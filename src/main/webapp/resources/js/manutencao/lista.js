@@ -28,10 +28,21 @@ $(document).ready( function () {
     $('.assumir-manutencao').each( function () {
         $(this).click( function () {
             var id = $(this).attr("id-manutencao");
-            var urlAssumir = $('#urlManutencaoPadrao').val();
+            var urlAssumir = $('#urlAssumir').val();
             var novaUrlAssumir = urlAssumir +"?id="+id;
             $('#btnAssumirManutencao').attr("href", novaUrlAssumir);
             console.log($('#btnAssumirManutencao').attr("href"));
+        });
+    });
+
+    // Ao clicar em CONCLUIR MANUTENCAO este método irá incluir a ID da manutenção no HREF
+    $('.concluir-manutencao').each( function () {
+        $(this).click( function () {
+            var id = $(this).attr("id-manutencao");
+            var urlAssumir = $('#urlConcluir').val();
+            var novaUrlAssumir = urlAssumir +"?id="+id;
+            $('#btnConcluirManutencao').attr("href", novaUrlAssumir);
+            console.log($('#btnConcluirManutencao').attr("href"));
         });
     });
 

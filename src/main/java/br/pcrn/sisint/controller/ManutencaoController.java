@@ -7,6 +7,7 @@ import br.com.caelum.vraptor.observer.upload.UploadSizeLimit;
 
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
+import br.pcrn.sisint.anotacoes.Seguranca;
 import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.*;
 import br.pcrn.sisint.dominio.*;
@@ -77,19 +78,12 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
     @UploadSizeLimit(sizeLimit = 40 * 1024 * 1024, fileSizeLimit = 10 * 1024 * 1024)
     public void salvar(Manutencao manutencao) throws IOException {
 
-
         if (manutencao.getId() == null || manutencao.getDataAbertura() == null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
             manutencao.setDataAbertura(LocalDate.now().format(formatter));
-            manutencao.setTecnico(usuarioLogado.getUsuario());
-
-//            if (manutencao.getTecnico().getId() == null) {
-//                manutencao.setTecnico(null);
-//            }
         }
 
-
+        manutencao.setTecnico(usuarioLogado.getUsuario());
         this.manutencaoDao.salvar(manutencao);
 
 //        String path = "C:\\Users\\SINF\\Documents\\arquivos" + manutencao.getId();
@@ -131,7 +125,8 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
 
     public void lista() { this.resultado.include("manutencoes", this.manutencaoDao.listarEmAberto()); }
 
-    public void listarTodos() { this.resultado.include("manutencoes", this.manutencaoDao.todos());}
+    @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
+    public void listarTodos() { this.resultado.include("manutencoes", this.manutencaoDao.listar()); }
 
     public void detalhar(Long id) {
         Manutencao manutencao = this.manutencaoDao.buscarPorId(id);
@@ -145,7 +140,15 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
         manutencao.setTecnico(usuarioLogado.getUsuario());
         manutencao.setStatus(StatusManutencao.EM_MANUTENCAO);
         manutencaoDao.salvar(manutencao);
-        resultado.redirectTo(ManutencaoController.class).lista();
+        resultado.redirectTo(this).lista();
+    }
+
+    @Transacional
+    public void concluir(Long id) {
+        Manutencao manutencao = manutencaoDao.buscarPorId(id);
+        manutencao.setStatus(StatusManutencao.CONCLUIDO);
+        manutencaoDao.salvar(manutencao);
+        resultado.redirectTo(this).lista();
     }
 
     @Get

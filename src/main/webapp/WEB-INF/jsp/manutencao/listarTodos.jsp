@@ -97,35 +97,11 @@
                                 <td><a href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}" alt="Detalhar"><i class="fa fa-eye"></i></a>
                                     <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}" alt="Editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                     <a href="${linkTo[ManutencaoController].remover}?id=${manutencao.id}" alt="Remover"><i class="fa fa-trash"></i></a>
-                                    <a class="assumir-manutencao" id-manutencao="${manutencao.id}" title="Assumir Manutenção" data-toggle="modal"
-                                       href="#modalAssumir"><i class="glyphicon glyphicon-ok-sign" aria-hidden="true"></i></a></td>
+
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL PARA CONFIRMAR ASSUMIR SERVIÇO -->
-        <div class="modal fade" id="modalAssumir" role="dialog">
-            <div class="modal-dialog">
-                <input type="hidden" name="tarefa.id" value="${manutencao.id}"/>
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title primary">Aguardando Manutenção...</h4>
-                    </div>
-                    <div class="modal-body">
-                        <h5> Deseja assumir a manutenção?</h5>
-                    </div>
-                    <div id="btns-modal" class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <a id="btnAssumirManutencao" href="${linkTo[ManutencaoController].assumirManutencao}?id=" class="btn btn-primary">
-                            Assumir
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

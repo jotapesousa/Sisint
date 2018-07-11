@@ -63,7 +63,8 @@
             <div class="panel-heading">
                 <div class="panel-title">Gerenciamento de Manutencao</div>
             </div>
-            <input id="urlManutencaoPadrao" type="hidden" value="${linkTo[ManutencaoController].assumirManutencao}">
+            <input id="urlAssumir" type="hidden" value="${linkTo[ManutencaoController].assumirManutencao}">
+            <input id="urlConcluir" type="hidden" value="${linkTo[ManutencaoController].concluir}">
             <div class="panel-body" style="padding-top: 0px;">
                 <a class="btn btn-info" style="margin-bottom: 16px;" href="${linkTo[ManutencaoController].form}">Cadastrar</a>
                 <div class="tabela-servicos">
@@ -95,14 +96,18 @@
                                 <td>${manutencao.dataAbertura}</td>
                                 <td><span class="status-manutencao">${manutencao.status.chave}</span></td>
                                 <td><a href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}" title="Detalhar"><i class="fa fa-eye"></i></a>
-                                    <c:if test="${usuarioLogado.usuario.nome == manutencao.tecnico.nome}">
+                                    <c:if test="${(usuarioLogado.usuario.nome == manutencao.tecnico.nome)}">
                                         <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}" title="Editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                         <a href="${linkTo[ManutencaoController].remover}?id=${manutencao.id}" title="Remover"><i class="fa fa-trash"></i></a>
+                                        <c:if test="${manutencao.status == 'EM_MANUTENCAO'}">
+                                            <a class="concluir-manutencao" id-manutencao="${manutencao.id}" title="Concluir" data-toggle="modal"
+                                               href="#modalConcluir"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i></a>
+                                        </c:if>
                                     </c:if>
-                                    <a class="assumir-manutencao" id-manutencao="${manutencao.id}" title="Assumir" data-toggle="modal"
-                                       href="#modalAssumir"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></a>
-                                    <a class="concluir-manutencao" id-manutencao="${manutencao.id}" title="Concluir" data-toggle="modal"
-                                       href="#modalConcluir"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i></a></td>
+                                    <c:if test="${manutencao.status == 'AGUARDANDO_MANUTENCAO'}">
+                                        <a class="assumir-manutencao" id-manutencao="${manutencao.id}" title="Assumir" data-toggle="modal"
+                                           href="#modalAssumir"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></a>
+                                    </c:if></td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -114,7 +119,7 @@
         <!-- MODAL PARA CONFIRMAR ASSUMIR SERVIÇO -->
         <div class="modal fade" id="modalAssumir" role="dialog">
             <div class="modal-dialog">
-                <input type="hidden" name="tarefa.id" value="${manutencao.id}"/>
+                <input type="hidden" name="manutencao.id" value="${manutencao.id}"/>
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -124,10 +129,33 @@
                     <div class="modal-body">
                         <h5> Deseja assumir a manutenção?</h5>
                     </div>
-                    <div id="btns-modal" class="modal-footer">
+                    <div id="btns-modalAssumir" class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <a id="btnAssumirManutencao" href="${linkTo[ManutencaoController].assumirManutencao}?id=" class="btn btn-primary">
                             Assumir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL PARA CONCLUIR SERVIÇO -->
+        <div class="modal fade" id="modalConcluir" role="dialog">
+            <div class="modal-dialog">
+                <input type="hidden" name="manutencao.id" value="${manutencao.id}"/>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title primary">Conluir Manutenção</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5> Deseja concluir a manutenção?</h5>
+                    </div>
+                    <div id="btns-modal" class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <a id="btnConcluirManutencao" href="${linkTo[ManutencaoController].concluir}?id=" class="btn btn-primary">
+                            Concluir
                         </a>
                     </div>
                 </div>
