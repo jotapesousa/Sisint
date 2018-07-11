@@ -1,0 +1,62 @@
+/*.panel{*/
+    /*border-radius: 0px;*/
+    /*box-shadow: 2px 2px 2px #888888;*/
+    /*border-color: #eadede;*/
+/*}*/
+
+#cadastro-servico, #cadastro-tarefa{
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.caixa-pontilhada {
+    border: 1px solid;
+    border-style: dashed;
+}
+.telefone {
+    font-weight: 600;
+    color: #0270ce;
+}
+.tituloCadastro{
+    border-bottom: 1px solid #3c3c3c;
+    color: #3c3c3c;
+}
+
+.cor-titulo-azul {
+    color: #001872;
+}
+
+.painel-sisint{
+    border-color: #ddd;
+    border-radius: 0;
+}
+
+.painel-cadastro-sisint{
+    border-color: #ddd;
+    border-radius: 0;
+}
+
+.colorBg {
+    padding: 50px 0;
+    min-height: 100%;
+    overflow: hidden;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    position: relative;
+    -o-box-shadow: inset 0 3px 3px -3px rgba(0, 0, 0, 0.3);
+    -ms-box-shadow: inset 0 3px 3px -3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 0 3px 3px -3px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 3px 3px -3px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 3px 3px -3px rgba(0, 0, 0, 0.3);
+}
+.colorBg.colorBg1 {
+    background-color: #1abc9c;
+    background-image: -ms-radial-gradient(center top, circle farthest-side, #55e7ca 0%, #1abc9c 100%);
+    background-image: -moz-radial-gradient(center top, circle farthest-side, #55e7ca 0%, #1abc9c 100%);
+    background-image: -o-radial-gradient(center top, circle farthest-side, #55e7ca 0%, #1abc9c 100%);
+    background-image: -webkit-gradient(radial, center top, 0, center top, 487, color-stop(0, #55e7ca), color-stop(1, #1abc9c));
+    background-image: -webkit-radial-gradient(center top, circle farthest-side, #55e7ca 0%, #1abc9c 100%);
+    background-image: radial-gradient(circle farthest-side at center top, #55e7ca 0%, #1abc9c 100%);
+}

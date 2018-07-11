@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioServico" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0765742a-c4b3-407d-9f7e-24738a5dfbbe">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="Dataset1" uuid="7157d34f-c831-4524-a735-fbe043bae1d9">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="diretorio_base" class="java.lang.String"/>
+	<parameter name="setor1" class="java.lang.String"/>
+	<parameter name="LISTA" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="ano" class="java.lang.String">
+		<fieldDescription><![CDATA[ano]]></fieldDescription>
+	</field>
+	<field name="nomeEquipamento" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeEquipamento]]></fieldDescription>
+	</field>
+	<field name="tomboEquipamento" class="java.lang.String">
+		<fieldDescription><![CDATA[tomboEquipamento]]></fieldDescription>
+	</field>
+	<field name="numSerieEquipamento" class="java.lang.String">
+		<fieldDescription><![CDATA[numSerieEquipamento]]></fieldDescription>
+	</field>
+	<field name="posicao" class="java.lang.Integer">
+		<fieldDescription><![CDATA[posicao]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="470" height="80" uuid="2996dc50-8b37-4517-a7c6-842320602f0a"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[GOVERNO DO ESTADO DO RIO GRANDE DO NORTE
+POLICIA CIVIL
+DIRETORIA  ADMINISTRATIVA
+SETOR DE INFORMÁTICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="80" width="524" height="14" uuid="111d2502-d7ec-4bc1-9d1a-5c8c3d8e5650"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[____________________________________________________________________________________________]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="0" width="70" height="80" uuid="ffe04e32-e6c4-487e-8be3-bba217e7a643"/>
+				<imageExpression><![CDATA[$P{diretorio_base} + "/WEB-INF/reports/img/brasao_pcrn.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="50" uuid="9b2a039a-00be-4108-b7dd-6bbb901bf07f"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Arial Black" size="17" isBold="false" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TERMO DE RECEBIMENTO E
+RESPONSABILIDADE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="240" y="50" width="50" height="25" uuid="8db77023-01b8-41df-be65-eb3472605b4f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1c4d9bb3-e9f5-431b-8e74-1924de9eb6ce"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="50" width="50" height="25" uuid="a6351edf-1f40-4c71-a702-910fe606f658">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3ff1676d-365b-418e-aebe-5faaed1929ae"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ano}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="210" y="50" width="30" height="25" uuid="638d3ef5-fadd-4b0c-a5fe-39e850478b7b"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="18" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="50" width="10" height="25" uuid="d1e4a39f-ce94-48c5-a292-f212bd0e1687"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="20" width="510" height="36" uuid="8e27ab73-fd7c-4426-9996-0d6e24db0872"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[	Declaro para os devidos fins, que recebi do Setor de Informática da POLICIA CIVIL o material abaixo relacionado:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="145" height="20" uuid="016f1c1e-7694-4964-8729-a9aec9f0b3f1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40a7c48c-5b92-433c-b8ba-1f195d6c9f22"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nomeEquipamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="265" y="0" width="70" height="20" uuid="c104c147-5f42-40a9-b1ca-ce75e99f51ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1ad02fda-a0de-475c-a6f4-49b5090e62c5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{tomboEquipamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="360" y="0" width="125" height="20" uuid="00a3f4e0-d8f4-41ff-9514-86bdf96516c0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0e5693fd-9d51-4fb4-a151-550faf858d1f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{numSerieEquipamento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="225" y="0" width="35" height="20" uuid="b44aad2b-44cc-48f6-91e1-66ab70ae4305"/>
+				<text><![CDATA[tombo: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="335" y="0" width="25" height="20" uuid="8d8ed80d-4a46-401f-8085-fa77dbbe96d1"/>
+				<text><![CDATA[N/S: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="46" y="0" width="27" height="20" uuid="0664bf66-dc72-4fb1-8824-59e252995b79">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9825dfa8-da9e-4579-bac7-272eb7b4feea"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{posicao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="73" y="0" width="7" height="20" uuid="dcaeec55-5e3a-4335-8648-bb7663cec746"/>
+				<text><![CDATA[.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="3" width="30" height="25" uuid="f042d6fd-07e7-4715-b581-ad58549aa11f"/>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="28" width="45" height="25" uuid="77e8d8a8-2a1e-475d-b9c6-0ced8c0a57da"/>
+				<text><![CDATA[Matrícula:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="53" width="45" height="25" uuid="688e3912-1aba-4f13-90ec-92bb990c44d4"/>
+				<text><![CDATA[Unidade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="78" width="213" height="30" uuid="120c5444-91c5-4ccc-be3c-7bec7a56a817"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Assinatura:________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="76" width="170" height="32" uuid="a1a461bb-180f-4771-afc7-a2673a06ad75"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<text><![CDATA[Natal/RN, ______/______/______]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="75" y="53" width="100" height="25" uuid="98f88d93-57e4-425e-bc9f-19e6a9caa63a"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{setor1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="40" y="40" width="480" height="30" uuid="f0873a70-5bce-4328-bce4-111e51310a28"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Av. Interventor Mario Câmara, 2550, Cidade da Esperança
+Natal/RN - CEP 59.064-600 Fone: (84) 3232-9212 e-mail:tipc@rn.gov.br ou sipcrn@hotmail.com]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

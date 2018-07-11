@@ -1,0 +1,161 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+          xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+          xmlns:tags="tagSisInt">
+    <html lang="en">
+
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="-1"/>
+
+    <jsp:directive.attribute name="cabecalho" fragment="true" />
+    <jsp:directive.attribute name="rodape" fragment="true" />
+
+    <head>
+        <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png"/>
+        <title>Sistema de Integração - SISINT</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="${ctx}/resources/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="${ctx}/resources/css/geral.css" rel="stylesheet"/>
+        <link href="${ctx}/resources/plugins/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet"/>
+        <link href="${ctx}/resources/plugins/dataTables/datatables.min.css" rel="stylesheet"/>
+
+        <jsp:invoke fragment="cabecalho"/>
+    </head>
+
+    <body style="background-color: rgba(232, 232, 232, 0.71)">
+    <input id="ctx" type="hidden" value="${linkTo[ServicosController].salvar}"/>
+    <nav class="navbar"  style="background-color: white; padding: 5px; box-shadow: 2px 1px #ddd; border-radius: 0px;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="${linkTo[InicioController].index}">SisInt</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="${linkTo[InicioController].index}">Home</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Serviços <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${linkTo[ServicosController].form}">Novo Serviço</a></li>
+                            <li class="divider"></li>
+                            <c:if test="${usuarioLogado.isAdmin()}">
+                            <li><a href="${linkTo[ServicosController].lista}">Todos os Serviços</a>
+                            </li>
+                            </c:if>
+                            <li><a href="${linkTo[ServicosController].meusServicos}">Meus Serviços</a></li>
+                            <li><a href="${linkTo[ServicosController].servicosAbertos}">Serviços Abertos</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tarefas <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <c:if test="${usuarioLogado.isAdmin()}">
+                                <li><a href="${linkTo[TarefasController].lista}">Listar tarefas </a></li></c:if>
+                            <!--<li><a href="${linkTo[TarefasController].tarefasAbertas}">Tarefas em aberto</a></li>-->
+                            <li><a href="${linkTo[TarefasController].minhasTarefas}">Minhas tarefas</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Setores <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${linkTo[SetorController].form}">Cadastrar Setor</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${linkTo[SetorController].lista}">Setores</a></li>
+                        </ul>
+                    </li>
+                    <c:if test="${usuarioLogado.isAdmin()}">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuários <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${linkTo[UsuariosController].form}">Cadastrar</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${linkTo[UsuariosController].lista}">Usuários</a></li>
+                        </ul>
+                    </li>
+                    </c:if>
+                    <!--<c:if test="${usuarioLogado.isAdmin()}">-->
+                        <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipamentos <span class="caret"></span></a>-->
+                        <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="${linkTo[EquipamentoController].form}">Cadastrar Equipamento</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="${linkTo[EquipamentoController].lista}">Equipamentos</a></li>-->
+                        <!--</ul>-->
+                        <!--</li>-->
+                    <!--</c:if>-->
+
+                    <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Manutenção <span class="caret"></span></a>-->
+                        <!--<ul class="dropdown-menu">-->
+                            <!--<li><a href="${linkTo[ManutencaoController].form}">Cadastrar Manutenção</a></li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="${linkTo[ManutencaoController].lista}">Manutenções</a></li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!--<c:if test="${usuarioLogado.isAdmin()}">-->
+                        <!--<li class="dropdown">-->
+                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Termos de Responsabilidade-->
+                                <!--<span class="caret"></span></a>-->
+                            <!--<ul class="dropdown-menu">-->
+                                <!--<li><a href="${linkTo[TermoController].form}">Cadastrar Termo</a></li>-->
+                                <!--<li class="divider"></li>-->
+                                <!--<li><a href="${linkTo[TermoController].lista}">Termos</a></li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
+                    <!--</c:if>-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-sort-desc" aria-hidden="true"><c:out value=""/></i> ${usuarioLogado.usuario.primeiroNome}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${linkTo[PerfilController].form}?id=${usuarioLogado.usuario.id}">Perfil</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${linkTo[LoginController].logout}">Sair</a></li>
+                        </ul>
+                    </li>
+                    <!--<li><a href="${linkTo[LoginController].logout}"><i class="fa fa-sort-desc" aria-hidden="true"><c:out value=""/></i> ${usuarioLogado.usuario.primeiroNome}</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="width: 90%;">
+        <jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>
+        <jsp:doBody/>
+    </div>
+
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="${ctx}/resources/plugins/jquery/jquery-3.2.1.min.js"><c:out value=""/></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="${ctx}/resources/plugins/bootstrap3/js/bootstrap.js"><c:out value=""/></script>
+
+    <script src="${ctx}/resources/plugins/dataPicker/dataPicker-bootstrap.js"><c:out value=""/></script>
+    <script src="${ctx}/resources/plugins/moment/moment.js"><c:out value=""/></script>
+    <!--<script src="${ctx}/resources/plugins/moment/date-time-moment.js"><c:out value=""/></script>-->
+    <script src="${ctx}/resources/plugins/moment/moment-with-locale.js"><c:out value=""/></script>
+    <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
+
+    <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
+    <script src="${ctx}/resources/plugins/jqueryValidate/jquery.validate.js"><c:out value=""/></script>
+    <script src="${ctx}/resources/plugins/bootstrapValidator/validator.js"><c:out value=""/></script>
+
+    <script src="${ctx}/resources/js/init.js"><c:out value=""/></script>
+
+    <jsp:invoke fragment="rodape"/>
+    </body>
+
+    </html>
+</jsp:root>
