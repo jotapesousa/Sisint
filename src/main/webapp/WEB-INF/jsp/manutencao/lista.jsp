@@ -147,10 +147,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title primary">Conluir Manutenção</h4>
+                        <h4 class="modal-title primary">Deseja concluir a manutenção?</h4>
                     </div>
                     <div class="modal-body">
-                        <h5> Deseja concluir a manutenção?</h5>
+                        <div class="custom-checkbox custom-control">
+                            <label>
+                                <input type="checkbox" id="checkConserto" name="statusEquipamento" value="QUEBRADO"/> Equipamento Consertado?
+                            </label>
+                        </div>
                     </div>
                     <div id="btns-modal" class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

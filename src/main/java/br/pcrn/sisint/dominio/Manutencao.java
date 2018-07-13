@@ -16,8 +16,10 @@ public class Manutencao extends Entidade {
     private String codigoManutencao;
     private String dataAbertura;
     private String dataFechamento;
-    private String descricao;
     private boolean deletado;
+
+    @Column(columnDefinition  = "text")
+    private String descricao;
 
     @ManyToOne
     private Setor setor;

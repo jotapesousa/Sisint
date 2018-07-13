@@ -36,10 +36,10 @@
                 <h4 align="center">Detalhes de Manutenção</h4>
             </div>
             <div class="panel-body" style="padding-top: 0px;">
-                <div class="col-md-8">
+                <div class="row">
                     <div class="panel">
                         <div class="panel-body">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="manutencao-titulo">Nome do Solicitante: </label>
                                 <span id="manutencao-titulo">${manutencao.nomeSolicitante}</span>
                                 <br>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <%--<c:if test="${not empty manutencao.equipamento}">--%>
-                    <div class="col-md-4">
+                    <div class="row">
                         <div class="panel">
                             <div class="panel-body">
                                     <div class="caixa-pontilhada col-md-12" style="border: 1px solid #000341;

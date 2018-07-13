@@ -50,4 +50,26 @@ public class ManutencaoNegocio {
                 equipamento -> new OpcaoSelect(equipamento.getNome(), equipamento.getId()))
                 .collect(Collectors.toList());
     }
+
+    public void verificarStatus(Manutencao manutencao) {
+        Long idEquipamento = manutencao.getEquipamento().getId();
+        Equipamento equipamento = equipamentoDao.buscarPorId(idEquipamento);
+
+        if (manutencao.getStatus() == StatusManutencao.AGUARDANDO_MANUTENCAO) {
+            equipamento.setStatus(StatusEquipamento.QUEBRADO);
+        } else if (manutencao.getStatus() == StatusManutencao.EM_MANUTENCAO) {
+           equipamento.setStatus(StatusEquipamento.EM_CONSERTO);
+        }
+    }
+
+    public void verificarConclusao(Manutencao manutencao, String checkConserto) {
+        Long idEquipamento = manutencao.getEquipamento().getId();
+        Equipamento equipamento = equipamentoDao.buscarPorId(idEquipamento);
+
+        if (checkConserto.equals("OK")) {
+            equipamento.setStatus(StatusEquipamento.OK);
+        } else {
+            equipamento.setStatus(StatusEquipamento.QUEBRADO);
+        }
+    }
 }

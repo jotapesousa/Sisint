@@ -12,7 +12,6 @@ $(document).ready( function () {
     // Cria label no Status da MANUTENÇÃO
     $span.each(function () {
         var descricao =  $(this).text();
-        console.log("Descricao TEXTO: " + descricao);
         if(descricao == 'Concluído') {
             $(this).addClass('label label-success');
         } else if(descricao == 'Em Manutencao') {
@@ -39,11 +38,29 @@ $(document).ready( function () {
     $('.concluir-manutencao').each( function () {
         $(this).click( function () {
             var id = $(this).attr("id-manutencao");
+            var checarConserto = $('#checkConserto').val();
             var urlAssumir = $('#urlConcluir').val();
             var novaUrlAssumir = urlAssumir +"?id="+id;
             $('#btnConcluirManutencao').attr("href", novaUrlAssumir);
             console.log($('#btnConcluirManutencao').attr("href"));
         });
+    });
+
+    $('#checkConserto').change(function () {
+        var checarConserto;
+        var novaUrl;
+
+        if($(this).is(':checked')) {
+            $('#checkConserto').val("OK");
+        }else {
+            $('#checkConserto').val("QUEBRADO");
+        }
+
+        checarConserto = $('#checkConserto').val();
+        novaUrl = $('#btnConcluirManutencao').attr("href") + "&checkConserto=" + checarConserto;
+        $('#btnConcluirManutencao').attr("href", novaUrl);
+
+        console.log(novaUrl);
     });
 
 });

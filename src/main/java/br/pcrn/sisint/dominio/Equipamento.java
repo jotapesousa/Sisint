@@ -91,4 +91,5 @@ public class Equipamento extends Entidade{
     public StatusEquipamento getStatus() {  return status; }
 
     public void setStatus(StatusEquipamento status) { this.status = status; }
+
 }

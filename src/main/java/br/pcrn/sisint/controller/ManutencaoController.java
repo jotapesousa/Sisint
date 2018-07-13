@@ -83,6 +83,8 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
             manutencao.setDataAbertura(LocalDate.now().format(formatter));
         }
 
+        manutencaoNegocio.verificarStatus(manutencao);
+
         manutencao.setTecnico(usuarioLogado.getUsuario());
         this.manutencaoDao.salvar(manutencao);
 
@@ -139,14 +141,17 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
         Manutencao manutencao = manutencaoDao.buscarPorId(id);
         manutencao.setTecnico(usuarioLogado.getUsuario());
         manutencao.setStatus(StatusManutencao.EM_MANUTENCAO);
+        manutencaoNegocio.verificarStatus(manutencao);
         manutencaoDao.salvar(manutencao);
         resultado.redirectTo(this).lista();
     }
 
     @Transacional
-    public void concluir(Long id) {
+    public void concluir(Long id, String checkConserto) {
+        System.out.println(checkConserto);
         Manutencao manutencao = manutencaoDao.buscarPorId(id);
         manutencao.setStatus(StatusManutencao.CONCLUIDO);
+        manutencaoNegocio.verificarConclusao(manutencao, checkConserto);
         manutencaoDao.salvar(manutencao);
         resultado.redirectTo(this).lista();
     }
