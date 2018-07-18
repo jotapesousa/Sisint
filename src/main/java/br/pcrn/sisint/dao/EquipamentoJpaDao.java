@@ -19,6 +19,14 @@ public class EquipamentoJpaDao extends EntidadeJpaDao<Equipamento> implements Eq
         super(entityManager, Equipamento.class);
     }
 
+
+    @Override
+    public Long contarTotalEquipamentos() {
+        Query query = manager.createQuery("select count(t) from Equipamento t WHERE t.deletado = false");
+        return (Long) query.getSingleResult();
+    }
+
+
     @Override
     public List<Equipamento> listarPorNSerie(String codigo) {
         Query query = manager.createQuery("SELECT e FROM Equipamento e WHERE e.numeroSerie LIKE :codigo")

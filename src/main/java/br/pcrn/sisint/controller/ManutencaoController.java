@@ -130,6 +130,8 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
     public void listarTodos() { this.resultado.include("manutencoes", this.manutencaoDao.listar()); }
 
+    public void listarConcluidos() { this.resultado.include("manutencoes", this.manutencaoDao.listarConcluidos()); }
+
     public void detalhar(Long id) {
         Manutencao manutencao = this.manutencaoDao.buscarPorId(id);
         resultado.include("manutencao", manutencao);

@@ -8,6 +8,7 @@ $(document).ready( function () {
     var $deletado;
     var statusEquipamento;
     var setor;
+    var checarConserto = $('#checkConserto').val();
 
     // Cria label no Status da MANUTENÇÃO
     $span.each(function () {
@@ -38,7 +39,7 @@ $(document).ready( function () {
     $('.concluir-manutencao').each( function () {
         $(this).click( function () {
             var id = $(this).attr("id-manutencao");
-            var checarConserto = $('#checkConserto').val();
+            console.log("CHECK CONSERTO: " + checarConserto);
             var urlAssumir = $('#urlConcluir').val();
             var novaUrlAssumir = urlAssumir +"?id="+id;
             $('#btnConcluirManutencao').attr("href", novaUrlAssumir);
@@ -46,21 +47,34 @@ $(document).ready( function () {
         });
     });
 
-    $('#checkConserto').change(function () {
-        var checarConserto;
-        var novaUrl;
+    // Ao clidar no botão CONCLUIR do modal CONCLUIR este método irá incluir o CHECKBOX de consertado ou não no HREF
+    $('#btnConcluirManutencao').each( function () {
+        $(this).click( function () {
+           var novaUrlConcluir = $('#btnConcluirManutencao').attr("href");
 
+           novaUrlConcluir += "&checkConserto=" + checarConserto;
+            $('#btnConcluirManutencao').attr("href", novaUrlConcluir);
+            console.log($('#btnConcluirManutencao').attr("href"));
+        });
+    });
+
+    // Ao clicar no botão REMOVER este método irá adicionar o valor do atributo URL-REMOVER no atributo HREF do BTN-REMOVER
+    $('.removerManutencao').click( function () {
+        var valorUrl = $(this).attr("url-remover");
+        console.log(valorUrl);
+        $('#btnRemover').attr("href", valorUrl);
+    });
+
+    // Troca do valor do CHECKBOX de Consertado ou não
+    $('#checkConserto').change(function () {
         if($(this).is(':checked')) {
             $('#checkConserto').val("OK");
         }else {
             $('#checkConserto').val("QUEBRADO");
         }
-
         checarConserto = $('#checkConserto').val();
-        novaUrl = $('#btnConcluirManutencao').attr("href") + "&checkConserto=" + checarConserto;
-        $('#btnConcluirManutencao').attr("href", novaUrl);
-
-        console.log(novaUrl);
+        console.log("CHECK CONSERTO: " + checarConserto);
+        console.log($('#checkConserto').val());
     });
 
 });

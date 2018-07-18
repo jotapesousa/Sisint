@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: SINF
-  Date: 07/02/2018
-  Time: 14:56
+  Date: 18/07/2018
+  Time: 15:11
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -71,7 +71,7 @@
                     <table id="tabela-servico" class="table table-bordered tabela">
                         <thead>
                         <tr>
-                            <%--<th>Título</th>--%>
+                                <%--<th>Título</th>--%>
                             <th>Solicitante</th>
                             <th>Equipamento</th>
                             <th>Tombo</th>
@@ -86,7 +86,7 @@
                         <tbody>
                         <c:forEach items="${manutencoes}" var="manutencao">
                             <tr>
-                                <%--<td>${manutencao.titulo}</td>--%>
+                                    <%--<td>${manutencao.titulo}</td>--%>
                                 <td>${manutencao.nomeSolicitante}</td>
                                 <td>${manutencao.equipamento.nome}</td>
                                 <td>${manutencao.equipamento.tombo}</td>
@@ -98,23 +98,13 @@
                                 <td><a href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}" title="Detalhar"><i class="fa fa-eye"></i></a>
                                     <c:if test="${(usuarioLogado.usuario.nome == manutencao.tecnico.nome) ||
                                                     (usuarioLogado.usuario.tipoUsuario == 'ADMINISTRADOR')}">
-                                            <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}"
-                                               title="Editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                            <a class="removerManutencao" href="#modalRemover" data-toggle="modal"
-                                               url-remover="${linkTo[ManutencaoController].remover}?id=${manutencao.id}"
-                                               title="Remover"><i class="fa fa-trash"></i></a>
+                                        <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}"
+                                           title="Editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                        <a class="removerManutencao" href="#modalRemover" data-toggle="modal"
+                                           url-remover="${linkTo[ManutencaoController].remover}?id=${manutencao.id}"
+                                           title="Remover"><i class="fa fa-trash"></i></a>
                                     </c:if>
-                                    <c:if test="${(usuarioLogado.usuario.nome == manutencao.tecnico.nome)}">
-                                        <c:if test="${manutencao.status == 'EM_MANUTENCAO'}">
-                                            <a class="concluir-manutencao" id-manutencao="${manutencao.id}" title="Concluir" data-toggle="modal"
-                                               href="#modalConcluir"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i></a>
-                                        </c:if>
-                                    </c:if>
-                                    <c:if test="${manutencao.status == 'AGUARDANDO_MANUTENCAO' ||
-                                                (usuarioLogado.usuario.nome != manutencao.tecnico.nome)}">
-                                        <a class="assumir-manutencao" id-manutencao="${manutencao.id}" title="Assumir" data-toggle="modal"
-                                           href="#modalAssumir"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></a>
-                                    </c:if></td>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -159,7 +149,7 @@
                     <div class="modal-body">
                         <div class="custom-checkbox custom-control">
                             <label>
-                                <input type="checkbox" id="checkConserto" name="statusEquipamento" value="OK" checked/> Equipamento Consertado?
+                                <input type="checkbox" id="checkConserto" name="statusEquipamento" value="QUEBRADO"/> Equipamento Consertado?
                             </label>
                         </div>
                     </div>

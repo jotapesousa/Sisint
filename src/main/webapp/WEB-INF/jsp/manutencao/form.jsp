@@ -146,7 +146,7 @@
                                 <div class="form-group col-sm-4">
                                     <label for="listaEquipamento">Equipamento</label>
                                     <div class="input-group">
-                                        <button id="listaEquipamento" type="button" class="btn btn-default"
+                                        <button id="listaEquipamento" type="button" class="btn btn-success"
                                         data-toggle="modal" data-target="#myModal">Inserir Equipamento</button>
                                     </div>
                                 </div>

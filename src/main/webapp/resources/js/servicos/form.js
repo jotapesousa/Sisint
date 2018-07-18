@@ -3,8 +3,6 @@
  */
 
 $(function () {
-
-    console.log('Carregou com sucesso!');
     var btnSalvarTarefas = $('#btnt');
     var btnServico = $('#btnServico');
 

@@ -129,7 +129,7 @@ $(document).ready(function () {
                 criarInputsHidden($form, tarefa, cont);
                 cont = cont + 1;
             });
-            console.log("tarefas: " + listaTarefas.length);
+            //console.log("tarefas: " + listaTarefas.length);
         }).fail(function () {
         }).always(function () {
             $btnsEditar = $(".editar-tarefa");

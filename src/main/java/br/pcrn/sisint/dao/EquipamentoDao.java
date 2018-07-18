@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EquipamentoDao extends EntidadeDao<Equipamento> {
+    Long contarTotalEquipamentos();
 
     List<Equipamento> listarPorTombo(Long codigo);
     List<Equipamento> listarPorNSerie(String codigo);

@@ -106,6 +106,7 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     public Long contarServicosStatus(StatusServico statusServico) {
         Query query = manager.createQuery("select count(s) from Servico s where s.deletado = false AND s.statusServico = :status");
         query.setParameter("status", statusServico);
+
         return (Long) query.getSingleResult();
     }
 

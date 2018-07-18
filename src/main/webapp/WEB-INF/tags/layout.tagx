@@ -71,39 +71,33 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Setores <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="${linkTo[SetorController].form}">Cadastrar Setor</a></li>
-                            <li class="divider"></li>
                             <li><a href="${linkTo[SetorController].lista}">Setores</a></li>
                         </ul>
                     </li>
                     <c:if test="${usuarioLogado.isAdmin()}">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuários <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="${linkTo[UsuariosController].form}">Cadastrar</a></li>
+                                <li><a href="${linkTo[UsuariosController].lista}">Usuários</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuários <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipamentos <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="${linkTo[UsuariosController].form}">Cadastrar</a></li>
-                            <li class="divider"></li>
-                            <li><a href="${linkTo[UsuariosController].lista}">Usuários</a></li>
+                            <li><a href="${linkTo[EquipamentoController].form}">Cadastrar Equipamento</a></li>
+                            <li><a href="${linkTo[EquipamentoController].lista}">Equipamentos</a></li>
                         </ul>
                     </li>
-                    </c:if>
-                    <!--<c:if test="${usuarioLogado.isAdmin()}">-->
-                        <!--<li class="dropdown">-->
-                        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipamentos <span class="caret"></span></a>-->
-                        <!--<ul class="dropdown-menu">-->
-                        <!--<li><a href="${linkTo[EquipamentoController].form}">Cadastrar Equipamento</a></li>-->
-                        <!--<li class="divider"></li>-->
-                        <!--<li><a href="${linkTo[EquipamentoController].lista}">Equipamentos</a></li>-->
-                        <!--</ul>-->
-                        <!--</li>-->
-                    <!--</c:if>-->
-
-                    <!--<li class="dropdown">-->
-                        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Manutenção <span class="caret"></span></a>-->
-                        <!--<ul class="dropdown-menu">-->
-                            <!--<li><a href="${linkTo[ManutencaoController].form}">Cadastrar Manutenção</a></li>-->
-                            <!--<li class="divider"></li>-->
-                            <!--<li><a href="${linkTo[ManutencaoController].lista}">Manutenções</a></li>-->
-                        <!--</ul>-->
-                    <!--</li>-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manutenção <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${linkTo[ManutencaoController].form}">Cadastrar Manutenção</a></li>
+                            <li><a href="${linkTo[ManutencaoController].lista}">Em aberto</a></li>
+                            <li><a href="${linkTo[ManutencaoController].listarConcluidos}">Concluídos</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <!--<c:if test="${usuarioLogado.isAdmin()}">-->

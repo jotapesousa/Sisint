@@ -25,12 +25,6 @@
             $(document).ready(function () {
                 $.fn.dataTable.moment('DD/MM/YYYY');
 
-                $('.link-remover').click( function () {
-                    var valorUrl = $(this).attr("url-remover");
-                    console.log(valorUrl);
-                    $('#btn-remover').attr("href", valorUrl);
-                });
-
 
                 $('.table').DataTable( {
                     pageLength:25,
@@ -102,8 +96,7 @@
                             </tr>
                         </c:forEach>
 
-                         <!-- /.modal -->
-                        <!-- Modal -->
+                        <!-- Modal REMOVER -->
                         <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
