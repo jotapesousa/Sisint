@@ -18,6 +18,7 @@ public class SetorController extends ControladorSisInt<Setor> {
     public SetorController(){
         this(null,null);
     }
+
     @Inject
     public SetorController(Result resultado, SetorDao setorDao) {
         super(resultado);
@@ -25,7 +26,7 @@ public class SetorController extends ControladorSisInt<Setor> {
     }
 
     public void lista(){
-        resultado.include("setores", setorDao.todos());
+        resultado.include("setores", setorDao.listar());
     }
     public void form(){}
 
@@ -33,11 +34,20 @@ public class SetorController extends ControladorSisInt<Setor> {
     @Transacional
     public void salvar(Setor setor){
         this.setorDao.salvar(setor);
-        resultado.redirectTo(InicioController.class).index();
+        resultado.redirectTo(this).lista();
     }
+
     public void editar(Long id){
         Setor setor = setorDao.buscarPorId(id);
         resultado.include("setor",setor);
         resultado.of(this).form();
+    }
+
+    @Transacional
+    public void remover(Long id) {
+        Setor setor = setorDao.buscarPorId(id);
+        setor.setDeletado(true);
+        this.setorDao.salvar(setor);
+        resultado.redirectTo(this).lista();
     }
 }

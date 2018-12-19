@@ -8,14 +8,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" uri="tagSisInt" %>
-<%@ taglib prefix="td" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <tags:layout>
     <jsp:attribute name="cabecalho">
-
+        <link href="${ctx}/resources/css/componentes/checkbox.css" rel="stylesheet"/>
     </jsp:attribute>
     <jsp:attribute name="rodape">
+        <script src="${ctx}/resources/plugins/typeahead/typeahead.bundle.js"></script>
+
         <!-- Gerador de Código -->
         <script>
             $('#btn-gerarns').click(function() {
@@ -27,38 +29,40 @@
     </jsp:attribute>
 
     <jsp:body>
-        <div class="panel painel-sisint">
-            <div class="panel-heading">
-                <h4 align="center">Cadastro de Equipamento</h4>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Cadastro de Equipamentos</h1>
             </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="panel painel-sisint">
             <div class="panel-body">
-                <form id="formTarefa" class="form-horizontal" action="${linkTo[EquipamentoController].salvar}" enctype="multipart/form-data" method="post">
+                <form id="formTarefa" action="${linkTo[EquipamentoController].salvar}" enctype="multipart/form-data" method="post">
                     <input type="hidden" name="equipamento.id" value="${equipamento.id}">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Nome: </label>
-                        <div class="col-sm-10">
-                            <input class="form-control" minlength="4" name="equipamento.nome" type="text" required value="${equipamento.nome}">
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="nome-equipamento">Nome: </label>
+                            <input id="nome-equipamento" class="form-control" minlength="4" name="equipamento.nome"
+                                   type="text" required value="${equipamento.nome}">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Tombo: </label>
-                        <div class="col-sm-10">
-                            <input class="form-control" maxlength="11" name="equipamento.tombo" type="text" value="${equipamento.tombo}">
+                        <div class="col-md-4">
+                            <label for="ns-equipamento">Número de Série</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="ns-equipamento" name="equipamento.numeroSerie"
+                                       value="${equipamento.numeroSerie}" required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id="btn-gerarns" type="button">Gerar Código</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="form-group col-md-4">
+                            <label for="tombo-equipamento">Tombo: </label>
+                            <input id="tombo-equipamento" class="form-control" maxlength="11" name="equipamento.tombo"
+                                   type="text" value="${equipamento.tombo}">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Número de Série: </label>
-                        <div class="col-sm-9">
-                            <input id="ns-equipamento" class="form-control" name="equipamento.numeroSerie"
-                                   type="text" value="${equipamento.numeroSerie}" required  >
-                        </div>
-                        <div class="col-sm-1">
-                            <button id="btn-gerarns" type="button" class="btn btn-default" style="float: right;">Gerar Código</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Status: </label>
-                        <div class="col-sm-10">
+                        <div class="form-group col-md-4">
+                            <label for="status-equip">Status: </label>
                             <select type="text" class="form-control" id="status-equip" placeholder="Status"
                                     required="true"
                                     name="equipamento.status">
@@ -73,11 +77,8 @@
                                 </c:forEach>
                             </select>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Setor: </label>
-                        <div class="col-sm-10">
+                        <div class="form-group col-md-4">
+                            <label for="equipamento-setor">Setor: </label>
                             <select class="form-control" id="equipamento-setor" name="equipamento.setor.id" type="text">
                                 <option value=""></option>
                                 <c:forEach items="${setores}" var="setor">
@@ -90,15 +91,15 @@
                                 </c:forEach>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Descrição: </label>
-                        <div class="col-sm-10">
-                             <textarea class="form-control" minlength="6" name="equipamento.descricao" rows="2"
-                                       required="true" >${equipamento.descricao}</textarea>
+                        <div class="form-group col-md-8">
+                            <label for="descricao-equipamento">Descrição: </label>
+                            <textarea id="descricao-equipamento" class="form-control" minlength="6"
+                                      name="equipamento.descricao" rows="7"
+                                      required="true" >${equipamento.descricao}
+                            </textarea>
                         </div>
                     </div>
-                    <div align="right">
+                    <div class="panel">
                         <button class="btn btn-primary" type="submit">Salvar</button>
                     </div>
                 </form>

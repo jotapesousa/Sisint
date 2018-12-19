@@ -18,8 +18,10 @@ public interface ServicoDao extends EntidadeDao<Servico> {
     List<Servico> listarServicos();
     public List<Servico> listarMeusServicos(Long id);
     public List<Servico> listarServicosEmAberto();
+    Long servicoPorSetor(Long id);
     Servico BuscarPorId(Long id);
     void salvarLogServico(LogServico logServico);
+    Long meusServicos();
 
     public void verificarConlusaoEAtualizar(Long id);
 }

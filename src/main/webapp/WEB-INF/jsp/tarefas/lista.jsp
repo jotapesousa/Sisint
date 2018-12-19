@@ -12,6 +12,7 @@
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/js/servicos/lista.js"></script>
+        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
             $(document).ready(function () {
@@ -99,9 +100,9 @@
                                 <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
                                 <td><a href="#"><i class="fa fa-eye" aria-hidden="false"></i></a>
-                                    <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <c:if test="${usuarioLogado.isAdmin()}">
-                                        <a href="${linkTo[TarefasController].remover}?id=${tarefa.id}"><i class="fa fa-trash"></i></a>
+                                        <a href="${linkTo[TarefasController].remover}?id=${tarefa.id}"><i class="fa fa-trash fa-lg"></i></a>
                                         <!--<a data-toggle="modal" url="${linkTo[ServicosController].assumirServico}?id=${tarefa.id}"
                                            href="#concluirId" id="concluir-tarefa" id-tarefa="${tarefa.id}"
                                            title="Concluir Tarefa"><i class="glyphicon glyphicon-ok"></i> </a> -->

@@ -153,12 +153,12 @@ public class ServicosNegocio {
     }
 
     public boolean verificarConclusaoServico(List<Tarefa> tarefas) {
-        boolean conluida = true;
+        boolean concluida = true;
         for(Tarefa tarefa : tarefas) {
             if(!tarefa.getStatusTarefa().equals(StatusTarefa.CONCLUIDO)) {
-                conluida = false;
+                concluida = false;
             }
         }
-        return conluida;
+        return concluida;
     }
 }

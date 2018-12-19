@@ -19,6 +19,7 @@
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
+        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/js/manutencao/lista.js"></script>
         <script src="${ctx}/resources/js/manutencao/form.js"></script>
         <script>
@@ -93,7 +94,7 @@
                                 <td>${manutencao.setor.nome}</td>
                                 <td>${manutencao.tecnico.nome}</td>
                                 <td>${manutencao.dataAbertura}</td>
-                                <td><span class="status-manutencao">${manutencao.status.chave}</span></td>
+                                <td><span class="label labelStatus">${manutencao.status.chave}</span></td>
                                 <td><a href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}" alt="Detalhar"><i class="fa fa-eye"></i></a>
                                     <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}" alt="Editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                     <a href="${linkTo[ManutencaoController].remover}?id=${manutencao.id}" alt="Remover"><i class="fa fa-trash"></i></a>

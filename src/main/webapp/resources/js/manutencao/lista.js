@@ -1,6 +1,5 @@
 
 $(document).ready( function () {
-    var $span =  $(this).find('.status-manutencao');
     var $nome;
     var $tombo;
     var $nSerie;
@@ -9,18 +8,19 @@ $(document).ready( function () {
     var statusEquipamento;
     var setor;
     var checarConserto = $('#checkConserto').val();
+    var $labelStatus = $(this).find('.labelStatus');
 
-    // Cria label no Status da MANUTENÇÃO
-    $span.each(function () {
+    // Cria label no Status do SERVIÇO
+    $labelStatus.each(function () {
         var descricao =  $(this).text();
+        console.log(descricao);
         if(descricao == 'Concluído') {
             $(this).addClass('label label-success');
-        } else if(descricao == 'Em Manutencao') {
+        } else if(descricao == 'Em Manutenção') {
             $(this).addClass('label label-info');
-        } else if(descricao == 'Aguardando Manutencao') {
+        } else if(descricao == 'Aguardando Manutenção') {
             $(this).addClass('label label-warning');
         }
-
     });
 
 

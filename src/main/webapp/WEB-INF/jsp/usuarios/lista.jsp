@@ -50,8 +50,11 @@
 
     <jsp:body>
         <div class="panel painel-sisint">
-            <div class="panel-heading">
-                <div class="panel-title">Gerenciamento de usuários</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Gerenciamento de Usuários</h2>
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
             <div class="panel-body" style="padding-top: 0px;">
                 <a class="btn btn-info" style="margin-bottom: 16px;" href="${linkTo[UsuariosController].form}">Cadastrar</a>
@@ -75,10 +78,10 @@
                                 <td>${usuario.login}</td>
                                 <td>${usuario.email}</td>
                                 <td>${usuario.telefone}</td>
-                                <td><a href="#"><i class="fa fa-eye" aria-hidden="false"></i></a>
-                                    <a href="${linkTo[UsuariosController].editar}?id=${usuario.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                <td><a title="Detalhes" href="#"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Editar" href="${linkTo[UsuariosController].editar}?id=${usuario.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <c:if test="${usuarioLogado.isAdmin()}">
-                                        <a href="${linkTo[UsuariosController].remover}?id=${usuario.id}"><i class="fa fa-trash"></i></a></td>
+                                        <a title="Remover" href="${linkTo[UsuariosController].remover}?id=${usuario.id}"><i class="fa fa-trash fa-lg"></i></a></td>
                                     </c:if>
                             </tr>
                         </c:forEach>

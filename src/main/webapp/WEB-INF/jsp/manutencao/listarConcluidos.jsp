@@ -19,6 +19,7 @@
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
+        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/js/manutencao/lista.js"></script>
         <script src="${ctx}/resources/js/manutencao/form.js"></script>
         <script>
@@ -60,8 +61,11 @@
 
     <jsp:body>
         <div class="panel painel-sisint">
-            <div class="panel-heading">
-                <div class="panel-title">Gerenciamento de Manutencao</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Manutenções Concluídas</h1>
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
             <input id="urlAssumir" type="hidden" value="${linkTo[ManutencaoController].assumirManutencao}">
             <input id="urlConcluir" type="hidden" value="${linkTo[ManutencaoController].concluir}">
@@ -78,7 +82,6 @@
                             <th>N/S do Equipamento</th>
                             <th>Setor Solicitante</th>
                             <th>Técnico</th>
-                            <th>Data de Abertura</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -93,16 +96,15 @@
                                 <td>${manutencao.equipamento.numeroSerie}</td>
                                 <td>${manutencao.setor.nome}</td>
                                 <td>${manutencao.tecnico.nome}</td>
-                                <td>${manutencao.dataAbertura}</td>
-                                <td><span class="status-manutencao">${manutencao.status.chave}</span></td>
-                                <td><a href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}" title="Detalhar"><i class="fa fa-eye"></i></a>
+                                <td><span class="label labelStatus">${manutencao.status.chave}</span></td>
+                                <td><a href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}" title="Detalhar"><i class="fa fa-eye fa-lg"></i></a>
                                     <c:if test="${(usuarioLogado.usuario.nome == manutencao.tecnico.nome) ||
                                                     (usuarioLogado.usuario.tipoUsuario == 'ADMINISTRADOR')}">
                                         <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}"
-                                           title="Editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                           title="Editar"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                         <a class="removerManutencao" href="#modalRemover" data-toggle="modal"
                                            url-remover="${linkTo[ManutencaoController].remover}?id=${manutencao.id}"
-                                           title="Remover"><i class="fa fa-trash"></i></a>
+                                           title="Remover"><i class="fa fa-trash fa-lg"></i></a>
                                     </c:if>
                                 </td>
                             </tr>

@@ -5,7 +5,6 @@
   Time: 23:27
   To change this template use File | Settings | File Templates.
 --%>
-<%-- aqui vai qualquer coisa--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" uri="tagSisInt" %>
@@ -13,7 +12,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <tags:layout>
-
     <jsp:attribute name="cabecalho">
         <link href="${ctx}/resources/plugins/dataPicker/dataPicker.css" rel="stylesheet"/>
         <link href="${ctx}/resources/css/componentes/checkbox.css" rel="stylesheet"/>
@@ -22,11 +20,9 @@
                 font-weight: 600;
                 font-size: 12px;
             }
-
             .datepicker {
                 z-index: 1151 !important;
             }
-
             .panel-title {
                 border-bottom: 1px solid;
             }
@@ -48,20 +44,21 @@
 
                 $('#nserie-equipamento').val(ns);
             })
+
+            if ($(".datePicker").val()) {
+                var data = moment($(".datePicker").val(), "YYYY-MM-DD").format("DD/MM/YYYY");
+                $(".datePicker").val(data);
+                console.log($(".datePicker").val());
+            }
         </script>
     </jsp:attribute>
 
     <jsp:body>
-
-        <ul clas="errors">
-            <c:forEach items="${errors}" var="error">
-                <li>${error.category} - ${error.message}</li>
-            </c:forEach>
-        </ul>
-
-        <div class="alert alert-warning alert-dismissible" hidden role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Warning!</strong> Better check yourself, you're not looking too good.
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Cadastro de Manutenções</h1>
+            </div>
+            <!-- /.col-lg-12 -->
         </div>
         <div class="panel painel-cadastro-sisint">
             <form id="form-manutencao-tarefa" action="${linkTo[ManutencaoController].salvar}" method="post"
@@ -71,93 +68,71 @@
                 <input id="manutencao-dataAbertura" type="hidden" name="manutencao.dataAbertura"
                        value="${manutencao.dataAbertura}"/>
                 <div id="container-inputs-tarefa"></div>
+
                 <div class="panel-body">
-                    <h4 class="tituloCadastro">Cadastro de manutenções</h4>
-                    <div id="cadastro-manutencao">
+                    <div class="cadastro-servico">
                         <div class="row">
                             <input id="manutencao-id" type="hidden" name="manutencao.id" value="${manutencao.id}"/>
-                            <div class="col-md-12">
-                                <div class="form-group col-sm-4">
-                                    <label for="nomeSolicitante-manutencao">Nome do solicitante</label>
-                                    <input type="text" minlength="3" class="form-control"
-                                           id="nomeSolicitante-manutencao"
-                                           required="true"
-                                           value="${manutencao.nomeSolicitante}"
-                                           placeholder="Nome do solicitante" name="manutencao.nomeSolicitante"/>
 
-                                </div>
-                                <div class="form-group col-sm-4">
-                                    <label for="setor-manutencao">Setor solicitante</label>
-                                    <select class="form-control" required id="setor-manutencao"
-                                            name="manutencao.setor.id">
-                                        <c:forEach items="${setores}" var="setor">
-                                            <c:if test="${setor.valor == manutencao.setor.id}">
-                                                <option value="${setor.valor}" selected="true">${setor.chave}</option>
-                                            </c:if>
-                                            <c:if test="${!(setor.valor == manutencao.setor.id)}">
-                                                <option value="${setor.valor}">${setor.chave}</option>
-                                            </c:if>
-                                        </c:forEach>
+                            <div class="form-group col-md-4">
+                                <label for="nomeSolicitante-manutencao">Nome do solicitante</label>
+                                <input type="text" minlength="3" class="form-control"
+                                       id="nomeSolicitante-manutencao"
+                                       required="true"
+                                       value="${manutencao.nomeSolicitante}"
+                                       placeholder="Nome do solicitante" name="manutencao.nomeSolicitante"/>
 
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="setor-manutencao">Setor solicitante</label>
+                                <select class="form-control" required id="setor-manutencao"
+                                        name="manutencao.setor.id">
+                                    <option value=""></option>
+                                    <c:forEach items="${setores}" var="setor">
+                                        <c:if test="${setor.valor == manutencao.setor.id}">
+                                            <option value="${setor.valor}" selected="true">${setor.chave}</option>
+                                        </c:if>
+                                        <c:if test="${!(setor.valor == manutencao.setor.id)}">
+                                            <option value="${setor.valor}">${setor.chave}</option>
+                                        </c:if>
+                                    </c:forEach>
 
-                                <div class="form-group col-sm-4">
-                                    <label for="data-fechamento-manutencao">Data de Finalização</label>
-                                    <input type="text" class="form-control datePicker" id="data-fechamento-manutencao"
-                                           required="true"
-                                           value="${manutencao.dataFechamento}"
-                                           placeholder="Data de finalização" readonly="readonly"
-                                           name="manutencao.dataFechamento"/>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="data-fechamento-manutencao">Data de Finalização</label>
+                                <input type="text" class="form-control datePicker" id="data-fechamento-manutencao"
+                                       required="true"
+                                       value="${manutencao.dataFechamento}"
+                                       placeholder="Data de finalização" readonly="readonly" name="manutencao.dataFechamento"/>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="status-manutencao">Status: </label>
+                                <select type="text" id="status-manutencao" class="form-control" id="status-equip"
+                                        placeholder="Status" required="true" name="manutencao.status">
+                                    <option value=""></option>
+                                    <c:forEach items="${status}" var="s">
+                                        <c:if test="${s.valor == manutencao.status.valor}">
+                                            <option value="${s.valor}" selected="true">${s.chave}</option>
+                                        </c:if>
+                                        <c:if test="${!(s.valor == manutencao.status.valor)}">
+                                            <option value="${s.valor}">${s.chave}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="listaEquipamento">Equipamento</label>
+                                <div class="input-group">
+                                    <button id="listaEquipamento" type="button" class="btn btn-success"
+                                    data-toggle="modal" data-target="#myModal">Inserir Equipamento</button>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <%--<div class="form-group col-sm-4">--%>
-                                    <%--<label for="tecnico-manutencao">Ténico Responsável</label>--%>
-                                    <%--<select class="form-control" id="tecnico-manutencao"--%>
-                                            <%--name="manutencao.tecnico.id">--%>
-                                        <%--<option></option>--%>
-                                        <%--<c:forEach items="${usuarios}" var="usuario">--%>
-                                            <%--<c:if test="${usuario.valor == manutencao.tecnico.id}">--%>
-                                                <%--<option value="${usuario.valor}"--%>
-                                                        <%--selected="true">${usuario.chave}</option>--%>
-                                            <%--</c:if>--%>
-                                            <%--<c:if test="${!(usuario.valor == manutencao.tecnico.id)}">--%>
-                                                <%--<option value="${usuario.valor}">${usuario.chave}</option>--%>
-                                            <%--</c:if>--%>
-                                        <%--</c:forEach>--%>
-                                    <%--</select>--%>
-                                <%--</div>--%>
-                                <div class="form-group col-sm-4">
-                                    <label for="status-manutencao">Status: </label>
-                                    <select type="text" id="status-manutencao" class="form-control" id="status-equip"
-                                            placeholder="Status" required="true" name="manutencao.status">
-                                        <option value=""></option>
-                                        <c:forEach items="${status}" var="s">
-                                            <c:if test="${s.valor == manutencao.status.valor}">
-                                                <option value="${s.valor}" selected="true">${s.chave}</option>
-                                            </c:if>
-                                            <c:if test="${!(s.valor == manutencao.status.valor)}">
-                                                <option value="${s.valor}">${s.chave}</option>
-                                            </c:if>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-4">
-                                    <label for="listaEquipamento">Equipamento</label>
-                                    <div class="input-group">
-                                        <button id="listaEquipamento" type="button" class="btn btn-success"
-                                        data-toggle="modal" data-target="#myModal">Inserir Equipamento</button>
-                                    </div>
-                                </div>
-                                <div class=""></div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group col-sm-8">
-                                    <label for="descricao">Descrição:</label>
-                                    <textarea class="form-control" name="manutencao.descricao" rows="2" required="true"
-                                              id="descricao">${manutencao.descricao}</textarea>
-                                </div>
+                            <div class=""></div>
+                            <div class="form-group col-md-8">
+                                <label for="descricao">Descrição:</label>
+                                <textarea class="form-control" name="manutencao.descricao" rows="7" required="true"
+                                          id="descricao">${manutencao.descricao}</textarea>
                             </div>
                         </div>
                     </div>
@@ -187,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="panel-footer" align="right">
+                <div class="panel" align="right">
                     <button class="btn btn-primary" type="submit">Salvar</button>
                 </div>
             </form>
@@ -267,15 +242,25 @@
                                    value="${equipamento.nome}" placeholder="Digite o tombo do equipamento">
                         </div>
                         <div class="form-group">
-                            <div>
-                                <label for="nserie-equipamento">Número de Série</label>
-                                <input id="nserie-equipamento" class="form-control" type="text" name="manutencao.equipamento.numeroSerie"
-                                       value="${equipamento.numeroSerie}" placeholder="Digite o N/S do equipamento">
-                            </div>
-                            <div>
-                                <button id="btn-gerarns" type="button" class="btn btn-default" style="float: right;">Gerar Código</button>
-                            </div>
+                            <label for="nserie-equipamento">Número de Série</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nserie-equipamento" name="manutencao.equipamento.numeroSerie"
+                                       value="${equipamento.numeroSerie}" placeholder="Digite o N/S do equipamento" required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id="btn-gerarns" type="button">Gerar Código</button>
+                                </span>
+                            </div><!-- /input-group -->
                         </div>
+                        <%--<div class="form-group">--%>
+                            <%--<div>--%>
+                                <%--<label for="nserie-equipamento">Número de Série</label>--%>
+                                <%--<input id="nserie-equipamento" class="form-control" type="text" name="manutencao.equipamento.numeroSerie"--%>
+                                       <%--value="${equipamento.numeroSerie}" placeholder="Digite o N/S do equipamento">--%>
+                            <%--</div>--%>
+                            <%--<div>--%>
+                                <%--<button id="btn-gerarns" type="button" class="btn btn-default" style="float: right;">Gerar Código</button>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                         <div class="form-group">
                             <label>Status: </label>
                             <select type="text" class="form-control" id="status-equipamento" placeholder="Status"

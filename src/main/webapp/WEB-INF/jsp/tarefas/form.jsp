@@ -15,6 +15,7 @@
     <jsp:attribute name="cabecalho">
     </jsp:attribute>
     <jsp:attribute name="rodape">
+        <script src="${ctx}/resources/js/init.js"></script>
         <script>
             $(document).ready(function () {
                 console.log("entrou no js");

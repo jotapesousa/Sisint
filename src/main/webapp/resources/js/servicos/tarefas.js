@@ -1,4 +1,4 @@
-/**
+/*
  * Created by samuel on 15/09/2017.
  */
 //Variável global salvar tarefas
@@ -19,6 +19,7 @@ $(document).ready(function () {
     var id;
     var titulo;
     var tecnico;
+    var tecnico2;
     var descricao;
     var dataFechamento;
     var status;
@@ -73,7 +74,7 @@ $(document).ready(function () {
         e.preventDefault();
         carregarInputs();
 
-        console.log("TRIGGER 2 ATIVADA");
+        console.log("URL:" + url);
 
         prazo = moment(dataFechamento.val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var tarefa = {
@@ -85,12 +86,15 @@ $(document).ready(function () {
             dataFechamento: prazo,
             descricao: descricao.val(),
             tecnico: {
-                id: tecnico.val()
+                id: tecnico.val(),
             },
             pendente: pendente.is(':checked'),
             codigoTarefa:"",
             dataAbertura:""
         };
+
+        console.log("TECNICO: " +tecnico.attributes);
+
         $tarefasContainer.empty();
         if (!editando) {
             listaTarefas.push(tarefa);
@@ -211,14 +215,17 @@ $(document).ready(function () {
         }
         $tarefasContainer.prepend(
             "<div id='list-tarefa' class='list-group-item' >"+
-            "<a id='editar-tarefa' class='editar-tarefa' href='#myModal' data-toggle='modal' posicao='"+ i +"' style='float: right;'><i class='fa fa-pencil-square-o'></i></a>" +
-            "<a id='remover-tarefa' class='remover-tarefa' href='#' posicao='"+ i +"' style='margin-right: 4px; float: right;'><i class='fa fa-trash-o'></i></a>" +
-            "<h4 class='list-group-item-heading'>Título da tarefa: "+tarefa.titulo+"</h4>"+
-            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>Abertura: "+moment(tarefa.dataFechamento, "YYYY-MM-DD").format("DD/MM/YYYY")+"</span>"+
-            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>Previsão: "+moment(tarefa.dataFechamento, "YYYY-MM-DD").format("DD/MM/YYYY")+"</span>"+
-            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>Status: " +
-            "<span class='label label-status "+classe+"'>"+chaveStatus(tarefa.statusTarefa.valor)+"</span></span>"+ possuiPendencia +
-            "<p class='list-group-item-text'>Descrição: "+tarefa.descricao+"</p>"+
+                "<a id='editar-tarefa' class='editar-tarefa' href='#myModal' data-toggle='modal' posicao='"+ i +"' style='float: right;'>" +
+                    "<i class='fa fa-pencil-square-o'></i></a>" +
+                "<a id='remover-tarefa' class='remover-tarefa' href='#' posicao='"+ i +"' style='margin-right: 4px; float: right;'>" +
+                    "<i class='fa fa-trash-o'></i></a>" +
+                "<h4 class='list-group-item-heading'>"+tarefa.titulo+"</h4>"+
+                "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+                    "Previsão: "+moment(tarefa.dataFechamento, "YYYY-MM-DD").format("DD/MM/YYYY")+"</span><br>"+
+                "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+                    "Status: " +
+                    "<span class='label label-status "+classe+"'>"+chaveStatus(tarefa.statusTarefa.valor)+"</span></span>"+ possuiPendencia +
+                "<p class='list-group-item-text'>Descrição: "+tarefa.descricao+"</p>"+
             "</div>"
         );
         $btnsRemover = $('.remover-tarefa');
@@ -286,6 +293,7 @@ $(document).ready(function () {
         id = $("input[name='tarefa.id']");
         titulo = $("input[name='tarefa.titulo']");
         tecnico = $("select[name='tarefa.tecnico']");
+        tecnico2 = $("#status-tarefa :selected");
         descricao = $("textarea[name='tarefa.descricao']");
         dataFechamento = $("input[name='tarefa.dataFechamento']");
         status = $("select[name='tarefa.statusTarefa']");
@@ -294,6 +302,9 @@ $(document).ready(function () {
         prazo = moment(dataFechamento.val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         dateteste = moment.utc(prazo);
         prazo = dateteste.toISOString();
+
+        console.log(tecnico);
+        console.log(tecnico2);
     }
 
     function limparInputs() {
@@ -307,13 +318,13 @@ $(document).ready(function () {
 
     function chaveStatus(valor) {
         if(valor === 'CANCELADO'){
-            return '4 - cancelado';
+            return 'Cancelado';
         } else if (valor === 'EM_ESPERA') {
-            return '1 - Aguardando execução'
+            return 'Aguardando Execução'
         } else if (valor === 'EM_EXECUCAO') {
-            return '2 - Em execução';
+            return 'Em execução';
         } else if (valor === 'CONCLUIDO') {
-            return '3 - Concluído';
+            return 'Concluído';
         }
     }
 

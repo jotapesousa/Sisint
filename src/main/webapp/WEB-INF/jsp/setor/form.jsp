@@ -18,39 +18,42 @@
     </jsp:attribute>
 
     <jsp:body>
-        <div class="panel painel-sisint">
-            <div class="panel-heading">
-                <h4 align="center">Cadastro de setor</h4>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Cadastro de Setores</h1>
             </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="panel painel-sisint">
             <div class="panel-body">
-                <form id="formTarefa" class="form-horizontal" action="${linkTo[SetorController].salvar}" method="post">
+                <form id="formTarefa" action="${linkTo[SetorController].salvar}" method="post">
                     <input type="hidden" name="setor.id" value="${setor.id}">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Nome: </label>
-                        <div class="col-sm-10">
-                            <input class="form-control" minlength="4" name="setor.nome" type="text" required value="${setor.nome}">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="nome-setor">Nome: </label>
+                            <input id="nome-setor" class="form-control" minlength="3" name="setor.nome"
+                                   type="text" required value="${setor.nome}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="senha-setor">Senha: </label>
+                            <input id="senha-setor" class="form-control" name="setor.senha" type="text" value="${setor.senha}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="telefone-setor">Telefone: </label>
+                            <input id="telefone-setor" class="form-control" name="setor.telefone" type="text" value="${setor.telefone}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="endereco-setor">Endereço: </label>
+                            <input id="endereco-setor" class="form-control" name="setor.endereco" type="text" value="${setor.endereco}">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="informacao-setor">Informações: </label>
+                            <textarea id="informacao-setor" class="form-control" minlength="6" name="setor.informacao" rows="3"
+                                      required="true" >${setor.informacao}</textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Senha: </label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="setor.senha" type="text" value="${setor.senha}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Telefone: </label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="setor.telefone" type="text" value="${setor.telefone}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Informações: </label>
-                        <div class="col-sm-10">
-                             <textarea class="form-control" minlength="6" name="setor.informacao" rows="2"
-                                       required="true" >${setor.informacao}</textarea>
-                        </div>
-                    </div>
-                    <div align="right">
+
+                    <div>
                         <button class="btn btn-primary" type="submit">Salvar</button>
                     </div>
                 </form>

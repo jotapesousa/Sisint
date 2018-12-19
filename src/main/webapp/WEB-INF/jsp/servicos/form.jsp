@@ -33,88 +33,17 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/js/servicos/form.js"></script>
         <script src="${ctx}/resources/js/servicos/tarefas.js"></script>
-        <script>
-            $('#form-servico-tarefa').validator();
-
-            $('document').ready( function () {
-                var valTecnico = $('#tecnico-servico').val();
-
-                if (valTecnico != "") {
-                    $('#btnAdicionarTarefa').removeAttr('disabled');
-                } else {
-                    $('#btnAdicionarTarefa').attr('disabled', 'disabled');
-                }
-            });
-
-            function salvarTarefa() {
-                console.log("SUBMIT para trigger");
-                $('#btnTarefaPadrao').trigger('click');
-            }
-
-            function mudancaTecnico() {
-                var valTecnico = $('#tecnico-servico').val();
-
-                if (valTecnico != "") {
-                    $('#btnAdicionarTarefa').removeAttr('disabled');
-                } else {
-                    $('#btnAdicionarTarefa').attr('disabled', 'disabled');
-                }
-            }
-
-            function criarAviso() {
-                console.log("Vem aviso ai");
-                var elemento_pai = document.querySelector('#corpoModalServico');
-                var elemento = document.createElement('p');
-                var texto = "";
-                var numTarefas = $('#tarefas-cadastradas').children().length;
-
-                console.log("DIV: " + $('#tarefas-cadastradas').children().length);
-                console.log("numero tarefas :" + numTarefas);
-
-                elemento_pai.innerHTML = "";
-
-                if ($('#tecnico-servico').val() == "") {
-                    if (numTarefas > 0) {
-                        console.log("sem tecnico com tarefas");
-                        $('#btnSalvarServico').attr('disabled', 'disabled');
-                        texto = document.createTextNode("Você deve selecionar um Técnico responspável pois criou tarefa(s)");
-                    } else {
-                        console.log("sem tecnico sem tarefas");
-                        $('#btnSalvarServico').removeAttr('disabled');
-                        $('#btnTarefaPadrao').attr('disabled', 'disabled');
-                        $('#btnTarefaPadrao').attr('href', '#');
-                        texto = document.createTextNode("Você não selecionou nenhum técnico responsável. Deseja salvar o serviço em aberto?");
-                    }
-                } else {
-                    if (numTarefas > 0) {
-                        console.log("com tecnico com tarefas");
-                        $('#btnTarefaPadrao').attr('disabled', 'disabled');
-                        $('#btnTarefaPadrao').attr('href', '#');
-                        $('#btnSalvarServico').removeAttr('disabled');
-                        texto = document.createTextNode("Técnico selecionado e tarefa(s) criada(s). Você deseja manter os dados?");
-                    } else {
-                        console.log("com tecnico sem tarefas");
-                        $('#btnTarefaPadrao').removeAttr('disabled');
-
-                        $('#btnSalvarServico').attr('disabled', 'disabled');
-                        texto = document.createTextNode("Você selecionou um técnico mas não adicionou nenhuma tarefa. Deseja salvar serviço com tarefa padrão?");
-                        console.log($('#btnTarefaPadrao').attr('href'));
-                    }
-                }
-                elemento.appendChild(texto);
-                elemento_pai.appendChild(elemento);
-            }
-
-            if ($(".datePicker").val()) {
-                var data = moment($(".datePicker").val(), "YYYY-MM-DD").format("DD/MM/YYYY");
-                $(".datePicker").val(data);
-                console.log($(".datePicker").val());
-            }
-
-        </script>
+        <script src="${ctx}/resources/js/servicos/btnTarefa.js"></script>
+        <%--<script src="${ctx}/resources/js/servicos/adicionarTarefa.js"></script>--%>
     </jsp:attribute>
 
     <jsp:body>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Cadastro de Serviço</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
         <div class="panel painel-cadastro-sisint">
             <form id="form-servico-tarefa" action="${linkTo[ServicosController].salvar}" method="post">
                 <c:forEach items="${listaLogs}" var="log" varStatus="status">
@@ -130,11 +59,11 @@
                 </div>
                 <div class="panel-body">
                     <input id="urlSalvar" type="hidden" value="${linkTo[ServicosController].salvar}"/>
-                    <h4 class="tituloCadastro">Cadastro de Serviços</h4>
                     <div id="cadastro-servico">
                         <div class="row">
                             <input id="servico-id" type="hidden" name="servico.id" value="${servico.id}"/>
                             <input id="servico-dataAbertura" type="hidden" name="servico.dataAbertura" value="${servico.dataAbertura}"/>
+
                             <div class="form-group col-md-6">
                                 <label for="titulo-servico">Título</label>
                                 <input type="text" minlength="5" class="form-control" id="titulo-servico" required="true"
@@ -175,7 +104,7 @@
 
                             <div class="form-group col-md-3">
                                 <label for="prioridade-servico">Prioridade</label>
-                                <select class="form-control" id="prioridade-servico" name="servico.prioridade">
+                                <select class="form-control" id="prioridade-servico" name="servico.prioridade" required>
                                     <option value=""></option>
                                     <c:forEach items="${prioridades}" var="prioridade">
                                         <c:if test="${prioridade.valor == servico.prioridade.valor}">
@@ -205,31 +134,33 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="servico-descricao">Descrição:</label>
-                                <textarea class="form-control" name="servico.descricao" rows="2" required="true"
+                                <textarea class="form-control" name="servico.descricao" rows="7" required="true"
                                           id="servico-descricao">${servico.descricao}</textarea>
+                            </div>
+                            <!-- BOTÂO PARA MODAL TAREFA -->
+                            <div class="col-md-12" align="right">
+                                <button id="btnAdicionarTarefa" type="button" class="btn btn-success" disabled data-toggle="modal" data-target="#myModal">
+                                    Adicionar Tarefa
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- BOTÂO PARA MODAL TAREFA -->
-
-                    <div id="cadastro-tarefa">
-                        <div class="row" align="right">
-                            <button id="btnAdicionarTarefa" type="button" class="btn btn-success" disabled data-toggle="modal" data-target="#myModal">
-                                Adicionar Tarefa
-                            </button>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="page-body">Tarefas</h3>
                         </div>
+                        <!-- /.col-lg-12 -->
                     </div>
                     <div id="tarefas-cadastradas" class="list-group" style="margin-top: 16px;">
 
                     </div>
-                </div>
 
-                <!-- BOTAO PARA MODAL SERVICO -->
-
-                <div class="panel-footer" align="right">
-                    <button type="button" id="btnServico" class="btn btn-primary"
-                            data-toggle="modal" data-target="#modalServico" onclick="criarAviso()">Salvar</button>
+                    <!-- BOTAO PARA MODAL SERVICO -->
+                    <div class="panel" align="right">
+                        <button type="button" id="btnServico" class="btn btn-primary"
+                                data-toggle="modal" data-target="#modalServico" onclick="criarAviso()">Cadastrar</button>
+                    </div>
                 </div>
 
                 <!-- MODAL SERVICO -->
@@ -262,7 +193,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Cadastro de tarefa</h4>
+                            <h2 class="modal-title text-center">Cadastro de Tarefa</h2>
                         </div>
                         <div class="modal-body">
                             <div class="form-horizontal">
@@ -338,7 +269,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button id="btnSalvarTarefa" type="button" class="btn btn-primary" data-dismiss="modal" onclick="">
+                            <button id="btnSalvarTarefa" type="button" class="btn btn-primary" data-dismiss="modal">
                                 Salvar
                             </button>
                         </div>

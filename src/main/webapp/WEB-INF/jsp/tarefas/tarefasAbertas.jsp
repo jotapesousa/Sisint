@@ -12,7 +12,9 @@
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/js/servicos/lista.js"></script>
+        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
+
         <script>
             $(document).ready(function () {
                 $.fn.dataTable.moment('DD/MM/YYYY');
@@ -71,12 +73,12 @@
                         <c:forEach items="${tarefas}" var="tarefa">
                             <tr>
                                 <td>${tarefa.titulo}</td>
-                                <td><span class="label">${tarefa.statusTarefa.chave}</span></td>
+                                <td><span class="label label-status">${tarefa.statusTarefa.chave}</span></td>
                                 <td clas="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
-                                <td><a href="#"><i class="fa fa-eye" aria-hidden="false"></i></a>
-                                    <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a></td>
+                                <td><a href="#"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                    <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-trash fa-lg"></i></a></td>
                             </tr>
                         </c:forEach>
 

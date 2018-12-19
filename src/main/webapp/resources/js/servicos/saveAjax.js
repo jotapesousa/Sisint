@@ -56,21 +56,14 @@ $(function () {
 
 
         var servico = $.ConverterObjetoParaVraptor("servico", objeto);
-
         console.log("Teste form" + objeto);
-
         var url = $("#urlSalvar").val();
-
         data = servico;
 
         $.ajax({
-
             url: url,
-
             type: 'POST',
-
             data: data
-
         }).done(function(data) {
             /* executada em caso de sucesso*/
             // window.location.href = "http://localhost:8080/servicos/lista"

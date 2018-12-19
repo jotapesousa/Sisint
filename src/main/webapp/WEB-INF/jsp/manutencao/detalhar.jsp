@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 <%--</c:if>--%>
-                <a href="${linkTo[ManutencaoController].lista}" class="btn btn-default">Voltar</a>
+                <button href="" class="btn btn-default" onclick="history.back(1)">Voltar</button>
             </div>
 
             </div>

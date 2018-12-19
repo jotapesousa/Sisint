@@ -10,6 +10,14 @@
     <uri>tagSisInt</uri>
 
     <tag-file>
+        <name>layoutSisint</name>
+        <path>/WEB-INF/tags/layout2.tagx</path>
+    </tag-file>
+    <tag-file>
+        <name>layoutSidebar</name>
+        <path>/WEB-INF/tags/layoutSidebar.tagx</path>
+    </tag-file>
+    <tag-file>
         <name>layout</name>
         <path>/WEB-INF/tags/layout.tagx</path>
     </tag-file>

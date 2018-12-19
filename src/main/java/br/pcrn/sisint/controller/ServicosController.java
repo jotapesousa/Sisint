@@ -66,13 +66,6 @@ public class ServicosController extends ControladorSisInt<Servico> {
         resultado.include("prioridades", OpcaoSelect.toListaOpcoes(Prioridade.values()));
     }
 
-//    public void formulario() {
-//        resultado.include("usuarios", servicosNegocio.geraListaOpcoesUsuarios());
-//        resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
-//        resultado.include("status", OpcaoSelect.toListaOpcoes(StatusServico.values()));
-//        resultado.include("statusTarefa", OpcaoSelect.toListaOpcoes(StatusTarefa.values()));
-//        resultado.include("prioridades", OpcaoSelect.toListaOpcoes(Prioridade.values()));
-//    }
 
     @Post("/servicos")
     @Transacional
@@ -81,10 +74,14 @@ public class ServicosController extends ControladorSisInt<Servico> {
             if(servico.isAssumirServico()){
                 servico.setTecnico(usuarioLogado.getUsuario());
             }
+
+            System.out.println(servico.getTecnico());
+            System.out.println(servico.getStatusServico());
+            System.out.println(servico.getTitulo());
+
             //Atribui data de abertura de chamado e caso não haja um técnico reponsável, torna nula a variável de usuário
             if (servico.getId() == null) {
                 servico.setDataAbertura(LocalDate.now());
-                System.out.println("tecnico: " + servico.getTecnico().getId());
                 if (servico.getTecnico().getId() == null) {
                     servico.setTecnico(null);
                 }

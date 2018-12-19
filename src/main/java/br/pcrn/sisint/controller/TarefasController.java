@@ -95,14 +95,19 @@ public class TarefasController extends ControladorSisInt<Tarefa> {
         resultado.include("tarefas", tarefasAbertas);
     }
 
+    public void detalhes(Long id){
+        Tarefa tarefa = this.tarefaDao.buscarPorId(id);
+
+        this.resultado.include("tarefa", tarefa);
+    }
+
+    @Transacional
     public void concluir(Long id) {
         Tarefa tarefa = this.tarefaDao.buscarPorId(id);
 
         tarefa.setStatusTarefa(StatusTarefa.CONCLUIDO);
-        this.tarefaDao.salvar(tarefa);
+        this.tarefaNegocio.salvar(tarefa);
 
-        List<Tarefa> minhasTarefas =  tarefaDao.minhasTarefas();
-        resultado.include("tarefas", minhasTarefas);
         resultado.redirectTo(this).minhasTarefas();
     }
 

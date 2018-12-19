@@ -15,16 +15,14 @@
 <tags:layout>
     <jsp:attribute name="cabecalho">
         <style>
-            .panel {
-                border-color: #92a0ff;
-                border-radius: 0;
-            }
+
         </style>
     </jsp:attribute>
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/servicos/lista.js"></script>
+        <script src="${ctx}/resources/js/init.js"></script>
+        <script src="${ctx}/resources/js/servicos/servico.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
             $(document).ready(function () {
@@ -65,8 +63,11 @@
 
     <jsp:body>
         <div class="panel painel-sisint">
-            <div class="panel-heading">
-                <div class="panel-title">Serviços atribuídos a ${usuarioLogado.usuario.nome}</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header">Serviços atribuídos a ${usuarioLogado.usuario.nome}</h3>
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
             <div class="panel-body" style="padding-top: 0px;">
                 <a class="btn btn-info" style="margin-bottom: 16px;" href="${linkTo[ServicosController].form}">Cadastrar</a>
@@ -75,12 +76,12 @@
                         <thead>
                         <tr>
                             <th>Titulo</th>
-                            <th>Status</th>
                             <th>Prioridade</th>
                             <th>Data de Abertura</th>
-                            <th>Data de Fechamento</th>
-                            <th>Técnico</th>
+                            <th>Prazo Final</th>
                             <th>Setor</th>
+                            <th>Técnico</th>
+                            <th>Status</th>
                             <th>Ações</th>
                         </tr>
                         </thead>
@@ -88,22 +89,45 @@
                         <c:forEach items="${servicos}" var="servico">
                             <tr>
                                 <td>${servico.titulo}</td>
-                                <td><span class="label">${servico.statusServico.chave}</span></td>
-                                <td><span class="label">${servico.prioridade.chave}</span></td>
+                                <td><span class="label label-prioridade">${servico.prioridade.chave}</span></td>
                                 <td class="date-column">${servico.dataAbertura}</td>
                                 <td class="date-column">${servico.dataFechamento}</td>
-                                <td>${servico.tecnico.nome}</td>
                                 <td>${servico.setor.nome}</td>
-                                <td><a title="Detalhes" href="${linkTo[ServicosController].detalhes}?id=${servico.id}"><i class="fa fa-eye" aria-hidden="false"></i></a>
-                                    <a title="Editar" href="${linkTo[ServicosController].editar}?id=${servico.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                <td>${servico.tecnico.nome}</td>
+                                <td><span class="label label-status">${servico.statusServico.chave}</span></td>
+                                <td><a title="Detalhes" href="${linkTo[ServicosController].detalhes}?id=${servico.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Editar" href="${linkTo[ServicosController].editar}?id=${servico.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <a title="Visualizar Log do serviço" href="${linkTo[ServicosController].logServico}?id=${servico.id}">
-                                        <i class="fa fa-list-ul" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a></td>
+                                        <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
+                                    <a title="Remover" class="remover-servico" id-servico="${servico.id}" data-toggle="modal" href="#modalRemover">
+                                        <i class="fa fa-trash fa-lg"></i></a></td>
                             </tr>
                         </c:forEach>
 
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalRemover" role="dialog">
+            <div class="modal-dialog">
+                <input type="hidden" name="tarefa.id" value="${servico.id}"/>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title primary">Remover Serviço</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5> Deseja remover o serviço?</h5>
+                    </div>
+                    <div id="btns-modal" class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <a id="btnRemoverServico" href="${linkTo[ServicosController].remover}?id=" class="btn btn-danger">Remover</a>
+                        <%--<a id="btnSalvarTarefa" href="${linkTo[ServicosController].assumirServico}?id=" class="btn btn-primary">--%>
+                            <%--Salvar--%>
+                        <%--</a>--%>
+                    </div>
                 </div>
             </div>
         </div>

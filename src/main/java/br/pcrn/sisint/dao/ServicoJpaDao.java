@@ -103,6 +103,14 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     }
 
     @Override
+    public Long meusServicos() {
+        Query query = manager.createQuery("select count(s) from Servico s where (s.statusServico = 'EM_EXECUCAO' or " +
+                "s.statusServico = 'EM_ESPERA') and s.tecnico.id = :usuario and s.deletado = false");
+        query.setParameter("usuario", usuarioLogado.getUsuario().getId());
+        return (Long) query.getSingleResult();
+    }
+
+    @Override
     public Long contarServicosStatus(StatusServico statusServico) {
         Query query = manager.createQuery("select count(s) from Servico s where s.deletado = false AND s.statusServico = :status");
         query.setParameter("status", statusServico);
@@ -128,6 +136,20 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
         Query query = manager.createQuery("select s from Servico s where s.deletado = false AND s.statusServico = :status");
         query.setParameter("status", StatusServico.EM_ESPERA);
         return query.getResultList();
+    }
+
+    @Override
+    public Long servicoPorSetor(Long id) {
+        StringBuilder queryString = new StringBuilder();
+        queryString.append("SELECT count(p) from Servico p ");
+        if(id > 0l) {
+            queryString.append(" WHERE p.setor.id = :idSetor ");
+        }
+        Query query = manager.createQuery(queryString.toString());
+        if(id > 0l) {
+            query.setParameter("idSetor",id);
+        }
+        return (Long) query.getSingleResult();
     }
 
     @Override

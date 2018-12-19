@@ -6,7 +6,7 @@ import br.pcrn.sisint.conversor.ConvertivelOpcaoSelect;
  * Created by samue on 09/09/2017.
  */
 public enum StatusServico implements ConvertivelOpcaoSelect{
-    CANCELADO("Cancelado"), EM_ESPERA("Aguardando execução"), EM_EXECUCAO("Em execução"), CONCLUIDO("Concluído");
+    CANCELADO("Cancelado"), EM_ESPERA("Aguardando Execução"), EM_EXECUCAO("Em Execução"), CONCLUIDO("Concluído");
 
     private String chave;
 

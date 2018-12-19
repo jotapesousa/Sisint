@@ -85,6 +85,8 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
 
         manutencaoNegocio.verificarStatus(manutencao);
 
+        System.out.println(usuarioLogado.getUsuario().getNome());
+
         manutencao.setTecnico(usuarioLogado.getUsuario());
         this.manutencaoDao.salvar(manutencao);
 

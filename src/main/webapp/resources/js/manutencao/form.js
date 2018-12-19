@@ -23,7 +23,6 @@ $(document).ready(function () {
 
     // Pesquisa equipamento por numero de série a partir de letra digitada
     $inputEquipamentoPorNS.keyup(function ( event ) {
-
         var texto = $inputEquipamentoPorNS.val();
         url = "/manutencao" +"/" +'buscarEquipamentos?texto='+texto;
         pesquisar(texto,url);
@@ -31,6 +30,7 @@ $(document).ready(function () {
 
     // Pesquisa equipamento por tombo a partir de letra digitada
     $inputEquipamentoPorTombo.keyup(function ( event ) {
+        console.log(ctx);
         var texto = $inputEquipamentoPorTombo.val();
         var url = "/manutencao" +"/" +'buscarEquipamentosPorTombo?tombo='+texto;
         pesquisar(texto,url);
@@ -214,6 +214,10 @@ $(document).ready(function () {
         console.log("AQUI LIMPA");
         $('#busca-equipamentoPorNS').val("");
         $('#busca-equipamentoTombo').val("");
+    });
+
+    $(".datePicker").datepicker({
+        format: "dd/mm/yyyy"
     });
 
 });

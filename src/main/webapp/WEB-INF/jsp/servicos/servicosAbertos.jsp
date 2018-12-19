@@ -14,18 +14,12 @@
 <!DOCTYPE html>
 <tags:layout>
     <jsp:attribute name="cabecalho">
-        <style>
-            .panel {
-                border-color: #a3aaff;
-                border-radius: 0;
-            }
-        </style>
+
     </jsp:attribute>
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/servicos/lista.js"></script>
-
+        <script src="${ctx}/resources/js/init.js"></script>
         <script>
             var idServico = "";
             var url = $('#btnSalvarTarefa').attr('href');
@@ -46,6 +40,8 @@
                         var novaUrlServPadrao = urlServicoPadrao +"?id="+idServico;
                         $('#btnSalvarTarefa').attr('href', novaUrl);
                         $('#salvarServPadrao').attr('href', novaUrlServPadrao);
+                        console.log($('#btnSalvarTarefa').attr('href'));
+                        console.log($('#salvarServPadrao').attr('href'));
                     });
                 });
 
@@ -95,8 +91,11 @@
 
     <jsp:body>
         <div class="panel">
-            <div class="panel-heading">
-                <div class="panel-title">Serviços em abertos</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Serviços Abertos</h1>
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
             <input id="urlServicoPadrao" type="hidden" value="${linkTo[ServicosController].assumirServicoComTarefa}">
             <div class="panel-body" style="padding-top: 0px;">
@@ -106,12 +105,12 @@
                         <thead>
                         <tr>
                             <th>Titulo</th>
-                            <th>Status</th>
                             <th>Prioridade</th>
                             <th>Data de Abertura</th>
-                            <th>Data de Fechamento</th>
-                            <th>Técnico</th>
+                            <th>Prazo Final</th>
                             <th>Setor</th>
+                            <th>Técnico</th>
+                            <th>Status</th>
                             <th>Ações</th>
                         </tr>
                         </thead>
@@ -119,16 +118,22 @@
                         <c:forEach items="${servicos}" var="servico">
                             <tr>
                                 <td>${servico.titulo}</td>
-                                <td><span class="label">${servico.statusServico.chave}</span></td>
-                                <td><span class="label">${servico.prioridade.chave}</span></td>
+                                <td><span class="label label-prioridade">${servico.prioridade.chave}</span></td>
                                 <td class="date-column">${servico.dataAbertura}</td>
                                 <td class="date-column">${servico.dataFechamento}</td>
-                                <td>${servico.tecnico.nome}</td>
                                 <td>${servico.setor.nome}</td>
-                                <td><a title="Detalhes" href="${linkTo[ServicosController].detalhes}?id=${servico.id}"><i class="fa fa-eye" aria-hidden="false"></i></a>
-                                    <a class="assumir-servico" id-servico="${servico.id}" title="Assumir serviço" data-toggle="modal" href="#myModal"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>
-                                    <a title="Visualizar log" href="${linkTo[ServicosController].logServico}?id=${servico.id}">
-                                        <i class="fa fa-list-ul" aria-hidden="true"></i></a></td>
+                                <td>${servico.tecnico.nome}</td>
+                                <td><span class="label label-status">${servico.statusServico.chave}</span></td>
+                                <td>
+                                    <a title="Detalhes" href="${linkTo[ServicosController].detalhes}?id=${servico.id}">
+                                        <i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Visualizar Log" href="${linkTo[ServicosController].logServico}?id=${servico.id}">
+                                        <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
+                                    <a title="Editar" href="${linkTo[ServicosController].editar}?id=${servico.id}">
+                                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Assumir Serviço" class="assumir-servico" id-servico="${servico.id}" data-toggle="modal" href="#myModal">
+                                        <i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i></a>
+                                </td>
                             </tr>
                         </c:forEach>
 

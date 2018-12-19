@@ -19,136 +19,302 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="description" content=""/>
         <meta name="author" content=""/>
+
         <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png"/>
-        <title>Sistema de Integração - SISINT</title>
+        <title>Sistema de Chamados - PCRN</title>
+
         <!-- Bootstrap Core CSS -->
-        <link href="${ctx}/resources/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="${ctx}/resources/css/geral.css" rel="stylesheet"/>
-        <link href="${ctx}/resources/plugins/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet"/>
-        <link href="${ctx}/resources/plugins/dataTables/datatables.min.css" rel="stylesheet"/>
+        <!--<link href="${ctx}/resources/css/geral.css" rel="stylesheet"/>-->
+        <!--<link href="${ctx}/resources/plugins/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet"/>-->
+        <!--<link href="${ctx}/resources/plugins/dataTables/datatables.min.css" rel="stylesheet"/>-->
 
-        <jsp:invoke fragment="cabecalho"/>
-    </head>
+        <!-- Bootstrap Core CSS -->
+        <link href="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <!-- MetisMenu CSS -->
+        <link href="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/metisMenu/metisMenu.min.css" rel="stylesheet"/>
+        <!-- Custom CSS -->
+        <link href="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/dist/css/sb-admin-2.css" rel="stylesheet"/>
+        <!-- Morris Charts CSS -->
+        <link href="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/morrisjs/morris.css" rel="stylesheet"/>
+        <!-- Custom Fonts -->
+        <link href="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
-    <body style="background-color: rgba(232, 232, 232, 0.71)">
-    <input id="ctx" type="hidden" value="${linkTo[ServicosController].salvar}"/>
-    <nav class="navbar"  style="background-color: white; padding: 5px; box-shadow: 2px 1px #ddd; border-radius: 0px;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="${linkTo[InicioController].index}">SisInt</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="${linkTo[InicioController].index}">Home</a></li>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+            <jsp:invoke fragment="cabecalho"/>
+        </head>
+
+        <body>
+            <input id="ctx" type="hidden" value="${linkTo[ServicosController].salvar}"/>
+            <div id="wrapper">
+
+                <!-- Navigation -->
+                <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="${linkTo[InicioController].index}">SisInt 2.0</a>
+                </div>
+                <!-- /.navbar-header -->
+
+                <ul class="nav navbar-top-links navbar-right">
+                    <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+                            <!--<i class="fa fa-envelope fa-fw"><c:out value=""/></i> <i class="fa fa-caret-down"><c:out value=""/></i>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu dropdown-messages">-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div>-->
+                                        <!--<strong>João Paulo</strong>-->
+                                        <!--<i class="pull-right text-muted">-->
+                                    <!--<em>Yesterday</em>-->
+                                <!--</i>-->
+                                    <!--</div>-->
+                                    <!--<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li>-->
+                                <!--<a class="text-center" href="#">-->
+                                    <!--<strong>Read All Messages</strong>-->
+                                    <!--<i class="fa fa-angle-right"><c:out value=""/></i>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                        <!--&lt;!&ndash; /.dropdown-messages &ndash;&gt;-->
+                    <!--</li>-->
+                    <!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
+                    <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+                            <!--<i class="fa fa-tasks fa-fw"><c:out value=""/></i> <i class="fa fa-caret-down"><c:out value=""/></i>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu dropdown-tasks">-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div>-->
+                                        <!--<p>-->
+                                            <!--<strong>Task 1</strong>-->
+                                            <!--<i class="pull-right text-muted">40% Complete</i>-->
+                                        <!--</p>-->
+                                        <!--<div class="progress progress-striped active">-->
+                                            <!--<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">-->
+                                                <!--<i class="sr-only">40% Complete (success)</i>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+
+                            <!--<li class="divider"></li>-->
+                            <!--<li>-->
+                                <!--<a class="text-center" href="#">-->
+                                    <!--<strong>See All Tasks</strong>-->
+                                    <!--<i class="fa fa-angle-right"><c:out value=""/></i>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                        <!--&lt;!&ndash; /.dropdown-tasks &ndash;&gt;-->
+                    <!--</li>-->
+                    <!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
+                    <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+                            <!--<i class="fa fa-bell fa-fw"><c:out value=""/></i> <i class="fa fa-caret-down"><c:out value=""/></i>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu dropdown-alerts">-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div>-->
+                                        <!--<i class="fa fa-comment fa-fw"><c:out value=""/></i> New Comment-->
+                                        <!--<i class="pull-right text-muted small">4 minutes ago<c:out value=""/></i>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<div>-->
+                                        <!--<i class="fa fa-twitter fa-fw"><c:out value=""/></i> 3 New Followers-->
+                                        <!--<i class="pull-right text-muted small">12 minutes ago<c:out value=""/></i>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li>-->
+                                <!--<a class="text-center" href="#">-->
+                                    <!--<strong>See All Alerts</strong>-->
+                                    <!--<i class="fa fa-angle-right"><c:out value=""/></i>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                        <!--&lt;!&ndash; /.dropdown-alerts &ndash;&gt;-->
+                    <!--</li>-->
+                    <!-- /.dropdown -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Serviços <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${linkTo[ServicosController].form}">Novo Serviço</a></li>
-                            <li class="divider"></li>
-                            <c:if test="${usuarioLogado.isAdmin()}">
-                            <li><a href="${linkTo[ServicosController].lista}">Todos os Serviços</a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"><c:out value=""/></i> ${usuarioLogado.usuario.nome} <i class="fa fa-caret-down"><c:out value=""/></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="${linkTo[PerfilController].form}?id=${usuarioLogado.usuario.id}"><i class="fa fa-user fa-fw"><c:out value=""/></i> Perfil</a>
                             </li>
-                            </c:if>
-                            <li><a href="${linkTo[ServicosController].meusServicos}">Meus Serviços</a></li>
-                            <li><a href="${linkTo[ServicosController].servicosAbertos}">Serviços Abertos</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tarefas <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <c:if test="${usuarioLogado.isAdmin()}">
-                                <li><a href="${linkTo[TarefasController].lista}">Listar tarefas </a></li></c:if>
-                            <!--<li><a href="${linkTo[TarefasController].tarefasAbertas}">Tarefas em aberto</a></li>-->
-                            <li><a href="${linkTo[TarefasController].minhasTarefas}">Minhas tarefas</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Setores <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${linkTo[SetorController].form}">Cadastrar Setor</a></li>
-                            <li><a href="${linkTo[SetorController].lista}">Setores</a></li>
-                        </ul>
-                    </li>
-                    <c:if test="${usuarioLogado.isAdmin()}">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuários <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="${linkTo[UsuariosController].form}">Cadastrar</a></li>
-                                <li><a href="${linkTo[UsuariosController].lista}">Usuários</a></li>
-                            </ul>
-                        </li>
-                    </c:if>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipamentos <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${linkTo[EquipamentoController].form}">Cadastrar Equipamento</a></li>
-                            <li><a href="${linkTo[EquipamentoController].lista}">Equipamentos</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manutenção <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${linkTo[ManutencaoController].form}">Cadastrar Manutenção</a></li>
-                            <li><a href="${linkTo[ManutencaoController].lista}">Em aberto</a></li>
-                            <li><a href="${linkTo[ManutencaoController].listarConcluidos}">Concluídos</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <!--<c:if test="${usuarioLogado.isAdmin()}">-->
-                        <!--<li class="dropdown">-->
-                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Termos de Responsabilidade-->
-                                <!--<span class="caret"></span></a>-->
-                            <!--<ul class="dropdown-menu">-->
-                                <!--<li><a href="${linkTo[TermoController].form}">Cadastrar Termo</a></li>-->
-                                <!--<li class="divider"></li>-->
-                                <!--<li><a href="${linkTo[TermoController].lista}">Termos</a></li>-->
-                            <!--</ul>-->
-                        <!--</li>-->
-                    <!--</c:if>-->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-sort-desc" aria-hidden="true"><c:out value=""/></i> ${usuarioLogado.usuario.primeiroNome}</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${linkTo[PerfilController].form}?id=${usuarioLogado.usuario.id}">Perfil</a></li>
                             <li class="divider"></li>
-                            <li><a href="${linkTo[LoginController].logout}">Sair</a></li>
+                            <li><a href="${linkTo[LoginController].logout}"><i class="fa fa-sign-out fa-fw"><c:out value=""/></i> Sair</a>
+                            </li>
                         </ul>
+                        <!-- /.dropdown-user -->
                     </li>
-                    <!--<li><a href="${linkTo[LoginController].logout}"><i class="fa fa-sort-desc" aria-hidden="true"><c:out value=""/></i> ${usuarioLogado.usuario.primeiroNome}</a></li>-->
+                    <!-- /.dropdown -->
                 </ul>
-            </div>
+                <!-- /.navbar-top-links -->
+
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <a href="${linkTo[InicioController].index}"><i class="fa fa-home fa-fw"><c:out value=""/></i> Home</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-th-list fa-fw"><c:out value=""/></i> Ordem de Serviço<i class="fa arrow"><c:out value=""/></i></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${linkTo[ServicosController].form}">Novo Serviço</a>
+                                    </li>
+                                    <li>
+                                        <a href="${linkTo[ServicosController].meusServicos}">Meus Serviços</a>
+                                    </li>
+                                    <li>
+                                        <a href="${linkTo[ServicosController].servicosAbertos}">Ver Serviços Abertos</a>
+                                    </li>
+                                    <c:if test="${usuarioLogado.isAdmin()}">
+                                        <li>
+                                            <a href="${linkTo[ServicosController].lista}">Ver Todos os Serviços</a>
+                                        </li>
+                                    </c:if>
+                                    <li>
+                                        <a href="${linkTo[TarefasController].minhasTarefas}">Minhas Tarefas</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-wrench fa-fw"><c:out value=""/></i> Manutenção<i class="fa arrow"><c:out value=""/></i></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${linkTo[ManutencaoController].form}">Cadastrar</a>
+                                    </li>
+                                    <li>
+                                        <a href="${linkTo[ManutencaoController].lista}">Ver Abertas</a>
+                                    </li>
+                                    <li>
+                                        <a href="${linkTo[ManutencaoController].listarConcluidos}">Concluídos</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-laptop fa-fw"><c:out value=""/></i> Equipamentos<i class="fa arrow"><c:out value=""/></i></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${linkTo[EquipamentoController].form}">Cadastrar</a>
+                                    </li>
+                                    <li>
+                                        <a href="${linkTo[EquipamentoController].lista}">Ver Todos</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-building fa-fw"><c:out value=""/></i> Setores<i class="fa arrow"><c:out value=""/></i></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${linkTo[SetorController].form}">Cadastrar</a>
+                                    </li>
+                                    <li>
+                                        <a href="${linkTo[SetorController].lista}">Ver Todos</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <c:if test="${usuarioLogado.isAdmin()}">
+                                <li>
+                                    <a href="#"><i class="fa fa-users fa-fw"><c:out value=""/></i> Usuários<i class="fa arrow"><c:out value=""/></i></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="${linkTo[UsuariosController].form}">Cadastrar</a>
+                                        </li>
+                                        <li>
+                                            <a href="${linkTo[UsuariosController].lista}">Ver Todos</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-second-level -->
+                                </li>
+                            </c:if>
+                            <li>
+                                <a href="${linkTo[InicioController].info}"><i class="fa fa-info-circle fa-fw"><c:out value=""/></i> Informações Gerais</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
+                </div>
+                <!-- /.navbar-static-side -->
+            </nav>
         </div>
-    </nav>
+        <!-- /#wrapper -->
+        <div id="page-wrapper">
+            <jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>
+            <jsp:doBody/>
+        </div>
 
-    <div class="container" style="width: 90%;">
-        <jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>
-        <jsp:doBody/>
-    </div>
 
-    <!-- /#wrapper -->
-    <!-- jQuery -->
-    <script src="${ctx}/resources/plugins/jquery/jquery-3.2.1.min.js"><c:out value=""/></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${ctx}/resources/plugins/bootstrap3/js/bootstrap.js"><c:out value=""/></script>
+        <!-- jQuery -->
+        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js"><c:out value=""/></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.min.js"><c:out value=""/></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/metisMenu/metisMenu.min.js"><c:out value=""/></script>
+        <!-- Morris Charts JavaScript -->
+        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/raphael/raphael.min.js"><c:out value=""/></script>
+        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/morrisjs/morris.min.js"><c:out value=""/></script>
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/data/morris-data.js"><c:out value=""/></script>-->
 
-    <script src="${ctx}/resources/plugins/dataPicker/dataPicker-bootstrap.js"><c:out value=""/></script>
-    <script src="${ctx}/resources/plugins/moment/moment.js"><c:out value=""/></script>
-    <!--<script src="${ctx}/resources/plugins/moment/date-time-moment.js"><c:out value=""/></script>-->
-    <script src="${ctx}/resources/plugins/moment/moment-with-locale.js"><c:out value=""/></script>
-    <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot/excanvas.min.js"><c:out value=""/></script>-->
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot/jquery.flot.js"><c:out value=""/></script>-->
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot/jquery.flot.pie.js"><c:out value=""/></script>-->
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot/jquery.flot.resize.js"><c:out value=""/></script>-->
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot/jquery.flot.time.js"><c:out value=""/></script>-->
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot-tooltip/jquery.flot.tooltip.min.js"><c:out value=""/></script>-->
+        <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/data/flot-data.js"><c:out value=""/></script>-->
 
-    <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-    <script src="${ctx}/resources/plugins/jqueryValidate/jquery.validate.js"><c:out value=""/></script>
-    <script src="${ctx}/resources/plugins/bootstrapValidator/validator.js"><c:out value=""/></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/dist/js/sb-admin-2.js"><c:out value=""/></script>
 
-    <script src="${ctx}/resources/js/init.js"><c:out value=""/></script>
+        <!--&lt;!&ndash; jQuery &ndash;&gt;-->
+        <!--<script src="${ctx}/resources/plugins/jquery/jquery-3.2.1.min.js"><c:out value=""/></script>-->
+        <!--&lt;!&ndash; Bootstrap Core JavaScript &ndash;&gt;-->
+        <!--<script src="${ctx}/resources/plugins/bootstrap3/js/bootstrap.js"><c:out value=""/></script>-->
 
-    <jsp:invoke fragment="rodape"/>
+        <script src="${ctx}/resources/plugins/dataPicker/dataPicker-bootstrap.js"><c:out value=""/></script>
+        <script src="${ctx}/resources/plugins/moment/moment.js"><c:out value=""/></script>
+        <!--<script src="${ctx}/resources/plugins/moment/date-time-moment.js"><c:out value=""/></script>-->
+        <script src="${ctx}/resources/plugins/moment/moment-with-locale.js"><c:out value=""/></script>
+        <!--<script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>-->
+
+        <!--<script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>-->
+        <script src="${ctx}/resources/plugins/jqueryValidate/jquery.validate.js"><c:out value=""/></script>
+        <script src="${ctx}/resources/plugins/bootstrapValidator/validator.js"><c:out value=""/></script>
+
+        <!--<script src="${ctx}/resources/js/init.js"><c:out value=""/></script>-->
+
+        <jsp:invoke fragment="rodape"/>
     </body>
 
     </html>

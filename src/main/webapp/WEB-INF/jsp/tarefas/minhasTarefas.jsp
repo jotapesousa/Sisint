@@ -11,7 +11,8 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/servicos/lista.js"></script>
+        <script src="${ctx}/resources/js/init.js"></script>
+        <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
             $(document).ready(function () {
@@ -88,21 +89,40 @@
                         <c:forEach items="${tarefas}" var="tarefa">
                             <tr>
                                 <td>${tarefa.titulo}</td>
-                                <td><span class="label">${tarefa.statusTarefa.chave}</span></td>
+                                <td><span class="label label-status">${tarefa.statusTarefa.chave}</span></td>
                                 <td>${tarefa.servico.setor.nome}</td>
                                 <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
-                                <td><a href="#"><i class="fa fa-eye" aria-hidden="false"></i></a>
-                                    <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
-                                    <!--<a href="${linkTo[TarefasController].concluir}?id=${tarefa.id}" title="Concluir Tarefa">
-                                        <i class="glyphicon glyphicon-ok"></i> </a> -->
+                                <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Editar" href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                    <%--<a title="Remover" href="#"><i class="fa fa-trash fa-lg"></i></a>--%>
+                                    <a title="Concluir" class="concluir-tarefa" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalTarefa">
+                                        <i class="fa fa-check fa-lg" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                         </c:forEach>
 
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalTarefa" role="dialog">
+            <div class="modal-dialog">
+                <input type="hidden" name="tarefa.id" value="${tarefa.id}"/>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title primary">Concluir Tarefa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5> Deseja realmente concluir a tarefa?</h5>
+                    </div>
+                    <div id="btns-modal" class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <a id="btnConcluirTarefa" href="${linkTo[TarefasController].concluir}?id=" class="btn btn-primary">Concluir</a>
+                    </div>
                 </div>
             </div>
         </div>

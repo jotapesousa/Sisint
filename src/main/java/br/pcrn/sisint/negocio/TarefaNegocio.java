@@ -2,6 +2,7 @@ package br.pcrn.sisint.negocio;
 
 import javax.inject.Inject;
 
+import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.ServicoDao;
 import br.pcrn.sisint.dao.TarefaDao;
 import br.pcrn.sisint.dominio.Tarefa;
@@ -23,6 +24,7 @@ public class TarefaNegocio {
     @Inject
     private UsuarioLogado usuarioLogado;
 
+    @Transacional
     public void salvar(Tarefa tarefa) {
         Tarefa tarefaBanco = tarefaDao.buscarPorId(tarefa.getId());
 

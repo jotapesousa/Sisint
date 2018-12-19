@@ -40,7 +40,7 @@
                             "sLoadingRecords": "Carregando...",
                             "sProcessing": "Processando...",
                             "sZeroRecords": "Nenhum registro encontrado",
-                            "sSearch": "Pesquisar",
+                            "sSearch": "Pesquisar ",
                             "oPaginate": {
                                 "sNext": "Próximo",
                                 "sPrevious": "Anterior",
@@ -61,8 +61,11 @@
 
     <jsp:body>
         <div class="panel painel-sisint">
-            <div class="panel-heading">
-                <div class="panel-title">Gerenciamento de Equipamentos</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Gerenciamento de Equipamentos</h1>
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
             <div class="panel-body" style="padding-top: 0px;">
                 <a class="btn btn-info" style="margin-bottom: 16px;" href="${linkTo[EquipamentoController].form}">Cadastrar</a>
@@ -87,9 +90,13 @@
                                 <td>${equipamento.numeroSerie}</td>
                                 <td>${equipamento.setor.nome}</td>
                                 <td><span class="label status-equip">${equipamento.status.chave}</span></td>
-                                <td><a class="editar-equip" href="${linkTo[EquipamentoController].editar}?id=${equipamento.id}" alt="Editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                    <a class="link-remover" href="#delete-modal" url-remover="${linkTo[EquipamentoController].remover}?id=${equipamento.id}"
-                                       data-toggle="modal" alt="Remover"><i class="fa fa-trash"></i></a>
+                                <td><a title="Editar" class="editar-equip" href="${linkTo[EquipamentoController].editar}?id=${equipamento.id}" alt="Editar">
+                                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                    <c:if test="${usuarioLogado.isAdmin()}">
+                                        <a title="Remover" class="link-remover" href="#delete-modal" url-remover="${linkTo[EquipamentoController].remover}?id=${equipamento.id}"
+                                           data-toggle="modal" alt="Remover">
+                                            <i class="fa fa-trash fa-lg"></i></a>
+                                    </c:if>
                                     <%--<a href="#"><i class="glyphicon glyphicon-file"></i></a>--%>
                                 </td>
                                 <%--<td><a href="#">Detalhar</a></td>--%>
