@@ -8,4 +8,5 @@ public interface TarefaDao extends EntidadeDao<Tarefa> {
     Long contarTotalTarefas();
     List<Tarefa> tarefasEmAberto();
     List<Tarefa> minhasTarefas();
+    List<Tarefa> tarefasConcluidas();
 }

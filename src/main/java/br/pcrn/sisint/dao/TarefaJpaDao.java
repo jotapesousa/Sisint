@@ -38,6 +38,13 @@ public class TarefaJpaDao extends EntidadeJpaDao<Tarefa> implements TarefaDao{
     }
 
     @Override
+    public List<Tarefa> tarefasConcluidas() {
+        Query query = this.manager.createQuery("SELECT p FROM Tarefa p WHERE p.statusTarefa = 'CONCLUIDO' AND p.deletado = false");
+        List<Tarefa> tarefas = query.getResultList();
+        return tarefas;
+    }
+
+    @Override
     public Long contarTotalTarefas() {
         Query query = manager.createQuery("select count(t) from Tarefa t WHERE t.deletado = false");
         return (Long) query.getSingleResult();

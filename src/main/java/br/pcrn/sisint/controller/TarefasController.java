@@ -96,6 +96,11 @@ public class TarefasController extends ControladorSisInt<Tarefa> {
         resultado.include("tarefas", tarefasAbertas);
     }
 
+    public void tarefasConcluidas () {
+        List<Tarefa> tarefasConcluidas =  tarefaDao.tarefasConcluidas();
+        resultado.include("tarefas", tarefasConcluidas);
+    }
+
     public void detalhes(Long id){
         Tarefa tarefa = this.tarefaDao.buscarPorId(id);
 

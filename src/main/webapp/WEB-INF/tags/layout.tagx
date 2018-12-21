@@ -206,16 +206,16 @@
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-wrench fa-fw"><c:out value=""/></i> Tarefas<i class="fa arrow"><c:out value=""/></i></a>
+                                <a href="#"><i class="fa fa-tasks fa-fw"><c:out value=""/></i> Tarefas<i class="fa arrow"><c:out value=""/></i></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="${linkTo[TarefasController].minhasTarefas}">Minhas Tarefas</a>
                                     </li>
+                                        <!--<li>-->
+                                            <!--<a href="${linkTo[TarefasController].lista}">Todas as Tarefas</a>-->
+                                        <!--</li>-->
                                     <li>
-                                        <a href="${linkTo[ManutencaoController].lista}">Todas as Tarefas</a>
-                                    </li>
-                                    <li>
-                                        <a href="${linkTo[ManutencaoController].listarConcluidos}">Concluídas</a>
+                                        <a href="${linkTo[TarefasController].tarefasConcluidas}">Concluídas</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
