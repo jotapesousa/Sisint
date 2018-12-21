@@ -2,6 +2,7 @@ package br.pcrn.sisint.dominio;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by samue on 09/09/2017.
@@ -28,6 +29,9 @@ public class Tarefa extends Entidade{
 
     @Enumerated(EnumType.STRING)
     private StatusTarefa statusTarefa;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Nota> notas;
 
     private LocalDate dataFechamento;
 
@@ -125,5 +129,13 @@ public class Tarefa extends Entidade{
 
     public void setDeletado(boolean deletado) {
         this.deletado = deletado;
+    }
+
+    public List<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Nota> notas) {
+        this.notas = notas;
     }
 }

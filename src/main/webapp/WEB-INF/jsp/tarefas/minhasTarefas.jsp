@@ -13,6 +13,7 @@
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
+        <script src="${ctx}/resources/js/tarefas/notas.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
             $(document).ready(function () {
@@ -96,6 +97,8 @@
                                 <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
                                     <a title="Editar" href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <%--<a title="Remover" href="#"><i class="fa fa-trash fa-lg"></i></a>--%>
+                                    <a title="Adicionar Nota" class="add_nota" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalNota">
+                                        <i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
                                     <a title="Concluir" class="concluir-tarefa" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalTarefa">
                                         <i class="fa fa-check fa-lg" aria-hidden="true"></i></a>
                                 </td>
@@ -107,6 +110,32 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL ADICIONAR NOTA -->
+        <div class="modal fade" id="modalNota" role="dialog">
+            <div class="modal-dialog">
+                <form action="${linkTo[TarefasController].salvarNota}">
+                    <input type="hidden" id="id_tarefa_nota" name="nota.tarefa.id" value=""/>
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title primary">Adicionar Nota</h4>
+                        </div>
+                        <div class="modal-body">
+                            <textarea type="text" id="nota_tarefa" name="nota.descricao" class="form-control" rows="7" value="${nota.descricao}"></textarea>
+                        </div>
+                        <div id="btn_nota_modal" class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <%--<a id="btnAddNota" class="btn btn-primary" href="${linkTo[TarefasController].salvarNota}?id=">Concluir</a>--%>
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL CONCLUIR TAREFA -->
         <div class="modal fade" id="modalTarefa" role="dialog">
             <div class="modal-dialog">
                 <input type="hidden" name="tarefa.id" value="${tarefa.id}"/>

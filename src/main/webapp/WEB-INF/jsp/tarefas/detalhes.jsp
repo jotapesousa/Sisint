@@ -36,6 +36,15 @@
             console.log($('#tarefa-dataFechamento').val());
             var obj = moment($('#tarefa-dataFechamento').val(), 'YYYY-MM-DD').format('DD/MM/YYYY');
             $('#tarefa-dataFechamento').val(obj);
+
+            $(".badge").each(function () {
+                var tecnico = $('#tarefa-tecnico').val();
+                console.log(tecnico);
+                var nome = $(this).text();
+                nome = moment(nome).format("DD/MM/YYYY HH:mm:ss");
+                $(this).text(nome + ", " + tecnico);
+                console.log(nome);
+            })
         </script>
     </jsp:attribute>
 
@@ -45,41 +54,51 @@
                 <h3 align="center">Tarefa: ${tarefa.codigoTarefa}</h3>
             </div>
             <div class="panel-body">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group col-md-6">
-                                <label for="tarefa-titulo">Titulo: </label>
-                                <input id="tarefa-titulo" class="form-control fonte" name="tarefa.titulo" value="${tarefa.titulo}" disabled/>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="tarefa-tecnico">Técnico Responsável: </label>
-                                <input id="tarefa-tecnico" class="form-control fonte" name="tarefa.tecnico.nome"
-                                       value="${tarefa.tecnico.nome}" disabled/>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="tarefa-dataFechamento">Prazo Final: </label>
-                                <input id="tarefa-dataFechamento" class="form-control date-column fonte" name="tarefa.dataFechamento"
-                                       value="${tarefa.dataFechamento}" disabled/>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="tarefa-status">Status: </label> <br>
-                                <span id="tarefa-status" class="label label-status fonte">${tarefa.statusTarefa.chave}</span>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="tarefa-descricao">Descrição: </label> <br>
-                                <span id="tarefa-descricao" class="fonte">${tarefa.descricao}</span>
-                            </div>
-                            <%--<label for="tarefa-dataFechamento">Técnico Responsável: </label>--%>
-                            <%--<span id="tarefa-tecnico">${tarefa.tecnico.nome}</span>--%>
-                            <%--<br>--%>
-                            <%--<label for="tarefa-status">Status da tarefa: </label>--%>
-                            <%--<span id="tarefa-status" class="label label-status">${tarefa.statusTarefa.chave}</span>--%>
-                            <%--<br>--%>
-
-                            <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label for="tarefa-titulo">Titulo: </label>
+                            <input id="tarefa-titulo" class="form-control fonte" name="tarefa.titulo" value="${tarefa.titulo}" disabled/>
                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="tarefa-tecnico">Técnico Responsável: </label>
+                            <input id="tarefa-tecnico" class="form-control fonte" name="tarefa.tecnico.nome"
+                                   value="${tarefa.tecnico.nome}" disabled/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="tarefa-dataFechamento">Prazo Final: </label>
+                            <input id="tarefa-dataFechamento" class="form-control date-column fonte" name="tarefa.dataFechamento"
+                                   value="${tarefa.dataFechamento}" disabled/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="tarefa-status">Status: </label> <br>
+                            <span id="tarefa-status" class="label label-status fonte">${tarefa.statusTarefa.chave}</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="tarefa-descricao">Descrição: </label> <br>
+                            <span id="tarefa-descricao" class="fonte">${tarefa.descricao}</span>
+                        </div>
+                        <%--<label for="tarefa-dataFechamento">Técnico Responsável: </label>--%>
+                        <%--<span id="tarefa-tecnico">${tarefa.tecnico.nome}</span>--%>
+                        <%--<br>--%>
+                        <%--<label for="tarefa-status">Status da tarefa: </label>--%>
+                        <%--<span id="tarefa-status" class="label label-status">${tarefa.statusTarefa.chave}</span>--%>
+                        <%--<br>--%>
+
+                        <br>
                     </div>
+                </div>
+                <div class="panel-heading">
+                    <h3 align="center">Notas</h3>
+                </div>
+                <div class="row">
+                    <c:forEach items="${tarefa.notas}" var="nota">
+                        <ul class="list-group">
+                            <li class="list-group-item"><span style="font-weight: 600;color: #3c99c8;">
+                                    ${nota.descricao}</span><span class="badge">${nota.dataCriacao}</span>
+                            </li>
+                        </ul>
+                    </c:forEach>
                 </div>
             </div>
         </div>

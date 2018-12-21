@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,5 +112,16 @@ public class TarefasController extends ControladorSisInt<Tarefa> {
         resultado.redirectTo(this).minhasTarefas();
     }
 
+    @Transacional
+    public void salvarNota(Nota nota) {
+        nota.setDataCriacao(LocalDateTime.now());
+        nota.setTecnico(usuarioLogado.getUsuario());
 
+        Tarefa tarefaNota = this.dao.buscarPorId(nota.getTarefa().getId());
+        tarefaNota.getNotas().add(nota);
+        this.dao.salvar(tarefaNota);
+        this.resultado.include("mensagem", new SimpleMessage("success","mensagem.salvar.sucesso"));
+        this.resultado.redirectTo(this).detalhes(tarefaNota.getId());
+
+    }
 }
