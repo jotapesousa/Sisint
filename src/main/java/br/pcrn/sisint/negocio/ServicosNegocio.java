@@ -68,6 +68,12 @@ public class ServicosNegocio {
                 }
             }
         } else {
+            Servico servicoAntigo = servicoDao.BuscarPorId(servico.getId());
+            String comparaServico = compararServicos(servicoAntigo, servico);
+            if (!comparaServico.equals("")) {
+                servico.getLogServicos().add(gerarLogAtualizacaoServico(servico.getId(), horario, comparaServico));
+            }
+
             if(servico.getTarefas() != null) {
                 for(Tarefa tarefa : servico.getTarefas()) {
                     if(tarefa.getId() != null) {
@@ -132,10 +138,23 @@ public class ServicosNegocio {
         return logServico;
     }
 
+    public LogServico gerarLogAtualizacaoServico(Long idServico, LocalDateTime horario, String comparacao) {
+        LogServico logServico = new LogServico();
+
+        Servico servicoAntigo = servicoDao.BuscarPorId(idServico);
+        String logString = "O usuario " + usuarioLogado.getUsuario().getNome() + " alterou este serviço. " +
+                "\n" + comparacao;
+        logServico.setLog(logString);
+        logServico.setUsuario(usuarioLogado.getUsuario());
+        logServico.setDataAlteracao(horario);
+
+        return logServico;
+    }
+
     public String compararTarefas(Tarefa tarefaAntiga, Tarefa tarefaNova) {
         String retorno = "";
         if(!tarefaAntiga.getTitulo().equals(tarefaNova.getTitulo())) {
-            retorno = retorno + "Titulo modificado de " +tarefaAntiga.getTitulo()+ " para " +tarefaNova.getTitulo() + ". ";
+            retorno = retorno + "Titulo modificado de \"" +tarefaAntiga.getTitulo()+ "\" para \"" +tarefaNova.getTitulo() + "\". ";
         }
         if(!tarefaAntiga.getStatusTarefa().equals(tarefaNova.getStatusTarefa())) {
             retorno = retorno + "Status modificado de " +tarefaAntiga.getStatusTarefa().getChave()
@@ -149,6 +168,28 @@ public class ServicosNegocio {
         if(!tarefaAntiga.getTitulo().equals(tarefaNova.getTitulo())) {
             retorno = retorno + "Titulo modificado de " +tarefaAntiga.getTitulo()+ " para " +tarefaNova.getTitulo() + ". ";
         }
+        return retorno;
+    }
+
+    public String compararServicos(Servico servicoAntigo, Servico servicoNovo) {
+        String retorno = "";
+
+        if (!servicoAntigo.getTecnico().equals(servicoNovo.getTecnico())){
+            retorno += "Técnico modificado! Antigo: \"" + servicoAntigo.getTecnico().getNome() + "\".";
+        }
+        if (!servicoAntigo.getStatusServico().equals(servicoNovo.getStatusServico())) {
+            retorno += " Status do servico modificado! Antigo: \"" + servicoAntigo.getStatusServico().getChave() + "\".";
+        }
+        if (!servicoAntigo.getTitulo().equals(servicoNovo.getTitulo())) {
+            retorno += " Titulo modificado! Antigo:  \"" + servicoAntigo.getTitulo() + "\".";
+        }
+        if (!servicoAntigo.getDescricao().equals(servicoNovo.getDescricao())) {
+            retorno += " Descricao modificada! Antiga: \"" + servicoAntigo.getDescricao() + "\".";
+        }
+        if (!servicoAntigo.getPrioridade().equals(servicoNovo.getPrioridade())){
+            retorno += " Prioridade Modificada! Antiga: \"" + servicoAntigo.getPrioridade().getChave() + "\".";
+        }
+
         return retorno;
     }
 

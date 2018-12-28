@@ -99,7 +99,7 @@
                                 <td>${tarefa.servico.setor.nome}</td>
                                 <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
-                                <td><a href="#"><i class="fa fa-eye" aria-hidden="false"></i></a>
+                                <td><a title="Detalhes" href="#"><i class="fa fa-eye" aria-hidden="false"></i></a>
                                     <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <c:if test="${usuarioLogado.isAdmin()}">
                                         <a href="${linkTo[TarefasController].remover}?id=${tarefa.id}"><i class="fa fa-trash fa-lg"></i></a>

@@ -41,19 +41,11 @@ $(document).ready(function () {
         var tecnicoResponsavel = $('#tecnico-servico').val();
         var descricaoServico = $('#servico-descricao').val();
 
-        console.log("TAREFA EDITA");
-        console.log(tituloServico);
-        console.log(dataFechamento);
-        console.log(tecnicoResponsavel);
-        console.log(descricaoServico);
-
         $('#titulo-tarefa').val(tituloServico);
         $('#data-fechamento-tarefa').val(dataFechamento);
         $('#tecnico-tarefa').val(tecnicoResponsavel);
         $('#descricao-tarefa').val(descricaoServico);
         $('#status-tarefa').val("EM_ESPERA");
-
-        console.log("DEPOIS DA  1 TRIGGER!");
 
         $('#btnSalvarTarefa').trigger('click');
         $('#form-servico-tarefa').submit();
@@ -74,8 +66,6 @@ $(document).ready(function () {
         e.preventDefault();
         carregarInputs();
 
-        console.log("URL:" + url);
-
         prazo = moment(dataFechamento.val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var tarefa = {
             id: id.val(),
@@ -92,8 +82,6 @@ $(document).ready(function () {
             codigoTarefa:"",
             dataAbertura:""
         };
-
-        console.log("TECNICO: " +tecnico.attributes);
 
         $tarefasContainer.empty();
         if (!editando) {
@@ -302,9 +290,6 @@ $(document).ready(function () {
         prazo = moment(dataFechamento.val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         dateteste = moment.utc(prazo);
         prazo = dateteste.toISOString();
-
-        console.log(tecnico);
-        console.log(tecnico2);
     }
 
     function limparInputs() {

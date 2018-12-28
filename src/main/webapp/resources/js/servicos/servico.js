@@ -6,6 +6,5 @@ $(document).ready( function () {
         var id = $(this).attr('id-servico');
         var url = pathRemocao + id;
         $('#btnRemoverServico').attr('href', url);
-        console.log($('#btnRemoverServico').attr('href'));
     });
 });

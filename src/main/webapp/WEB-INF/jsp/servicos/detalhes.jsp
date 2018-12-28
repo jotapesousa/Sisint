@@ -94,7 +94,8 @@
                                                                         margin-bottom: 16px;
                                                                         border-style: dashed;
                                                                         background-color: rgba(238,242,255,0.97)">
-                                        <h4 id="tarefa-codigo" align="center">Tarefa: ${tarefa.codigoTarefa}</h4>
+                                        <h4 id="tarefa-codigo" align="center">
+                                            <a href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}">Tarefa: ${tarefa.codigoTarefa}</a></h4>
                                         <label for="tarefa-titulo">Titulo da tarefa: </label>
                                         <span id="tarefa-titulo">${tarefa.titulo}</span>
                                         <br>

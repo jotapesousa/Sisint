@@ -75,10 +75,6 @@ public class ServicosController extends ControladorSisInt<Servico> {
                 servico.setTecnico(usuarioLogado.getUsuario());
             }
 
-            System.out.println(servico.getTecnico());
-            System.out.println(servico.getStatusServico());
-            System.out.println(servico.getTitulo());
-
             //Atribui data de abertura de chamado e caso não haja um técnico reponsável, torna nula a variável de usuário
             if (servico.getId() == null) {
                 servico.setDataAbertura(LocalDate.now());

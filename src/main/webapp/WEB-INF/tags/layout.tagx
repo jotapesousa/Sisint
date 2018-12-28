@@ -199,9 +199,6 @@
                                             <a href="${linkTo[ServicosController].lista}">Ver Todos os Serviços</a>
                                         </li>
                                     </c:if>
-                                    <li>
-                                        <a href="${linkTo[TarefasController].minhasTarefas}">Minhas Tarefas</a>
-                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -211,9 +208,6 @@
                                     <li>
                                         <a href="${linkTo[TarefasController].minhasTarefas}">Minhas Tarefas</a>
                                     </li>
-                                        <!--<li>-->
-                                            <!--<a href="${linkTo[TarefasController].lista}">Todas as Tarefas</a>-->
-                                        <!--</li>-->
                                     <li>
                                         <a href="${linkTo[TarefasController].tarefasConcluidas}">Concluídas</a>
                                     </li>
