@@ -10,6 +10,7 @@ import br.pcrn.sisint.util.OpcaoSelect;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -174,20 +175,29 @@ public class ServicosNegocio {
     public String compararServicos(Servico servicoAntigo, Servico servicoNovo) {
         String retorno = "";
 
-        if (!servicoAntigo.getTecnico().equals(servicoNovo.getTecnico())){
-            retorno += "Técnico modificado! Antigo: \"" + servicoAntigo.getTecnico().getNome() + "\".";
+        if (servicoAntigo.getTecnico() == null) {
+            retorno += servicoNovo.getTecnico().getNome() + " é o responsável pelo serviço!";
+        } else if (!servicoAntigo.getTecnico().equals(servicoNovo.getTecnico())){
+            retorno += "Técnico modificado! Antigo: '" + servicoAntigo.getTecnico().getNome() + "'.";
         }
         if (!servicoAntigo.getStatusServico().equals(servicoNovo.getStatusServico())) {
-            retorno += " Status do servico modificado! Antigo: \"" + servicoAntigo.getStatusServico().getChave() + "\".";
+            retorno += " Status do servico modificado! Antigo: '" + servicoAntigo.getStatusServico().getChave() + "'.";
         }
         if (!servicoAntigo.getTitulo().equals(servicoNovo.getTitulo())) {
-            retorno += " Titulo modificado! Antigo:  \"" + servicoAntigo.getTitulo() + "\".";
+            retorno += " Titulo modificado! Antigo:  '" + servicoAntigo.getTitulo() + "'.";
         }
         if (!servicoAntigo.getDescricao().equals(servicoNovo.getDescricao())) {
-            retorno += " Descricao modificada! Antiga: \"" + servicoAntigo.getDescricao() + "\".";
+            retorno += " Descricao modificada! Antiga: '" + servicoAntigo.getDescricao() + "'.";
         }
         if (!servicoAntigo.getPrioridade().equals(servicoNovo.getPrioridade())){
-            retorno += " Prioridade Modificada! Antiga: \"" + servicoAntigo.getPrioridade().getChave() + "\".";
+            retorno += " Prioridade Modificada! Antiga: '" + servicoAntigo.getPrioridade().getChave() + "'.";
+        }
+        if (!servicoAntigo.getDataFechamento().equals(servicoNovo.getDataFechamento())) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            retorno += " Data de Finalização Modificada! Antiga: '" + servicoAntigo.getDataFechamento().format(formatter) + "'.";
+        }
+        if (!servicoAntigo.getSetor().getId().equals(servicoNovo.getSetor().getId())) {
+            retorno += " Setor Modificado! Antigo: '" + servicoAntigo.getSetor().getNome() + "'.";
         }
 
         return retorno;
@@ -201,5 +211,16 @@ public class ServicosNegocio {
             }
         }
         return concluida;
+    }
+
+    public void gerarLogAssumirServico(Servico servico) {
+        LogServico logServico = new LogServico();
+        String logString = servico.getTecnico().getNome() + " é o responsável por este serviço!";
+
+        logServico.setUsuario(servico.getTecnico());
+        logServico.setDataAlteracao(LocalDateTime.now().plusSeconds(1l));
+        logServico.setLog(logString);
+
+        servico.getLogServicos().add(logServico);
     }
 }

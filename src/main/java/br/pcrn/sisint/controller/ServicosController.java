@@ -71,10 +71,6 @@ public class ServicosController extends ControladorSisInt<Servico> {
     @Transacional
     public void salvar(Servico servico) {
         try {
-            if(servico.isAssumirServico()){
-                servico.setTecnico(usuarioLogado.getUsuario());
-            }
-
             //Atribui data de abertura de chamado e caso não haja um técnico reponsável, torna nula a variável de usuário
             if (servico.getId() == null) {
                 servico.setDataAbertura(LocalDate.now());
@@ -236,6 +232,7 @@ public class ServicosController extends ControladorSisInt<Servico> {
         Servico servico = servicoDao.BuscarPorId(id);
         servico.setTecnico(usuarioLogado.getUsuario());
         servico.setStatusServico(StatusServico.EM_EXECUCAO);
+        servicosNegocio.gerarLogAssumirServico(servico);
         servicoDao.salvar(servico);
         resultado.redirectTo(ServicosController.class).meusServicos();
     }

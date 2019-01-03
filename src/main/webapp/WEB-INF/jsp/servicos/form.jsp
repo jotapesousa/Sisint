@@ -121,7 +121,9 @@
                             <div class="form-group col-md-6">
                                 <label for="tecnico-servico">Ténico Responsável</label>
                                 <select class="form-control" id="tecnico-servico" name="servico.tecnico.id" onchange="mudancaTecnico()">
+                                    <c:if test="${servico.tecnico == null}">
                                     <option></option>
+                                    </c:if>
                                     <c:forEach items="${usuarios}" var="usuario">
                                         <c:if test="${usuario.valor == servico.tecnico.id}">
                                             <option value="${usuario.valor}" selected="true">${usuario.chave}</option>
