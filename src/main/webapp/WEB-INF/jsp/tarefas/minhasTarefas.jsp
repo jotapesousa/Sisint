@@ -146,7 +146,8 @@
                         <h4 class="modal-title primary">Concluir Tarefa</h4>
                     </div>
                     <div class="modal-body">
-                        <h5> Deseja realmente concluir a tarefa?</h5>
+                        <h5> Adicionar Nota:</h5>
+                        <textarea id="textoNota" class="form-control" rows="5"></textarea>
                     </div>
                     <div id="btns-modal" class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

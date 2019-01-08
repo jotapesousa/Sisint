@@ -62,6 +62,21 @@
                                    type="text" value="${equipamento.tombo}">
                         </div>
                         <div class="form-group col-md-4">
+                            <label for="status-equip">Tipo: </label>
+                            <select type="text" class="form-control" id="tipo-equip" placeholder="Tipo"
+                                    required="true"
+                                    name="equipamento.tipo">
+                                <c:forEach items="${tipo}" var="t">
+                                    <c:if test="${t.valor == equipamento.tipo.valor}">
+                                        <option value="${t.valor}" selected="true">${t.chave}</option>
+                                    </c:if>
+                                    <c:if test="${!(t.valor == equipamento.tipo.valor)}">
+                                        <option value="${t.valor}">${t.chave}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
                             <label for="status-equip">Status: </label>
                             <select type="text" class="form-control" id="status-equip" placeholder="Status"
                                     required="true"
@@ -95,8 +110,7 @@
                             <label for="descricao-equipamento">Descrição: </label>
                             <textarea id="descricao-equipamento" class="form-control" minlength="6"
                                       name="equipamento.descricao" rows="7"
-                                      required="true" >${equipamento.descricao}
-                            </textarea>
+                                      required="true" >${equipamento.descricao}</textarea>
                         </div>
                     </div>
                     <div class="panel">

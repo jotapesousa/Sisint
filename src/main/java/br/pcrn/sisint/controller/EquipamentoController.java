@@ -11,6 +11,7 @@ import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.*;
 import br.pcrn.sisint.dominio.Equipamento;
 import br.pcrn.sisint.dominio.StatusEquipamento;
+import br.pcrn.sisint.dominio.TipoEquipamento;
 import br.pcrn.sisint.negocio.EquipamentoNegocio;
 import br.pcrn.sisint.negocio.ServicosNegocio;
 import br.pcrn.sisint.util.OpcaoSelect;
@@ -49,6 +50,7 @@ public class EquipamentoController extends Controlador{
     public void form(){
         resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
         resultado.include("status", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+        resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
     }
 
     @Post

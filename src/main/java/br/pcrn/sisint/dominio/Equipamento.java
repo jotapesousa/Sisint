@@ -18,6 +18,7 @@ public class Equipamento extends Entidade{
     private String nome;
     private Long tombo;
     private String numeroSerie;
+    private TipoEquipamento tipo;
     private boolean deletado;
 
     @Column(columnDefinition  = "text")
@@ -92,4 +93,11 @@ public class Equipamento extends Entidade{
 
     public void setStatus(StatusEquipamento status) { this.status = status; }
 
+    public TipoEquipamento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEquipamento tipo) {
+        this.tipo = tipo;
+    }
 }
