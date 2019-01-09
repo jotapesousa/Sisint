@@ -95,18 +95,16 @@
                         <c:forEach items="${tarefas}" var="tarefa">
                             <tr class="linha-tabela clickable" data-toggle="collapse" data-target="#accordion${tarefa.id}">
                                 <td>${tarefa.titulo}</td>
-                                <td><span class="label status">${tarefa.statusTarefa.chave}</span></td>
+                                <td><span class="label label-status">${tarefa.statusTarefa.chave}</span></td>
                                 <td>${tarefa.servico.setor.nome}</td>
                                 <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
-                                <td><a title="Detalhes" href="#"><i class="fa fa-eye" aria-hidden="false"></i></a>
-                                    <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
-                                    <c:if test="${usuarioLogado.isAdmin()}">
-                                        <a href="${linkTo[TarefasController].remover}?id=${tarefa.id}"><i class="fa fa-trash fa-lg"></i></a>
-                                        <!--<a data-toggle="modal" url="${linkTo[ServicosController].assumirServico}?id=${tarefa.id}"
-                                           href="#concluirId" id="concluir-tarefa" id-tarefa="${tarefa.id}"
-                                           title="Concluir Tarefa"><i class="glyphicon glyphicon-ok"></i> </a> -->
-                                    </c:if>
+                                <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Editar" href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                    <a title="Remover" href="${linkTo[TarefasController].remover}?id=${tarefa.id}"><i class="fa fa-trash fa-lg"></i></a>
+                                        <%--<a data-toggle="modal" url="${linkTo[ServicosController].assumirServico}?id=${tarefa.id}" --%>
+                                           <%--href="#concluirId" id="concluir-tarefa" id-tarefa="${tarefa.id}" title="Concluir Tarefa">--%>
+                                            <%--<i class="glyphicon glyphicon-ok"></i> </a>--%>
                                 </td>
                             </tr>
                             <%--<tr>--%>
@@ -116,28 +114,28 @@
                             <%--</tr>--%>
                         </c:forEach>
 
-                        <div id="concluirId" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Concluir Tarefa</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="notaFinal">Nota Final:</label>
-                                            <textarea class="form-control" rows="5" id="notaFinal"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                        <a href="${linkTo[TarefasController].concluir}?id=${tarefa.id}" class="btn btn-primary">Concluir</a>
-                                    </div>
-                                </div>
+                        <%--<div id="concluirId" class="modal fade" role="dialog">--%>
+                            <%--<div class="modal-dialog">--%>
+                                <%--<!-- Modal content-->--%>
+                                <%--<div class="modal-content">--%>
+                                    <%--<div class="modal-header">--%>
+                                        <%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
+                                        <%--<h4 class="modal-title">Concluir Tarefa</h4>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="modal-body">--%>
+                                        <%--<div class="form-group">--%>
+                                            <%--<label for="notaFinal">Nota Final:</label>--%>
+                                            <%--<textarea class="form-control" rows="5" id="notaFinal"></textarea>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="modal-footer">--%>
+                                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>--%>
+                                        <%--<a href="${linkTo[TarefasController].concluir}?id=${tarefa.id}" class="btn btn-primary">Concluir</a>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
 
-                            </div>
-                        </div>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
                         </tbody>
                     </table>

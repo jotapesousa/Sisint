@@ -211,6 +211,9 @@
                                     <li>
                                         <a href="${linkTo[TarefasController].tarefasConcluidas}">Concluídas</a>
                                     </li>
+                                    <li>
+                                        <a href="${linkTo[TarefasController].lista}">Todas</a>
+                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>

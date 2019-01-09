@@ -83,9 +83,9 @@
                                 <td><span class="label label-status">${tarefa.statusTarefa.chave}</span></td>
                                 <td clas="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
-                                <td><a href="#"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
-                                    <a href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-trash fa-lg"></i></a></td>
+                                <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Editar" href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                    <a title="Remover" href="#"><i class="fa fa-trash fa-lg"></i></a></td>
                             </tr>
                         </c:forEach>
 
