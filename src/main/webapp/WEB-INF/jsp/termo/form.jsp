@@ -23,7 +23,7 @@
                 <h4 align="center">Cadastro de Termo de Responsabilidade</h4>
             </div>
             <div class="panel-body">
-                <form id="formTarefa" class="form-horizontal" action="${linkTo[TermoController].imprimirTermo}" method="get">
+                <form id="formTermo" class="form-horizontal" action="${linkTo[TermoController].salvar}" method="post">
                     <input type="hidden" name="termo.id" value="${termo.id}">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Número do termo: </label>

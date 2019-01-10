@@ -1,6 +1,7 @@
 package br.pcrn.sisint.dominio;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,8 @@ public class Termo extends Entidade{
 
     private String numero;
     private String ano;
+    private LocalDate dataCriacao;
+    private boolean deletado;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Setor setor;
@@ -19,8 +22,11 @@ public class Termo extends Entidade{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Equipamento> equipamentos;
 
-    public Termo(){
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Usuario tecnico;
 
+    @Deprecated
+    public Termo(){
     }
 
     @Override
@@ -58,5 +64,29 @@ public class Termo extends Entidade{
 
     public void setEquipamentos(List<Equipamento> equipamentos) {
         this.equipamentos = equipamentos;
+    }
+
+    public LocalDate getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Usuario getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(Usuario tecnico) {
+        this.tecnico = tecnico;
+    }
+
+    public boolean isDeletado() {
+        return deletado;
+    }
+
+    public void setDeletado(boolean deletado) {
+        this.deletado = deletado;
     }
 }

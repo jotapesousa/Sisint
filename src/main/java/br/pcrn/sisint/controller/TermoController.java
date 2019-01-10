@@ -5,11 +5,13 @@ import br.com.caelum.vraptor.jasperreports.Report;
 import br.com.caelum.vraptor.jasperreports.download.ReportDownload;
 import br.com.caelum.vraptor.jasperreports.formats.ExportFormats;
 import br.com.caelum.vraptor.observer.download.Download;
+import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.SetorDao;
 import br.pcrn.sisint.dao.TermoDao;
 import br.pcrn.sisint.dominio.Equipamento;
 import br.pcrn.sisint.dominio.Setor;
 import br.pcrn.sisint.dominio.Termo;
+import br.pcrn.sisint.dominio.UsuarioLogado;
 import br.pcrn.sisint.dominio.relatorios.EntityReport;
 
 import br.pcrn.sisint.dominio.relatorios.TermoGeral;
@@ -19,6 +21,7 @@ import br.pcrn.sisint.negocio.TermoNegocio;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -28,31 +31,62 @@ import java.util.List;
 public class TermoController extends Controlador {
 
     private TermoNegocio termoNegocio;
-    private TermoDao termoDao;
+    private TermoDao dao;
     private SetorDao setorDao;
+    private UsuarioLogado usuarioLogado;
 
     @Inject
     private ServletContext context;
 
     @Deprecated
     protected TermoController(){
-        this(null, null, null, null);
+        this(null, null, null, null, null);
     }
 
     @Inject
-    public TermoController(Result resultado, TermoNegocio termoNegocio, TermoDao termoDao, SetorDao setorDao) {
+    public TermoController(Result resultado, TermoNegocio termoNegocio, TermoDao dao, SetorDao setorDao, UsuarioLogado usuarioLogado) {
         super(resultado);
         this.termoNegocio = termoNegocio;
-        this.termoDao = termoDao;
+        this.dao = dao;
         this.setorDao = setorDao;
+        this.usuarioLogado = usuarioLogado;
     }
 
     public void form() {
         resultado.include("equipamentos", termoNegocio.geraListaOpcoesEquipamentos());
         resultado.include("setores", termoNegocio.geraListaOpcoesSetores());
+        resultado.include("usuarios", termoNegocio.geraListaOpcoesUsuarios());
     }
 
-    public void lista() {  }
+    @Post("/termos")
+    @Transacional
+    public void salvar(Termo termo) {
+        termo.setDataCriacao(LocalDate.now());
+        termo.setTecnico(usuarioLogado.getUsuario());
+        this.dao.salvar(termo);
+        this.resultado.redirectTo(this).lista();
+    }
+
+    public void lista() { this.resultado.include("termos", this.dao.listar()); }
+
+    public void editar(Long id) {
+        Termo termo = this.dao.buscarPorId(id);
+        resultado.include("termo", termo);
+        resultado.of(this).form();
+    }
+
+    @Transacional
+    public void remover(Long id) {
+        Termo termo = this.dao.buscarPorId(id);
+        termo.setDeletado(true);
+        this.dao.salvar(termo);
+        this.resultado.redirectTo(this).lista();
+    }
+
+    public void detalhes(Long id) {
+        Termo termo = dao.buscarPorId(id);
+        resultado.include("termo", termo);
+    }
 
     @Get
     @Path("/imprimirTermo")

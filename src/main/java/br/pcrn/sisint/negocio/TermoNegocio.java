@@ -2,9 +2,11 @@ package br.pcrn.sisint.negocio;
 
 import br.pcrn.sisint.dao.EquipamentoDao;
 import br.pcrn.sisint.dao.SetorDao;
+import br.pcrn.sisint.dao.UsuarioDao;
 import br.pcrn.sisint.dominio.Equipamento;
 import br.pcrn.sisint.dominio.Setor;
 import br.pcrn.sisint.dominio.Termo;
+import br.pcrn.sisint.dominio.Usuario;
 import br.pcrn.sisint.dominio.relatorios.TermoGeral;
 import br.pcrn.sisint.util.OpcaoSelect;
 
@@ -17,15 +19,24 @@ public class TermoNegocio {
 
     private EquipamentoDao equipamentoDao;
     private SetorDao setorDao;
+    private UsuarioDao usuarioDao;
 
     @Inject
-    public TermoNegocio(EquipamentoDao equipamentoDao, SetorDao setorDao) {
+    public TermoNegocio(EquipamentoDao equipamentoDao, SetorDao setorDao, UsuarioDao usuarioDao) {
         this.equipamentoDao = equipamentoDao;
         this.setorDao = setorDao;
+        this.usuarioDao = usuarioDao;
     }
 
     @Deprecated
-    public TermoNegocio() { this(null, null);}
+    public TermoNegocio() { this(null, null, null);}
+
+    public List<OpcaoSelect> geraListaOpcoesUsuarios() {
+        List<Usuario> todos = this.usuarioDao.listar().stream().collect(Collectors.toList());
+        return todos.stream().map(
+                usuario -> new OpcaoSelect(usuario.getNome(), usuario.getId()))
+                .collect(Collectors.toList());
+    }
 
     public List<OpcaoSelect> geraListaOpcoesEquipamentos() {
         List<Equipamento> todos = this.equipamentoDao.todos().stream().collect(Collectors.toList());
