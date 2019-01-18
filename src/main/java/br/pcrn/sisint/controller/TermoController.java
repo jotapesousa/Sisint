@@ -8,14 +8,12 @@ import br.com.caelum.vraptor.observer.download.Download;
 import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.SetorDao;
 import br.pcrn.sisint.dao.TermoDao;
-import br.pcrn.sisint.dominio.Equipamento;
-import br.pcrn.sisint.dominio.Setor;
-import br.pcrn.sisint.dominio.Termo;
-import br.pcrn.sisint.dominio.UsuarioLogado;
+import br.pcrn.sisint.dominio.*;
 import br.pcrn.sisint.dominio.relatorios.EntityReport;
 
 import br.pcrn.sisint.dominio.relatorios.TermoGeral;
 import br.pcrn.sisint.negocio.TermoNegocio;
+import br.pcrn.sisint.util.OpcaoSelect;
 
 
 import javax.inject.Inject;
@@ -56,13 +54,20 @@ public class TermoController extends Controlador {
         resultado.include("equipamentos", termoNegocio.geraListaOpcoesEquipamentos());
         resultado.include("setores", termoNegocio.geraListaOpcoesSetores());
         resultado.include("usuarios", termoNegocio.geraListaOpcoesUsuarios());
+        resultado.include("statusEquipamento", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+        resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
     }
 
     @Post("/termos")
     @Transacional
     public void salvar(Termo termo) {
-        termo.setDataCriacao(LocalDate.now());
-        termo.setTecnico(usuarioLogado.getUsuario());
+        if (termo.getId() == null) {
+            termo.setNumero(termoNegocio.numTermo() + 1);
+            termo.setAno(LocalDate.now().getYear());
+            termo.setDataCriacao(LocalDate.now());
+            termo.setTecnico(usuarioLogado.getUsuario());
+        }
+
         this.dao.salvar(termo);
         this.resultado.redirectTo(this).lista();
     }
@@ -71,6 +76,7 @@ public class TermoController extends Controlador {
 
     public void editar(Long id) {
         Termo termo = this.dao.buscarPorId(id);
+        resultado.include("setores", termoNegocio.geraListaOpcoesSetores());
         resultado.include("termo", termo);
         resultado.of(this).form();
     }

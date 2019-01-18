@@ -71,6 +71,7 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
         resultado.include("equipamentos", manutencaoNegocio.geraListaOpcoesEquipamentos());
         resultado.include("status", OpcaoSelect.toListaOpcoes(StatusManutencao.values()));
         resultado.include("statusEquipamento", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+        resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
     }
 
     @Post
@@ -82,7 +83,6 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             manutencao.setDataAbertura(LocalDate.now().format(formatter));
         }
-
         manutencaoNegocio.verificarStatus(manutencao);
 
         System.out.println(usuarioLogado.getUsuario().getNome());
@@ -116,6 +116,7 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
         resultado.include("setores", manutencaoNegocio.geraListaOpcoesSetor());
         resultado.include("usuarios", manutencaoNegocio.geraListaOpcoesUsuarios());
         resultado.include("status", OpcaoSelect.toListaOpcoes(StatusManutencao.values()));
+        resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
         resultado.of(this).form();
     }
 

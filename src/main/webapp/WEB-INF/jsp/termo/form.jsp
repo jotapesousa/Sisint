@@ -15,6 +15,8 @@
     <jsp:attribute name="cabecalho">
     </jsp:attribute>
     <jsp:attribute name="rodape">
+        <script src="${ctx}/resources/js/termo/termo.js"></script>
+        <script src="${ctx}/resources/js/termo/cadastroEquipamentos.js"></script>
     </jsp:attribute>
 
     <jsp:body>
@@ -28,19 +30,37 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Número do termo: </label>
                         <div class="col-sm-1">
-                            <input class="form-control" minlength="2" name="termo.numero" type="text" required value="${termo.numero}">
+                            <input class="form-control" name="termo.numero" type="text" value="${termo.numero}" disabled>
                         </div>
 
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Ano: </label>
                         <div class="col-sm-1">
-                            <input class="form-control" minlength="4" maxlength="4" name="termo.ano" type="text" value="${termo.ano}">
+                            <input id="anoTermo" class="form-control" name="termo.ano" type="text" value="${termo.ano}" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Código SEI: </label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="termo.codigoSei" type="text" value="${termo.codigoSei}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Matrícula do Servidor: </label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="termo.matriculaServidor" type="text" value="${termo.matriculaServidor}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Recebido Por: </label>
+                        <div class="col-sm-3">
+                            <input class="form-control" name="termo.nomeServidor" type="text" value="${termo.nomeServidor}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Setor: </label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <select class="form-control" id="termo-setor" name="termo.setor.id" type="text">
                                 <option value=""></option>
                                 <c:forEach items="${setores}" var="setor">
@@ -57,32 +77,162 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Equipamentos: </label>
                         <div class="col-sm-1">
-                            <button id="inserirEq" type="button"class="btn btn-default"
+                            <button id="inserirEq" type="button"class="btn btn-success"
                                     data-toggle="modal" data-target="#modalEquipamento">Inserir Equipamento</button>
                         </div>
                     </div>
                     <div align="right">
                         <button class="btn btn-primary" type="submit">Salvar</button>
                     </div>
-
-                    <div class="modal fade" id="modalEquipamento" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Modal title</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>One fine body&hellip;</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
                 </form>
+
+                <div id="equipamentoCadastrado" hidden class="" style="margin-top: 16px;">
+
+                </div>
+
+            </div>
+
+            <!-- Modal SELECIONAR EQUIPAMENTO -->
+            <div id="modalEquipamento" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" id="fecharModal" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Selecionar equipamento</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="radio-inline"><input id="check-ns" type="radio" name="optradio">Buscar por NS</label>
+                                <label class="radio-inline"><input id="check-tombo" type="radio" name="optradio">Buscar por Tombo</label>
+                            </div>
+                            <div class="form-group">
+                                <input id="busca-equipamentoPorNS" class="form-control" type="text" maxlength="18" value=""
+                                       placeholder="Buscar por NS" style="display: none; float: right;"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="busca-equipamentoTombo" class="form-control" type="text" maxlength="10"value=""
+                                       placeholder="Buscar por tombo" style="display: none; float: right;"/>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Tombo</th>
+                                    <th>Número de série</th>
+                                    <th>Status</th>
+                                    <th>Selecionar</th>
+                                </tr>
+                                </thead>
+                                <tbody id="equip-body">
+
+                                </tbody>
+                            </table>
+                            <div id="nenhumEquipamento" class="text-center h4">Nenhum Equipamento Encontrado</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cadastrarEquipamento" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#modalCriarEquipamento" data-dismiss="modal">Novo Equipamento</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal NOVO EQUIPAMENTO -->
+            <div id="modalCriarEquipamento" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <input id="urlSalvarEquipamento" type="hidden" value="${linkTo[EquipamentoController].salvar}"/>
+                        <input type='hidden' id="#equip-novo-id" name='manutencao.equipamento.id' value='${manutencao.equipamento.id}' />
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Cadastrar Equipamento</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nome-equipamento">Nome do Equipamento</label>
+                                <input id="nome-equipamento" class="form-control" type="text" name="manutencao.equipamento.nome"
+                                       value="${equipamento.nome}" placeholder="Nome do equipamento">
+                            </div>
+                            <div class="form-group">
+                                <label for="tombo-equipamento">Tombo</label>
+                                <input id="tombo-equipamento" class="form-control" type="text" name="manutencao.equipamento.tombo"
+                                       maxlength="10"
+                                       value="${equipamento.nome}" placeholder="Digite o tombo do equipamento">
+                            </div>
+                            <div class="form-group">
+                                <label for="nserie-equipamento">Número de Série</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="nserie-equipamento" name="manutencao.equipamento.numeroSerie"
+                                           value="${equipamento.numeroSerie}" placeholder="Digite o N/S do equipamento" required>
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default" id="btn-gerarns" type="button">Gerar Código</button>
+                                </span>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="form-group">
+                                <label for="tipo-equipamento">Tipo: </label>
+                                <select type="text" class="form-control" id="tipo-equipamento" placeholder="Tipo"
+                                        required="true"
+                                        name="equipamento.tipo">
+                                    <c:forEach items="${tipo}" var="t">
+                                        <c:if test="${t.valor == equipamento.tipo.valor}">
+                                            <option value="${t.valor}" selected="true">${t.chave}</option>
+                                        </c:if>
+                                        <c:if test="${!(t.valor == equipamento.tipo.valor)}">
+                                            <option value="${t.valor}">${t.chave}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status: </label>
+                                <select type="text" class="form-control" id="status-equipamento" placeholder="Status"
+                                        required="true"
+                                        name="manutencao.equipamento.status">
+                                    <option value=""></option>
+                                    <c:forEach items="${statusEquipamento}" var="s">
+                                        <c:if test="${s.valor == equipamento.status.valor}">
+                                            <option value="${s.valor}" selected="true">${s.chave}</option>
+                                        </c:if>
+                                        <c:if test="${!(s.valor == equipamento.status.valor)}">
+                                            <option value="${s.valor}">${s.chave}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Setor: </label>
+                                <select class="form-control" id="setor-equipamento" name="manutencao.equipamento.setor.id" type="text">
+                                    <option value=""></option>
+                                    <c:forEach items="${setores}" var="setor">
+                                        <c:if test="${setor.valor == equipamento.setor.id}">
+                                            <option value="${setor.valor}" selected="true">${setor.chave}</option>
+                                        </c:if>
+                                        <c:if test="${!(setor.valor == equipamento.setor.id)}">
+                                            <option value="${setor.valor}">${setor.chave}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição: </label>
+                                <textarea id="descricao-equipamento" class="form-control" minlength="6" name="manutencao.equipamento.descricao" rows="2"
+                                          required="true" >${equipamento.descricao}</textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cadastro-equip" class="btn btn-primary" data-dismiss="modal">Cadastrar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </jsp:body>

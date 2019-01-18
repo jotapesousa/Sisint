@@ -2,6 +2,7 @@ package br.pcrn.sisint.negocio;
 
 import br.pcrn.sisint.dao.EquipamentoDao;
 import br.pcrn.sisint.dao.SetorDao;
+import br.pcrn.sisint.dao.TermoDao;
 import br.pcrn.sisint.dao.UsuarioDao;
 import br.pcrn.sisint.dominio.Equipamento;
 import br.pcrn.sisint.dominio.Setor;
@@ -17,19 +18,21 @@ import java.util.stream.Collectors;
 
 public class TermoNegocio {
 
+    private TermoDao termoDao;
     private EquipamentoDao equipamentoDao;
     private SetorDao setorDao;
     private UsuarioDao usuarioDao;
 
     @Inject
-    public TermoNegocio(EquipamentoDao equipamentoDao, SetorDao setorDao, UsuarioDao usuarioDao) {
+    public TermoNegocio(EquipamentoDao equipamentoDao, SetorDao setorDao, UsuarioDao usuarioDao, TermoDao termoDao) {
         this.equipamentoDao = equipamentoDao;
         this.setorDao = setorDao;
         this.usuarioDao = usuarioDao;
+        this.termoDao = termoDao;
     }
 
     @Deprecated
-    public TermoNegocio() { this(null, null, null);}
+    public TermoNegocio() { this(null, null, null, null);}
 
     public List<OpcaoSelect> geraListaOpcoesUsuarios() {
         List<Usuario> todos = this.usuarioDao.listar().stream().collect(Collectors.toList());
@@ -70,6 +73,10 @@ public class TermoNegocio {
             iterador++;
         }
         return termosGerais;
+    }
+
+    public int numTermo() {
+        return termoDao.numTermo();
     }
 
 }

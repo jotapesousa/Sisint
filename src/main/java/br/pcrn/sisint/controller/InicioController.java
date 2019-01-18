@@ -64,7 +64,6 @@ public class InicioController extends Controlador {
         resultado.include("totalEquipamentos",equipamentoDao.contarTotalEquipamentos());
         resultado.include("tarefasPendentes", tarefaDao.minhasTarefas().size());
         resultado.include("meusServicos", servicoDao.meusServicos());
-
     }
 
     @Path("/info")

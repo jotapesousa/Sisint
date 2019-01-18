@@ -46,59 +46,148 @@
                 console.log(nome);
             })
         </script>
+        <script>
+            $(document).ready(function () {
+                $.fn.dataTable.moment('DD/MM/YYYY');
+
+
+                $('.table').DataTable( {
+                    pageLength:25,
+                    "language":
+                        {
+                            "sEmptyTable": "Nenhum registro encontrado",
+                            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                            "sInfoPostFix": "",
+                            "sInfoThousands": ".",
+                            "sLengthMenu": "_MENU_ resultados por página",
+                            "sLoadingRecords": "Carregando...",
+                            "sProcessing": "Processando...",
+                            "sZeroRecords": "Nenhum registro encontrado",
+                            "sSearch": "Pesquisar ",
+                            "oPaginate": {
+                                "sNext": "Próximo",
+                                "sPrevious": "Anterior",
+                                "sFirst": "Primeiro",
+                                "sLast": "Último"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                                "sSortDescending": ": Ordenar colunas de forma descendente"
+                            }
+                        }
+                } );
+            });
+
+
+        </script>
     </jsp:attribute>
 
     <jsp:body>
-        <div class="panel">
+        <div class="panel painel-sisint">
             <div class="panel-heading">
-                <h3 align="center">Tarefa: ${tarefa.codigoTarefa}</h3>
+                <h3 align="center">Termo de Responsabilidade: ${termo.numero} / ${termo.ano}</h3>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group col-md-6">
-                            <label for="tarefa-titulo">Titulo: </label>
-                            <input id="tarefa-titulo" class="form-control fonte" name="tarefa.titulo" value="${tarefa.titulo}" disabled/>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="tarefa-tecnico">Técnico Responsável: </label>
-                            <input id="tarefa-tecnico" class="form-control fonte" name="tarefa.tecnico.nome"
-                                   value="${tarefa.tecnico.nome}" disabled/>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="tarefa-dataFechamento">Prazo Final: </label>
-                            <input id="tarefa-dataFechamento" class="form-control date-column fonte" name="tarefa.dataFechamento"
-                                   value="${tarefa.dataFechamento}" disabled/>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="tarefa-status">Status: </label> <br>
-                            <span id="tarefa-status" class="label label-status fonte">${tarefa.statusTarefa.chave}</span>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="tarefa-descricao">Descrição: </label> <br>
-                            <span id="tarefa-descricao" class="fonte">${tarefa.descricao}</span>
-                        </div>
-                            <%--<label for="tarefa-dataFechamento">Técnico Responsável: </label>--%>
-                            <%--<span id="tarefa-tecnico">${tarefa.tecnico.nome}</span>--%>
-                            <%--<br>--%>
-                            <%--<label for="tarefa-status">Status da tarefa: </label>--%>
-                            <%--<span id="tarefa-status" class="label label-status">${tarefa.statusTarefa.chave}</span>--%>
-                            <%--<br>--%>
+            <div class="panel-body form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Número do termo: </label>
+                    <div class="col-sm-1">
+                        <input class="form-control" name="termo.numero" type="text" value="${termo.numero}" disabled>
+                    </div>
 
-                        <br>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Ano: </label>
+                    <div class="col-sm-1">
+                        <input id="anoTermo" class="form-control" name="termo.ano" type="text" value="${termo.ano}" disabled>
                     </div>
                 </div>
-                <div class="panel-heading">
-                    <h3 align="center">Notas</h3>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Código SEI: </label>
+                    <div class="col-sm-2">
+                        <input class="form-control" name="termo.codigoSei" type="text" value="${termo.codigoSei}" disabled>
+                    </div>
                 </div>
-                <div class="row">
-                    <c:forEach items="${tarefa.notas}" var="nota">
-                        <ul class="list-group">
-                            <li class="list-group-item"><span style="font-weight: 600;color: #3c99c8;">
-                                    ${nota.descricao}</span><span class="badge">${nota.dataCriacao}</span>
-                            </li>
-                        </ul>
-                    </c:forEach>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Matrícula do Servidor: </label>
+                    <div class="col-sm-2">
+                        <input class="form-control" name="termo.ano" type="text" value="${termo.matriculaServidor}" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Recebido Por: </label>
+                    <div class="col-sm-3">
+                        <input class="form-control" name="termo.nomeServidor" type="text" value="${termo.nomeServidor}" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Setor: </label>
+                    <div class="col-sm-3">
+                        <input class="form-control" name="termo.setor.nome" type="text" value="${termo.setor.nome}" disabled>
+                    </div>
+                </div>
+                <hr>
+                <div class="panel-heading">
+                    <h3 align="center">Equipamentos</h3>
+                </div>
+                <div class="tabela-equipamentos">
+                    <table id="tabela-servico" class="table table-bordered tabela">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Tombo</th>
+                            <th>Número de Série</th>
+                            <th>Setor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                                <%--<th>Detalhes</th>--%>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${termo.equipamentos}" var="equipamento">
+                            <tr class="lista-equipamento">
+                                <td>${equipamento.nome}</td>
+                                <td>${equipamento.tipo.chave}</td>
+                                <td>${equipamento.tombo}</td>
+                                <td>${equipamento.numeroSerie}</td>
+                                <td>${equipamento.setor.nome}</td>
+                                <td><span class="label status-equip">${equipamento.status.chave}</span></td>
+                                <td><a title="Editar" class="editar-equip" href="${linkTo[EquipamentoController].editar}?id=${equipamento.id}" alt="Editar">
+                                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                    <%--<c:if test="${usuarioLogado.isAdmin()}">--%>
+                                        <%--<a title="Remover" class="link-remover" href="#delete-modal" url-remover="${linkTo[EquipamentoController].remover}?id=${equipamento.id}"--%>
+                                           <%--data-toggle="modal" alt="Remover">--%>
+                                            <%--<i class="fa fa-trash fa-lg"></i></a>--%>
+                                    <%--</c:if>--%>
+                                        <%--<a href="#"><i class="glyphicon glyphicon-file"></i></a>--%>
+                                </td>
+                                    <%--<td><a href="#">Detalhar</a></td>--%>
+                            </tr>
+                        </c:forEach>
+
+                        <%--<!-- Modal REMOVER -->--%>
+                        <%--<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">--%>
+                            <%--<div class="modal-dialog" role="document">--%>
+                                <%--<div class="modal-content">--%>
+                                    <%--<div class="modal-header">--%>
+                                        <%--<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>--%>
+                                        <%--<h4 class="modal-title" id="modalLabel">Excluir Item</h4>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="modal-body">--%>
+                                        <%--Deseja realmente excluir este item?--%>
+                                    <%--</div>--%>
+                                    <%--<div class="modal-footer">--%>
+                                        <%--<a id="btn-remover" href="" class="btn btn-primary">Sim</a>--%>
+                                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

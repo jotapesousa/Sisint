@@ -74,6 +74,7 @@
                         <thead>
                         <tr>
                             <th>Nome</th>
+                            <th>Tipo</th>
                             <th>Tombo</th>
                             <th>Número de Série</th>
                             <th>Setor</th>
@@ -86,6 +87,7 @@
                         <c:forEach items="${equipamentos}" var="equipamento">
                             <tr class="lista-equipamento">
                                 <td>${equipamento.nome}</td>
+                                <td>${equipamento.tipo.chave}</td>
                                 <td>${equipamento.tombo}</td>
                                 <td>${equipamento.numeroSerie}</td>
                                 <td>${equipamento.setor.nome}</td>

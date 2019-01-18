@@ -242,6 +242,21 @@
                                    value="${equipamento.nome}" placeholder="Digite o tombo do equipamento">
                         </div>
                         <div class="form-group">
+                            <label for="tipo-equipamento">Tipo: </label>
+                            <select type="text" class="form-control" id="tipo-equipamento" placeholder="Tipo"
+                                    required="true"
+                                    name="equipamento.tipo">
+                                <c:forEach items="${tipo}" var="t">
+                                    <c:if test="${t.valor == equipamento.tipo.valor}">
+                                        <option value="${t.valor}" selected="true">${t.chave}</option>
+                                    </c:if>
+                                    <c:if test="${!(t.valor == equipamento.tipo.valor)}">
+                                        <option value="${t.valor}">${t.chave}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="nserie-equipamento">Número de Série</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="nserie-equipamento" name="manutencao.equipamento.numeroSerie"

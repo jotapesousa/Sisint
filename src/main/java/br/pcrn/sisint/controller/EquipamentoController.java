@@ -139,6 +139,7 @@ public class EquipamentoController extends Controlador{
         resultado.include("equipamento", equipamento);
         resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
         resultado.include("status", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+        resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
         resultado.of(this).form();
     }
 

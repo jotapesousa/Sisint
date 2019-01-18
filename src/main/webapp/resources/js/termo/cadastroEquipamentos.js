@@ -1,40 +1,15 @@
-
-$(document).ready(function () {
+$(document).ready( function () {
 
     var $equipamentoContainer = $('#equipamentoCadastrado');
     var $btnBuscarEquipamento = $('#btn-buscarEquipamento');
     var $inputEquipamentoPorNS = $('#busca-equipamentoPorNS');
     var $inputEquipamentoPorTombo = $('#busca-equipamentoTombo');
     var ctx = $('#ctx').val();
+    var equipamentos = [];
     var equipamento = {};
     var xTriggered = 0;
     var url = "";
 
-    if ($('#manutencao-id').val()) {
-        $('#equipamentoCadastrado').removeAttr("hidden");
-    }
-
-
-    // $btnBuscarEquipamento.click(function () {
-    //     var texto = $inputEquipamento.val();
-    //     console.log(texto);
-    //     pesquisar(texto);
-    // });
-
-    // Pesquisa equipamento por numero de série a partir de letra digitada
-    $inputEquipamentoPorNS.keyup(function ( event ) {
-        var texto = $inputEquipamentoPorNS.val();
-        url = "/manutencao" +"/" +'buscarEquipamentos?texto='+texto;
-        pesquisar(texto,url);
-    });
-
-    // Pesquisa equipamento por tombo a partir de letra digitada
-    $inputEquipamentoPorTombo.keyup(function ( event ) {
-        console.log(ctx);
-        var texto = $inputEquipamentoPorTombo.val();
-        var url = "/manutencao" +"/" +'buscarEquipamentosPorTombo?tombo='+texto;
-        pesquisar(texto,url);
-    });
 
     // Muda a aba de pesquisa caso o CheckBox para pesquisar por tombo esteja selecionado
     $('#check-ns').change(function () {
@@ -60,6 +35,20 @@ $(document).ready(function () {
         }
     });
 
+    // Pesquisa equipamento por numero de série a partir de letra digitada
+    $inputEquipamentoPorNS.keyup(function ( event ) {
+        var texto = $inputEquipamentoPorNS.val();
+        url = "/manutencao" +"/" +'buscarEquipamentos?texto='+texto;
+        pesquisar(texto,url);
+    });
+
+    // Pesquisa equipamento por tombo a partir de letra digitada
+    $inputEquipamentoPorTombo.keyup(function ( event ) {
+        var texto = $inputEquipamentoPorTombo.val();
+        var url = "/manutencao" +"/" +'buscarEquipamentosPorTombo?tombo='+texto;
+        pesquisar(texto,url);
+    });
+
     function pesquisar(texto, url) {
         $.ajax({
             dataType: 'json',
@@ -69,7 +58,6 @@ $(document).ready(function () {
             $('#equip-body').empty();
             if (data.length == 0) {
                 $('#nenhumEquipamento').text("Nenhum Equipamento Encontrado");
-                //console.log($('#nenhumEquipamento').child());
             } else {
                 $('#nenhumEquipamento').text("");
                 data.forEach(function (dado) {
@@ -82,7 +70,7 @@ $(document).ready(function () {
                         +"<td>"+dado.nserie+"</td>"
                         +"<td>"+customizarStatus(dado)+"</td>"
                         +"<td class='text-center btnLinkId'><a class='btns-eq' id-equip='"+dado.id+"' href='#'"
-                        +" alt='Selecionar' data-dismiss='modal'><i class='glyphicon glyphicon-ok'></i></a></td>"
+                        +" alt='Selecionar'><i class='glyphicon glyphicon-ok'></i></a></td>"
                         +"</tr>");
                 });
             }
@@ -117,8 +105,32 @@ $(document).ready(function () {
         equipamento.status = equipamentos[3];
         gerarInputsEquipamento(equipamento);
         $('#equipamentoCadastrado').removeAttr("hidden");
-
     });
+
+    function gerarInputsEquipamento(equipamento) {
+        // $equipamentoContainer.empty();
+        $equipamentoContainer.prepend(
+            "<div id='child"+equipamento.id+"' class='panel panel-primary'>" +
+            "<input type='hidden' name='manutencao.equipamento.id' value='" + equipamento.id+ "' />" +
+            "<div class='panel-heading'>" +
+            "<h3 class='panel-title'>Equipamento</h3></div>"+
+            "<div class='panel-body'>"+
+            "<a class='editar-tarefa' id-equip='"+equipamento.id+"' class='editar-tarefa' href='#myModal' data-toggle='modal'" +
+            "style='float: right;'><i class='fa fa-pencil-square-o'></i></a>" +
+            "<a id='remover-tarefa' class='remover-tarefa' href='#' " +
+            "style='margin-right: 4px; float: right;'><i class='fa fa-trash-o'></i></a>" +
+            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+            "Nome: " + equipamento.nome +"</span><br>"+
+            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+            "Tombo: " + equipamento.tombo +"</span><br>"+
+            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+            "Num. Série: " + equipamento.numSerie +"</span><br>"+
+            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+            "Status: " + customizarStatus(equipamento)+"</span>" +
+            "</div>" +
+            "</div>"
+        );
+    }
 
     // Criação de NOVO EQUIPAMENTO via ajax
     $(document).on('click','#cadastro-equip',function () {
@@ -140,12 +152,12 @@ $(document).ready(function () {
             url: "/equipamento/salvarAjax",
             type: 'POST',
             data: { "equipamento.nome" : equipamento.nome,
-                    "equipamento.tombo" : equipamento.tombo,
-                    "equipamento.numeroSerie" :equipamento.numSerie,
-                    "equipamento.status" : equipamento.status,
-                    "equipamento.setor.id" : equipamento.setor,
-                    "equipamento.descricao" : equipamento.descricao,
-                    "equipamento.tipo" : equipamento.tipo }
+                "equipamento.tombo" : equipamento.tombo,
+                "equipamento.numeroSerie" :equipamento.numSerie,
+                "equipamento.status" : equipamento.status,
+                "equipamento.setor.id" : equipamento.setor,
+                "equipamento.descricao" : equipamento.descricao,
+                "equipamento.tipo" : equipamento.tipo }
 
         }).done(function (data) {
             console.log("OK ");
@@ -161,64 +173,8 @@ $(document).ready(function () {
 
     });
 
-
-    function gerarInputsEquipamento(equipamento) {
-        console.log(equipamento);
-        $equipamentoContainer.empty();
-        $equipamentoContainer.prepend(
-            "<input type='hidden' name='manutencao.equipamento.id' value='" + equipamento.id+ "' />" +
-            "<div id='' class='panel panel-primary'>" +
-                "<div class='panel-heading'>" +
-                    "<h3 class='panel-title'>Equipamento</h3></div>"+
-                "<div class='panel-body'>"+
-                    "<a id='editar-tarefa' class='editar-tarefa' href='#myModal' data-toggle='modal'" +
-                        "style='float: right;'><i class='fa fa-pencil-square-o'></i></a>" +
-                    "<a id='remover-tarefa' class='remover-tarefa' href='#' " +
-                        "style='margin-right: 4px; float: right;'><i class='fa fa-trash-o'></i></a>" +
-                    "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-                            "Nome: " + equipamento.nome +"</span><br>"+
-                    "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-                            "Tombo: " + equipamento.tombo +"</span><br>"+
-                    "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-                            "Num. Série: " + equipamento.numSerie +"</span><br>"+
-                    "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-                            "Status: " + customizarStatus(equipamento)+"</span>" +
-                "</div>" +
-            "</div>"
-
-        );
-    }
-
-    var substringMatcher = function(strs) {
-        return function findMatches(q, cb) {
-            var matches, substringRegex;
-
-            // an array that will be populated with substring matches
-            matches = [];
-
-            // regex used to determine if a string contains the substring `q`
-            substrRegex = new RegExp(q, 'i');
-
-            // iterate through the pool of strings and for any string that
-            // contains the substring `q`, add it to the `matches` array
-            $.each(strs, function(i, str) {
-                if (substrRegex.test(str)) {
-                    matches.push(str);
-                }
-            });
-
-            cb(matches);
-        };
-    };
-
-    $('#fecharModal').click( function () {
-        console.log("AQUI LIMPA");
-        $('#busca-equipamentoPorNS').val("");
-        $('#busca-equipamentoTombo').val("");
-    });
-
-    $(".datePicker").datepicker({
-        format: "dd/mm/yyyy"
+    $(document).on('click', '.editar-tarefa', function () {
+        console.log("ID equip: " + $(this).attr('id-equip'));
     });
 
 });

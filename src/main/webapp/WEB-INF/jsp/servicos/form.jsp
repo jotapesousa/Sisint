@@ -64,11 +64,18 @@
                             <input id="servico-id" type="hidden" name="servico.id" value="${servico.id}"/>
                             <input id="servico-dataAbertura" type="hidden" name="servico.dataAbertura" value="${servico.dataAbertura}"/>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="titulo-servico">Título</label>
                                 <input type="text" minlength="5" class="form-control" id="titulo-servico" required="true"
                                        value="${servico.titulo}"
                                        placeholder="Titulo do serviço"
+                                       name="servico.titulo"/>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="titulo-servico">Telefone para Retorno: </label>
+                                <input type="text" class="form-control" id="telefone-servico" required="true"
+                                       value="${servico.titulo}"
+                                       placeholder="Telefone para retorno"
                                        name="servico.titulo"/>
                             </div>
                             <div class="form-group col-md-3">

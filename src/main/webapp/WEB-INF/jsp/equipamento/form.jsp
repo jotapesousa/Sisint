@@ -62,7 +62,7 @@
                                    type="text" value="${equipamento.tombo}">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="status-equip">Tipo: </label>
+                            <label for="tipo-equip">Tipo: </label>
                             <select type="text" class="form-control" id="tipo-equip" placeholder="Tipo"
                                     required="true"
                                     name="equipamento.tipo">

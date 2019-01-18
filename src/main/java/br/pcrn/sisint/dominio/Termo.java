@@ -11,9 +11,14 @@ public class Termo extends Entidade{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String numero;
-    private String ano;
+    private int numero;
+    private int ano;
     private LocalDate dataCriacao;
+    private String codigoSei;
+    private String nomeServidor;
+    private String matriculaServidor;
+    private LocalDate horaRecebimento;
+    private boolean recebido;
     private boolean deletado;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -38,17 +43,21 @@ public class Termo extends Entidade{
     public Termo(String texto) {
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
-    public String getAno() { return ano;  }
+    public int getAno() {
+        return ano;
+    }
 
-    public void setAno(String ano) { this.ano = ano; }
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
 
     public Setor getSetor() {
         return setor;
@@ -88,5 +97,45 @@ public class Termo extends Entidade{
 
     public void setDeletado(boolean deletado) {
         this.deletado = deletado;
+    }
+
+    public String getCodigoSei() {
+        return codigoSei;
+    }
+
+    public void setCodigoSei(String codigoSei) {
+        this.codigoSei = codigoSei;
+    }
+
+    public String getNomeServidor() {
+        return nomeServidor;
+    }
+
+    public void setNomeServidor(String nomeServidor) {
+        this.nomeServidor = nomeServidor;
+    }
+
+    public String getMatriculaServidor() {
+        return matriculaServidor;
+    }
+
+    public void setMatriculaServidor(String matriculaServidor) {
+        this.matriculaServidor = matriculaServidor;
+    }
+
+    public LocalDate getHoraRecebimento() {
+        return horaRecebimento;
+    }
+
+    public void setHoraRecebimento(LocalDate horaRecebimento) {
+        this.horaRecebimento = horaRecebimento;
+    }
+
+    public boolean isRecebido() {
+        return recebido;
+    }
+
+    public void setRecebido(boolean recebido) {
+        this.recebido = recebido;
     }
 }
