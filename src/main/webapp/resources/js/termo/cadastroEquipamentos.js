@@ -1,14 +1,17 @@
 $(document).ready( function () {
-
-    var $equipamentoContainer = $('#equipamentoCadastrado');
+    var $form = $('#formTermo');
+    var $equipamentosContainer = $('#equipamentoCadastrado');
     var $btnBuscarEquipamento = $('#btn-buscarEquipamento');
+    var $btnEquipamentoSelecionado = $('.btnLinkId');
     var $inputEquipamentoPorNS = $('#busca-equipamentoPorNS');
     var $inputEquipamentoPorTombo = $('#busca-equipamentoTombo');
     var ctx = $('#ctx').val();
-    var equipamentos = [];
+    var listaEquipamentos = [];
+    var equipamentoSelecionado;
     var equipamento = {};
     var xTriggered = 0;
     var url = "";
+    var $containerInputsEquipamento = $('#container-inputs-equipamento');
 
 
     // Muda a aba de pesquisa caso o CheckBox para pesquisar por tombo esteja selecionado
@@ -49,6 +52,7 @@ $(document).ready( function () {
         pesquisar(texto,url);
     });
 
+    // Solicitação ao servidor de dados do equipamento via JSON
     function pesquisar(texto, url) {
         $.ajax({
             dataType: 'json',
@@ -60,18 +64,22 @@ $(document).ready( function () {
                 $('#nenhumEquipamento').text("Nenhum Equipamento Encontrado");
             } else {
                 $('#nenhumEquipamento').text("");
-                data.forEach(function (dado) {
+                listaEquipamentos = data;
+                var pos = 0;
+                // recuperar equipamento atraves de listener numa variavel equipamento
+                listaEquipamentos.forEach(function (equipamento) {
                     // console.log(dado.id + "\nNome: " + dado.nome + "\nTOMBO: " + dado.tombo + "\nNS: " + dado.nserie +
                     // "\nDescricao: " + dado.descricao + "\nStatus: " + dado.status);
                     //equipamentos.push(dado.nome);
-                    $('#equip-body').prepend("<tr id='trequip-"+dado.id+"'>"
-                        +"<td>"+dado.nome+"</td>"
-                        +"<td>"+dado.tombo+"</td>"
-                        +"<td>"+dado.nserie+"</td>"
-                        +"<td>"+customizarStatus(dado)+"</td>"
-                        +"<td class='text-center btnLinkId'><a class='btns-eq' id-equip='"+dado.id+"' href='#'"
+                    $('#equip-body').prepend("<tr id='trequip-"+equipamento.id+"'>"
+                        +"<td>"+equipamento.nome+"</td>"
+                        +"<td>"+equipamento.tombo+"</td>"
+                        +"<td>"+equipamento.nserie+"</td>"
+                        +"<td>"+customizarStatus(equipamento)+"</td>"
+                        +"<td class='text-center btnLinkId'><a class='btns-eq' posicao='" + pos + "' id-equip='"+equipamento.id+"' href='#'"
                         +" alt='Selecionar'><i class='glyphicon glyphicon-ok'></i></a></td>"
                         +"</tr>");
+                    pos++;
                 });
             }
         }).fail(function () {
@@ -80,98 +88,89 @@ $(document).ready( function () {
         });
     }
 
-    function customizarStatus(dado) {
-        if(dado.status == 'OK') {
+    function customizarStatus(equipamento) {
+        if(equipamento.status == 'OK') {
             return "<span class='label label-success'>OK</span>";
-        } else if(dado.status == 'Em Conserto' || dado.status == 'EM_CONSERTO') {
+        } else if(equipamento.status == 'Em Conserto' || equipamento.status == 'EM_CONSERTO') {
             return "<span class='label label-warning'>Em Conserto</span>";
-        } else if(dado.status == 'Quebrado' || dado.status == 'QUEBRADO') {
+        } else if(equipamento.status == 'Quebrado' || equipamento.status == 'QUEBRADO') {
             return "<span class='label label-danger'>Quebrado</span>";
         }
     }
 
     // Ao selecionar equipamento, os dados da linha da tabela serão adicionados a um vetor
     $(document).on('click','.btns-eq',function () {
-
-        var equipamentos = [];
         var id = $(this).attr('id-equip');
-        $('#trequip-'+id).find('td').each(function () {
-            equipamentos.push($(this).text());
-        });
-        equipamento.id = id;
-        equipamento.nome = equipamentos[0];
-        equipamento.tombo = equipamentos[1];
-        equipamento.numSerie = equipamentos[2];
-        equipamento.status = equipamentos[3];
-        gerarInputsEquipamento(equipamento);
+        var posicao = $(this).attr('posicao');
+
+        criarInputHidden(listaEquipamentos[posicao], posicao);
+        gerarInputsEquipamento(listaEquipamentos[posicao], posicao);
+
         $('#equipamentoCadastrado').removeAttr("hidden");
+
+        // limparInputs();
+        // editando = false;
+        //
+        // $btnsEditar = $(".editar-equipamento");
+        // $btnsRemover = $(".remover-equipamento");
+        // atribuirListennerBtnEdicao($btnsEditar);
+        // atribuirListennerBtnRemocao($btnsRemover);
     });
 
-    function gerarInputsEquipamento(equipamento) {
-        // $equipamentoContainer.empty();
-        $equipamentoContainer.prepend(
-            "<div id='child"+equipamento.id+"' class='panel panel-primary'>" +
-            "<input type='hidden' name='manutencao.equipamento.id' value='" + equipamento.id+ "' />" +
-            "<div class='panel-heading'>" +
-            "<h3 class='panel-title'>Equipamento</h3></div>"+
-            "<div class='panel-body'>"+
-            "<a class='editar-tarefa' id-equip='"+equipamento.id+"' class='editar-tarefa' href='#myModal' data-toggle='modal'" +
-            "style='float: right;'><i class='fa fa-pencil-square-o'></i></a>" +
-            "<a id='remover-tarefa' class='remover-tarefa' href='#' " +
-            "style='margin-right: 4px; float: right;'><i class='fa fa-trash-o'></i></a>" +
-            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-            "Nome: " + equipamento.nome +"</span><br>"+
-            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-            "Tombo: " + equipamento.tombo +"</span><br>"+
-            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-            "Num. Série: " + equipamento.numSerie +"</span><br>"+
-            "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
-            "Status: " + customizarStatus(equipamento)+"</span>" +
-            "</div>" +
-            "</div>"
-        );
+    function criarInputHidden(equipamento, pos) {
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden id='equipamento-termo" + pos + "' name='termo.equipamentos[" + pos + "].id' " +
+            "value='" + equipamento.id + "' />");
     }
 
-    // Criação de NOVO EQUIPAMENTO via ajax
-    $(document).on('click','#cadastro-equip',function () {
-        console.log("Criar equipamento ajax");
-        var url = $('#urlSalvarEquipamento').val();
-        var equipamento = {
-            nome: $('#nome-equipamento').val(),
-            tombo: $('#tombo-equipamento').val(),
-            numSerie: $('#nserie-equipamento').val(),
-            status: $('#status-equipamento').val(),
-            setor: $('#setor-equipamento').val(),
-            descricao: $('#descricao-equipamento').val(),
-            tipo: $('#tipo-equipamento').val()
-        };
+    function gerarInputsEquipamento(equipamento) {
+        // $equipamentosContainer.empty();
+        $equipamentosContainer.prepend(
+            "<div id='child"+equipamento.id+"' class='panel panel-primary'>" +
+                "<div class='panel-heading'>" +
+                "<h3 class='panel-title'>Equipamento</h3></div>"+
+                "<div class='panel-body'>"+
+                "<a id='editar-equipamento' class='editar-equipamento' id-equip='"+equipamento.id+"' href='#myModal' data-toggle='modal'" +
+                "style='float: right;'><i class='fa fa-pencil-square-o'></i></a>" +
+                "<a id='remover-equipamento' class='remover-equipamento' href='#' " +
+                "style='margin-right: 4px; float: right;'><i class='fa fa-trash-o'></i></a>" +
+                "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+                "Nome: " + equipamento.nome +"</span><br>"+
+                "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+                "Tombo: " + equipamento.tombo +"</span><br>"+
+                "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+                "Num. Série: " + equipamento.numSerie +"</span><br>"+
+                "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+                "Status: " + customizarStatus(equipamento)+"</span>" +
+                "</div>" +
+            "</div>"
+        );
+        $btnsRemover = $('.remover-equipamento');
+        atribuirListennerBtnRemocao($btnsRemover);
+        console.log("AQUI TUDO BEM");
+    }
 
-        console.log(url);
-
-        $.ajax({
-            url: "/equipamento/salvarAjax",
-            type: 'POST',
-            data: { "equipamento.nome" : equipamento.nome,
-                "equipamento.tombo" : equipamento.tombo,
-                "equipamento.numeroSerie" :equipamento.numSerie,
-                "equipamento.status" : equipamento.status,
-                "equipamento.setor.id" : equipamento.setor,
-                "equipamento.descricao" : equipamento.descricao,
-                "equipamento.tipo" : equipamento.tipo }
-
-        }).done(function (data) {
-            console.log("OK ");
-            console.log(data);
-            equipamento.id = data.id;
-            gerarInputsEquipamento(equipamento);
-            $('#equipamentoCadastrado').removeAttr("hidden");
-
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.log("Erro");
-            alert("O serviço não foi salvo!");
+    function remover(posicao) {
+        listaEquipamentos.splice(posicao,1);
+        $equipamentosContainer.empty();
+        $containerInputsEquipamento.empty();
+        var cont = 0;
+        listaEquipamentos.forEach(function (equipamento) {
+            criarInputsHidden($form, equipamento, cont);
+            cont = cont + 1;
         });
+    }
 
-    });
+    function atribuirListennerBtnRemocao($btnRemocao) {
+        $btnRemocao.off('click');
+        $btnRemocao.each(function () {
+            $(this).click(function () {
+                var posicao = $(this).attr('posicao');
+                posicaoEditavel = posicao;
+                remover(posicao);
+            });
+        });
+    }
 
     $(document).on('click', '.editar-tarefa', function () {
         console.log("ID equip: " + $(this).attr('id-equip'));

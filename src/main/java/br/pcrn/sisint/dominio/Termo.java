@@ -2,6 +2,7 @@ package br.pcrn.sisint.dominio;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Termo extends Entidade{
     private String codigoSei;
     private String nomeServidor;
     private String matriculaServidor;
-    private LocalDate horaRecebimento;
+    private LocalDateTime horaRecebimento;
     private boolean recebido;
     private boolean deletado;
 
@@ -123,11 +124,11 @@ public class Termo extends Entidade{
         this.matriculaServidor = matriculaServidor;
     }
 
-    public LocalDate getHoraRecebimento() {
+    public LocalDateTime getHoraRecebimento() {
         return horaRecebimento;
     }
 
-    public void setHoraRecebimento(LocalDate horaRecebimento) {
+    public void setHoraRecebimento(LocalDateTime horaRecebimento) {
         this.horaRecebimento = horaRecebimento;
     }
 

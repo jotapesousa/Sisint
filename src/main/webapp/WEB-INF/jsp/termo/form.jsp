@@ -17,6 +17,7 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/js/termo/termo.js"></script>
         <script src="${ctx}/resources/js/termo/cadastroEquipamentos.js"></script>
+        <script src="${ctx}/resources/js/equipamentos/equipamento.js"></script>
     </jsp:attribute>
 
     <jsp:body>
@@ -27,6 +28,8 @@
             <div class="panel-body">
                 <form id="formTermo" class="form-horizontal" action="${linkTo[TermoController].salvar}" method="post">
                     <input type="hidden" name="termo.id" value="${termo.id}">
+                    <div id="container-inputs-equipamento">
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Número do termo: </label>
                         <div class="col-sm-1">

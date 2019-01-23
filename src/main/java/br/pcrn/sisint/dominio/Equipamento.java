@@ -33,6 +33,9 @@ public class Equipamento extends Entidade{
     @OneToMany(fetch = FetchType.LAZY)
     private List<Manutencao> manutencoes;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Termo> termos;
+
     @Override
     public Long getId() {
         return id;
@@ -99,5 +102,13 @@ public class Equipamento extends Entidade{
 
     public void setTipo(TipoEquipamento tipo) {
         this.tipo = tipo;
+    }
+
+    public List<Termo> getTermos() {
+        return termos;
+    }
+
+    public void setTermos(List<Termo> termos) {
+        this.termos = termos;
     }
 }

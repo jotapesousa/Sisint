@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -66,6 +67,12 @@ public class TermoController extends Controlador {
             termo.setAno(LocalDate.now().getYear());
             termo.setDataCriacao(LocalDate.now());
             termo.setTecnico(usuarioLogado.getUsuario());
+        }
+        if (termo.isRecebido()) {
+            termo.setHoraRecebimento(LocalDateTime.now());
+            for (Equipamento equipamento : termo.getEquipamentos()) {
+                equipamento.setSetor(termo.getSetor());
+            }
         }
 
         this.dao.salvar(termo);
