@@ -13,7 +13,6 @@ $(document).ready( function () {
     var url = "";
     var $containerInputsEquipamento = $('#container-inputs-equipamento');
 
-
     // Muda a aba de pesquisa caso o CheckBox para pesquisar por tombo esteja selecionado
     $('#check-ns').change(function () {
         if($(this).is(':checked')) {
@@ -97,6 +96,50 @@ $(document).ready( function () {
             return "<span class='label label-danger'>Quebrado</span>";
         }
     }
+
+
+    // Criação de novo EQUIPAMENTO via AJAX
+    $(document).on('click','#cadastro-equip',function () {
+        var url = $('#urlSalvarEquipamento').val();
+        var equipamento = {
+            nome: $('#nome-equipamento').val(),
+            tombo: $('#tombo-equipamento').val(),
+            numSerie: $('#nserie-equipamento').val(),
+            status: $('#status-equipamento').val(),
+            setor: $('#setor-equipamento').val(),
+            descricao: $('#descricao-equipamento').val(),
+            tipo: $('#tipo-equipamento').val()
+        };
+
+        $.ajax({
+            url: "/equipamento/salvarAjax",
+            type: 'POST',
+            data: { "equipamento.nome" : equipamento.nome,
+                "equipamento.tombo" : equipamento.tombo,
+                "equipamento.numeroSerie" :equipamento.numSerie,
+                "equipamento.status" : equipamento.status,
+                "equipamento.setor.id" : equipamento.setor,
+                "equipamento.descricao" : equipamento.descricao,
+                "equipamento.tipo" : equipamento.tipo
+            }
+        }).done(function (data) {
+            console.log("OK ");
+            equipamento.id = data.id;
+
+            var cont = 0;
+            $containerInputsEquipamento.empty();
+            listaEquipamentos.forEach(function (equipamento) {
+                criarInputsHidden($form, equipamento, cont);
+                cont = cont + 1;
+            });
+
+            gerarInputsEquipamento(equipamento, cont);
+            $('#equipamentoCadastrado').removeAttr("hidden");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log("Erro");
+            alert("O serviço não foi salvo!");
+        });
+    });
 
     // Ao selecionar equipamento, os dados da linha da tabela serão adicionados a um vetor
     $(document).on('click','.btns-eq',function () {

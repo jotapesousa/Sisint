@@ -18,6 +18,7 @@
         <script src="${ctx}/resources/js/termo/termo.js"></script>
         <script src="${ctx}/resources/js/termo/cadastroEquipamentos.js"></script>
         <script src="${ctx}/resources/js/equipamentos/equipamento.js"></script>
+        <script src="${ctx}/resources/plugins/jquery-maskmoney-master/dist/jquery.maskMoney.min.js"></script>
     </jsp:attribute>
 
     <jsp:body>
@@ -33,7 +34,8 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Número do termo: </label>
                         <div class="col-sm-1">
-                            <input class="form-control" name="termo.numero" type="text" value="${termo.numero}" disabled>
+                            <input id="numeroTermo" class="form-control" name="termo.numero" type="text" value="${termo.numero}"
+                                   maxlength="4" pattern="[0-9]">
                         </div>
 
                     </div>
@@ -46,25 +48,25 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Código SEI: </label>
                         <div class="col-sm-2">
-                            <input class="form-control" name="termo.codigoSei" type="text" value="${termo.codigoSei}">
+                            <input id="codSeiTermo" class="form-control" name="termo.codigoSei" type="text" value="${termo.codigoSei}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Matrícula do Servidor: </label>
                         <div class="col-sm-2">
-                            <input class="form-control" name="termo.matriculaServidor" type="text" value="${termo.matriculaServidor}">
+                            <input id="matServidorTermo" class="form-control" name="termo.matriculaServidor" type="text" value="${termo.matriculaServidor}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Recebido Por: </label>
                         <div class="col-sm-3">
-                            <input class="form-control" name="termo.nomeServidor" type="text" value="${termo.nomeServidor}">
+                            <input id="nomeServidorTermo" class="form-control" name="termo.nomeServidor" type="text" value="${termo.nomeServidor}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Setor: </label>
                         <div class="col-sm-3">
-                            <select class="form-control" id="termo-setor" name="termo.setor.id" type="text">
+                            <select id="termo-setor" class="form-control" name="termo.setor.id" type="text" required>
                                 <option value=""></option>
                                 <c:forEach items="${setores}" var="setor">
                                     <c:if test="${setor.valor == termo.setor.id}">
@@ -77,15 +79,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Equipamentos: </label>
-                        <div class="col-sm-1">
-                            <button id="inserirEq" type="button"class="btn btn-success"
-                                    data-toggle="modal" data-target="#modalEquipamento">Inserir Equipamento</button>
-                        </div>
-                    </div>
                     <div align="right">
-                        <button class="btn btn-primary" type="submit">Salvar</button>
+                            <button id="confirmarTermo" type="button"class="btn btn-success" disabled>Confirmar</button>
+
+                            <button id="inserirEq" type="button"class="btn btn-success"
+                                    data-toggle="modal" data-target="#modalEquipamento" style="display: none;">Inserir Equipamento</button>
+                            <button id="salvarTermo" class="btn btn-primary" type="submit" style="display: none;">Salvar</button>
+
+
                     </div>
                 </form>
 

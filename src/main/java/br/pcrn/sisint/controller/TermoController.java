@@ -5,6 +5,7 @@ import br.com.caelum.vraptor.jasperreports.Report;
 import br.com.caelum.vraptor.jasperreports.download.ReportDownload;
 import br.com.caelum.vraptor.jasperreports.formats.ExportFormats;
 import br.com.caelum.vraptor.observer.download.Download;
+import br.com.caelum.vraptor.view.Results;
 import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.SetorDao;
 import br.pcrn.sisint.dao.TermoDao;
@@ -99,6 +100,23 @@ public class TermoController extends Controlador {
     public void detalhes(Long id) {
         Termo termo = dao.buscarPorId(id);
         resultado.include("termo", termo);
+    }
+
+    @Post
+    @Transacional
+    public void salvarAjax(Termo termo) {
+        termo.setNumero(termoNegocio.numTermo() + 1);
+        termo.setAno(LocalDate.now().getYear());
+        termo.setDataCriacao(LocalDate.now());
+        termo.setTecnico(usuarioLogado.getUsuario());
+
+        if (termo.isRecebido()) {
+            termo.setHoraRecebimento(LocalDateTime.now());
+        }
+
+        dao.salvar(termo);
+        resultado.use(Results.json()).withoutRoot().from(termo).recursive().serialize();
+        resultado.redirectTo(this).editar(termo.getId());
     }
 
     @Get
