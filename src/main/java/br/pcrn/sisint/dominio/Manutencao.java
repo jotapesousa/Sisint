@@ -21,6 +21,9 @@ public class Manutencao extends Entidade {
     @Column(columnDefinition  = "text")
     private String descricao;
 
+    @Column(columnDefinition  = "text")
+    private String descricaoFinal;
+
     @ManyToOne
     private Setor setor;
 
@@ -138,5 +141,13 @@ public class Manutencao extends Entidade {
 
     public void setDeletado(boolean deletado) {
         this.deletado = deletado;
+    }
+
+    public String getDescricaoFinal() {
+        return descricaoFinal;
+    }
+
+    public void setDescricaoFinal(String descricaoFinal) {
+        this.descricaoFinal = descricaoFinal;
     }
 }

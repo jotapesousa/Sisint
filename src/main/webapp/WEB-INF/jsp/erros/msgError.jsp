@@ -19,7 +19,6 @@
 <c:if test="${not empty mensagem}">
     <c:if test="${sucesso == mensagem.category}">
     <div class="alert alert-success">
-
         <strong><fmt:message key="${mensagem.message}"/></strong>
     </div>
     </c:if>

@@ -21,4 +21,8 @@
         <name>layout</name>
         <path>/WEB-INF/tags/layout.tagx</path>
     </tag-file>
+    <tag-file>
+        <name>header</name>
+        <path>/WEB-INF/tags/componentes/header.tagx</path>
+    </tag-file>
 </taglib>

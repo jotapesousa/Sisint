@@ -270,18 +270,18 @@
                                     <!-- /.nav-second-level -->
                                 </li>
                             </c:if>
-                            <li>
-                                <a href="#"><i class="fa fa-file-text fa-fw"><c:out value=""/></i> Termos<i class="fa arrow"><c:out value=""/></i></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="${linkTo[TermoController].form}">Cadastrar</a>
-                                    </li>
-                                    <li>
-                                        <a href="${linkTo[TermoController].lista}">Ver Todos</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
+                            <!--<li>-->
+                                <!--<a href="#"><i class="fa fa-file-text fa-fw"><c:out value=""/></i> Termos<i class="fa arrow"><c:out value=""/></i></a>-->
+                                <!--<ul class="nav nav-second-level">-->
+                                    <!--<li>-->
+                                        <!--<a href="${linkTo[TermoController].form}">Cadastrar</a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a href="${linkTo[TermoController].lista}">Ver Todos</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                                <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
+                            <!--</li>-->
                             <li>
                                 <a href="${linkTo[InicioController].info}"><i class="fa fa-info-circle fa-fw"><c:out value=""/></i> Informações Gerais</a>
                             </li>

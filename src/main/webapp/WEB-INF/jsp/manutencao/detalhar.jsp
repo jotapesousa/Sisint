@@ -58,6 +58,9 @@
                                 <label for="manutencao-descricao">Descrição da Manutenção: </label>
                                 <span id="manutencao-descricao">${manutencao.descricao}</span>
                                 <br>
+                                <label for="manutencao-descricaoFinal" style="margin-top: 10px; color: darkred;">Descrição Final: </label>
+                                <span id="manutencao-descricaoFinal">${manutencao.descricaoFinal}</span>
+                                <br>
                             </div>
                         </div>
                     </div>

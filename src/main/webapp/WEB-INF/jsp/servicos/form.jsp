@@ -33,6 +33,7 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/js/servicos/form.js"></script>
         <script src="${ctx}/resources/js/servicos/tarefas.js"></script>
+        <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
         <script src="${ctx}/resources/js/servicos/btnTarefa.js"></script>
         <%--<script src="${ctx}/resources/js/servicos/adicionarTarefa.js"></script>--%>
     </jsp:attribute>
@@ -67,16 +68,14 @@
                             <div class="form-group col-md-4">
                                 <label for="titulo-servico">Título</label>
                                 <input type="text" minlength="5" class="form-control" id="titulo-servico" required="true"
-                                       value="${servico.titulo}"
-                                       placeholder="Titulo do serviço"
-                                       name="servico.titulo"/>
+                                       value="${servico.titulo}" placeholder="Titulo do serviço" name="servico.titulo"/>
                             </div>
                             <div class="form-group col-md-2">
-                                <label for="titulo-servico">Telefone para Retorno: </label>
-                                <input type="text" class="form-control" id="telefone-servico" required="true"
-                                       value="${servico.titulo}"
+                                <label for="telRetorno-servico">Telefone para Retorno: </label>
+                                <input type="text" class="form-control" id="telRetorno-servico" required="true"
+                                       value="${servico.telefoneRetorno}"
                                        placeholder="Telefone para retorno"
-                                       name="servico.titulo"/>
+                                       name="servico.telefoneRetorno"/>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="nomeSolicitante-servico">Nome do solicitante</label>
@@ -278,7 +277,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button id="btnSalvarTarefa" type="button" class="btn btn-primary" data-dismiss="modal">
+                            <button id="btnSalvarTarefa" type="button" class="btn btn-primary" data-dismiss="modal" disabled>
                                 Salvar
                             </button>
                         </div>

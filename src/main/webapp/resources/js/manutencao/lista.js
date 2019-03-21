@@ -51,8 +51,9 @@ $(document).ready( function () {
     $('#btnConcluirManutencao').each( function () {
         $(this).click( function () {
            var novaUrlConcluir = $('#btnConcluirManutencao').attr("href");
+           var descricaoFinal = $('#descricaoFinal-manutencao').val();
 
-           novaUrlConcluir += "&checkConserto=" + checarConserto;
+           novaUrlConcluir += "&checkConserto=" + checarConserto + "&descricaoFinal=" + descricaoFinal;
             $('#btnConcluirManutencao').attr("href", novaUrlConcluir);
             console.log($('#btnConcluirManutencao').attr("href"));
         });

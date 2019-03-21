@@ -19,7 +19,7 @@ $(document).ready(function () {
     var id;
     var titulo;
     var tecnico;
-    var tecnico2;
+    var tecnicoNome;
     var descricao;
     var dataFechamento;
     var status;
@@ -77,6 +77,7 @@ $(document).ready(function () {
             descricao: descricao.val(),
             tecnico: {
                 id: tecnico.val(),
+                nome: tecnicoNome
             },
             pendente: pendente.is(':checked'),
             codigoTarefa:"",
@@ -115,6 +116,7 @@ $(document).ready(function () {
             type: 'GET',
             url: url
         }).done(function (data) {
+            console.log(data);
             listaTarefas.concat(criarTarefasEInserirNaLista(data));
             var cont = 0;
             listaTarefas.forEach(function (tarefa) {
@@ -141,7 +143,8 @@ $(document).ready(function () {
                 dataFechamento: dado.dataFechamento,
                 descricao: dado.descricao,
                 tecnico: {
-                    id: dado.tecnicoId
+                    id: dado.tecnicoId,
+                    nome: dado.tecnicoNome
                 },
                 codigoTarefa: dado.codigoTarefa,
                 dataAbertura: dado.dataAbertura,
@@ -207,7 +210,9 @@ $(document).ready(function () {
                     "<i class='fa fa-pencil-square-o'></i></a>" +
                 "<a id='remover-tarefa' class='remover-tarefa' href='#' posicao='"+ i +"' style='margin-right: 4px; float: right;'>" +
                     "<i class='fa fa-trash-o'></i></a>" +
-                "<h4 class='list-group-item-heading'>"+tarefa.titulo+"</h4>"+
+                "<h4 class='list-group-item-heading'>"+tarefa.titulo+"</h4>" +
+                "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
+                    "Técnico: "+ tarefa.tecnico.nome + " </span><br>" +
                 "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
                     "Previsão: "+moment(tarefa.dataFechamento, "YYYY-MM-DD").format("DD/MM/YYYY")+"</span><br>"+
                 "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
@@ -281,7 +286,7 @@ $(document).ready(function () {
         id = $("input[name='tarefa.id']");
         titulo = $("input[name='tarefa.titulo']");
         tecnico = $("select[name='tarefa.tecnico']");
-        tecnico2 = $("#status-tarefa :selected");
+        tecnicoNome = $("#tecnico-tarefa :selected").text();
         descricao = $("textarea[name='tarefa.descricao']");
         dataFechamento = $("input[name='tarefa.dataFechamento']");
         status = $("select[name='tarefa.statusTarefa']");
@@ -290,6 +295,8 @@ $(document).ready(function () {
         prazo = moment(dataFechamento.val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         dateteste = moment.utc(prazo);
         prazo = dateteste.toISOString();
+
+        console.log("tecnico nome: " + tecnicoNome);
     }
 
     function limparInputs() {

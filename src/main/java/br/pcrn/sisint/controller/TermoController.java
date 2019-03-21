@@ -6,6 +6,7 @@ import br.com.caelum.vraptor.jasperreports.download.ReportDownload;
 import br.com.caelum.vraptor.jasperreports.formats.ExportFormats;
 import br.com.caelum.vraptor.observer.download.Download;
 import br.com.caelum.vraptor.view.Results;
+import br.pcrn.sisint.anotacoes.Seguranca;
 import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.SetorDao;
 import br.pcrn.sisint.dao.TermoDao;
@@ -28,6 +29,7 @@ import java.util.List;
 
 
 @Controller
+@Seguranca(tipoUsuario = TipoUsuario.TECNICO)
 public class TermoController extends Controlador {
 
     private TermoNegocio termoNegocio;

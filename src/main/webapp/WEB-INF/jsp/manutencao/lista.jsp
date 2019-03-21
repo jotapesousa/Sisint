@@ -164,6 +164,11 @@
                                 <input type="checkbox" id="checkConserto" name="statusEquipamento" value="OK" checked/> Equipamento Consertado?
                             </label>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label" for="descricaoFinal-manutencao" style="margin-top: 15px;">Descrição:</label>
+                            <textarea class="form-control" name="descricaoFinal" rows="4"
+                                      id="descricaoFinal-manutencao">${manutencao.descricaoFinal}</textarea>
+                        </div>
                     </div>
                     <div id="btns-modal" class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

@@ -152,10 +152,11 @@ public class ManutencaoController extends ControladorSisInt<Manutencao> {
     }
 
     @Transacional
-    public void concluir(Long id, String checkConserto) {
+    public void concluir(Long id, String checkConserto, String descricaoFinal) {
         System.out.println(checkConserto);
         Manutencao manutencao = manutencaoDao.buscarPorId(id);
         manutencao.setStatus(StatusManutencao.CONCLUIDO);
+        manutencao.setDescricaoFinal(descricaoFinal);
         manutencaoNegocio.verificarConclusao(manutencao, checkConserto);
         manutencaoDao.salvar(manutencao);
         resultado.redirectTo(this).lista();

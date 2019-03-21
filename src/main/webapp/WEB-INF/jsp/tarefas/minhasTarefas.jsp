@@ -114,7 +114,7 @@
         <!-- MODAL ADICIONAR NOTA -->
         <div class="modal fade" id="modalNota" role="dialog">
             <div class="modal-dialog">
-                <form action="${linkTo[TarefasController].salvarNota}">
+                <form action="${linkTo[TarefasController].salvarNota}" accept-charset="ISO-8859-1">
                     <input type="hidden" id="id_tarefa_nota" name="nota.tarefa.id" value=""/>
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -147,7 +147,8 @@
                     </div>
                     <div class="modal-body">
                         <h5> Adicionar Nota:</h5>
-                        <textarea id="textoNota" class="form-control" rows="5"></textarea>
+                        <textarea type="text" id="nota_tarefaConclusao" name="nota.descricao" class="form-control"
+                                  rows="5" value="${nota.descricao}"></textarea>
                     </div>
                     <div id="btns-modal" class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

@@ -1,0 +1,19 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+    <jsp:directive.attribute name="titulo" required="true" rtexprvalue="true" description="Chave do titulo"/>
+
+    <div class="panel" style="border-radius: 0px; border: 1px solid #dddddd; margin-bottom: 8px;">
+        <div class="panel-body" style="padding-right: 16px; padding-left: 16px; padding-top: 4px; padding-bottom: 4px;">
+            <div class="row">
+                <h4 class="col-md-10">${titulo}</h4>
+                <div id="btns-header" class="col-md-2" align="right" style="float:right; margin-top: 8px;">
+                    <a type="button" href="${linkTo[InicioController].index}">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

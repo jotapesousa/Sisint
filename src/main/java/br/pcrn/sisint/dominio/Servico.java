@@ -3,6 +3,7 @@ package br.pcrn.sisint.dominio;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by samue on 09/09/2017.
@@ -16,10 +17,9 @@ public class Servico extends Entidade{
 
     @Column(columnDefinition = "text")
     private String titulo;
-
     private LocalDate dataAbertura;
-
     private LocalDate dataFechamento;
+    private String telefoneRetorno;
 
     @Column(columnDefinition = "text")
     private String descricao;
@@ -173,6 +173,14 @@ public class Servico extends Entidade{
 
     public void setAssumirServico(boolean assumirServico) {
         this.assumirServico = assumirServico;
+    }
+
+    public String getTelefoneRetorno() {
+        return telefoneRetorno;
+    }
+
+    public void setTelefoneRetorno(String telefoneRetorno) {
+        this.telefoneRetorno = telefoneRetorno;
     }
 
     @Override

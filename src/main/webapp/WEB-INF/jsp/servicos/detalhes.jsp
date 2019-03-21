@@ -22,31 +22,32 @@
                 font-size: 13px;
                 color: steelblue;
             }
-
             .datepicker {
                 z-index: 1151 !important;
             }
-
             .panel-title {
                 border-bottom: 1px solid;
+            }
+            .fonte {
+                font-size: 16px;
             }
         </style>
     </jsp:attribute>
 
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/js/init.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                var nome;
-                $(".badge").each(function () {
-                    nome = $(this).text();
-                    nome = moment(nome);
-                    nome = moment(nome).format("DD/MM/YYYY HH:mm:ss");
-                    $(this).text(nome);
-                    console.log("Nome:" +nome);
-                })
-            });
-        </script>
+        <%--<script>--%>
+            <%--$(document).ready(function() {--%>
+                <%--var nome;--%>
+                <%--$(".badge").each(function () {--%>
+                    <%--nome = $(this).text();--%>
+                    <%--nome = moment(nome);--%>
+                    <%--nome = moment(nome).format("DD/MM/YYYY HH:mm:ss");--%>
+                    <%--$(this).text(nome);--%>
+                    <%--console.log("Nome:" +nome);--%>
+                <%--})--%>
+            <%--});--%>
+        <%--</script>--%>
     </jsp:attribute>
 
     <jsp:body>
@@ -56,31 +57,48 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <label for="servico-titulo">Título serviço: </label>
-                        <span id="servico-titulo">${servico.titulo}</span>
-                        <br>
-                        <label for="servico-tecnico">Técnico reponsável: </label>
-                        <span id="servico-tecnico">${servico.tecnico.nome}</span>
-                        <br>
-                        <label for="servico-setor">Setor atendido: </label>
-                        <span id="servico-setor">${servico.setor.nome}</span>
-                        <br>
-                        <label for="servico-prioridade">Prioridade do serviço: </label>
-                        <span id="servico-prioridade">${servico.prioridade.chave}</span>
-                        <br>
-                        <label for="servico-codigo">Código do serviço: </label>
-                        <span id="servico-codigo">${servico.codigoServico}</span>
-                        <br>
-                        <label for="servico-dataAbertura">Data de abertura: </label>
-                        <span id="servico-dataAbertura" class="date-column">${servico.dataAbertura}</span>
-                        <br>
-                        <label for="servico-dataFechamento">Prazo Final: </label>
-                        <span id="servico-dataFechamento" class="date-column">${servico.dataFechamento}</span>
-                        <br>
-                        <label for="servico-descricao">Descrição do serviço: </label>
-                        <span id="servico-descricao">${servico.descricao}</span>
-                        <br>
-                    </div>
+                        <div class="form-group col-md-4">
+                            <label for="titulo-servico">Título</label>
+                            <input type="text" class="form-control" id="titulo-servico" value="${servico.titulo}"
+                                   name="servico.titulo" disabled/>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="telRetorno-servico">Telefone para Retorno: </label>
+                            <input type="text" class="form-control" id="telRetorno-servico" value="${servico.telefoneRetorno}"
+                                   name="servico.telefoneRetorno" disabled/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="nomeSolicitante-servico">Nome do solicitante</label>
+                            <input type="text" class="form-control" id="nomeSolicitante-servico" value="${servico.nomeSolicitante}"
+                                  name="servico.nomeSolicitante" disabled/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="setor-servico">Setor solicitante</label>
+                            <input id="setor-servico" type="text" class="form-control" value="${servico.setor.nome}"
+                                name="servico.setor.chave" disabled/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="servico-dataAbertura">Data de Abertura: </label>
+                            <input id="servico-dataAbertura" class="form-control date-columnInput" value="${servico.dataAbertura}"
+                                   name="servico.dataAbertura" disabled />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="servico-dataFinal">Prazo Final: </label>
+                            <input id="servico-dataFinal" class="form-control date-columnInput" value="${servico.dataFechamento}" disabled />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="servico-tecnico">Técnico Responsável: </label>
+                            <input id="servico-tecnico" class="form-control fonte" name="tarefa.tecnico.nome"
+                                   value="${servico.tecnico.nome}" disabled/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="prioridade-servico">Prioridade</label> <br>
+                            <span id="prioridade-servico" class="label label-prioridade fonte">${servico.prioridade.chave}</span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="servico-descricao">Descrição: </label> <br>
+                            <span id="servico-descricao" class="fonte">${servico.descricao}</span>
+                        </div>
                 </div>
                     <c:if test="${not empty servico.tarefas}">
                     <div class="panel-body">

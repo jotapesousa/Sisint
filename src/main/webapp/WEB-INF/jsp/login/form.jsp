@@ -13,6 +13,7 @@
 <head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="${ctx}/resources/css/form-signin.css" rel="stylesheet" />
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -22,27 +23,18 @@
     <title>Sistema de Integração - PCRN</title>
 </head>
 <body style="background-color: #3498db;">
-<jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>
 <div class="container">
     <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-
-
-    <div class="panel painel-sisint col-md-4 col-md-offset-4" style="margin-top:100px;">
-        <div class="panel-heading" align="center">
-            <img src="${ctx}/resources/imagens/logo-transp.png" style="margin-top: 16px; margin-left: -20px;"/>
-        </div>
-        <div class="panel-body" style="padding-bottom: 75px;">
+    <div class="panel-body">
+        <div class="form-signin" style="padding-bottom: 50px; border-radius: 10px;">
+            <div class="panel-heading" align="center">
+                <img src="${ctx}/resources/imagens/logo-transp.png" style="width: 100%;"/>
+            </div>
             <form method="post" action="${linkTo[LoginController].login}">
-                <div class="input-group" style="margin-bottom: 8px;">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="login-usuario" type="text" class="form-control" name="usuario.login" placeholder="Login">
-                </div>
-                <div class="input-group" style="margin-bottom: 8px;">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="senha-usuario" type="password" class="form-control" name="usuario.senha" placeholder="Senha">
-                </div>
-
-                <button class="btn btn-primary col-md-3 col-md-offset-9">Entrar</button>
+                <input id="login-usuario" type="text" class="form-control" name="usuario.login" placeholder="Login" autofocus>
+                <input id="senha-usuario" type="password" class="form-control" name="usuario.senha" placeholder="Senha">
+                <jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>
+                <button class="btn btn-primary btn-lg btn-block">Entrar</button>
             </form>
         </div>
     </div>

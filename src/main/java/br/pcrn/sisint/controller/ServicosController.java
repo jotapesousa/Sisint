@@ -170,6 +170,7 @@ public class ServicosController extends ControladorSisInt<Servico> {
                     jsonObject.addProperty("descricao", tarefa.getDescricao());
                     jsonObject.addProperty("servicoId", tarefa.getServico().getId());
                     jsonObject.addProperty("tecnicoId", tarefa.getTecnico().getId());
+                    jsonObject.addProperty("tecnicoNome", tarefa.getTecnico().getNome());
                     jsonObject.addProperty("codigoTarefa", tarefa.getCodigoTarefa());
                     jsonObject.addProperty("dataAbertura", tarefa.getDataAbertura().toString());
                     jsonObject.addProperty("pendente", pendente);
@@ -254,7 +255,7 @@ public class ServicosController extends ControladorSisInt<Servico> {
         tarefa.setTecnico(servico.getTecnico());
         tarefa.setDeletado(false);
         tarefa.setServico(servico);
-        tarefa.setStatusTarefa(StatusTarefa.EM_EXECUCAO);
+        tarefa.setStatusTarefa(StatusTarefa.EM_ESPERA);
         tarefas.add(tarefa);
         servico.setTarefas(tarefas);
         servicoDao.salvar(servico);

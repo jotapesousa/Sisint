@@ -38,10 +38,14 @@ $(document).ready(function () {
 
     $(".date-column").each(function () {
         var data =  $(this).text();
-        console.log("HE " + data);
-
         data = moment(data, 'YYYY-MM-DD').format('DD/MM/YYYY');
         $(this).text(data);
+    });
+
+    $(".date-columnInput").each( function () {
+        var valorData = $(this).val();
+        valorData = moment(valorData, 'YYYY-MM-DD').format('DD/MM/YYYY');
+        $(this).val(valorData);
     });
 
     $('.alert').fadeOut(7000);
