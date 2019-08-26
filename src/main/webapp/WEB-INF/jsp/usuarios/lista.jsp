@@ -11,7 +11,7 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/servicos/lista.js"></script>
+        <script src="${ctx}/resources/js/usuarios/usuario.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
             $(document).ready(function () {
@@ -67,6 +67,7 @@
                             <th>Login</th>
                             <th>Email</th>
                             <th>Telefone</th>
+                            <th>Tipo</th>
                             <th>Ações</th>
                         </tr>
                         </thead>
@@ -78,10 +79,12 @@
                                 <td>${usuario.login}</td>
                                 <td>${usuario.email}</td>
                                 <td>${usuario.telefone}</td>
+                                <td>${usuario.tipoUsuario.valor}</td>
                                 <td><a title="Detalhes" href="#"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
                                     <a title="Editar" href="${linkTo[UsuariosController].editar}?id=${usuario.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <c:if test="${usuarioLogado.isAdmin()}">
-                                        <a title="Remover" href="${linkTo[UsuariosController].remover}?id=${usuario.id}"><i class="fa fa-trash fa-lg"></i></a></td>
+                                        <a title="Desativar" class="desativar-usuario" id-usuario="${usuario.id}"
+                                           href="#modalDesativar" data-toggle="modal"><i class="fa fa-times fa-lg"></i></a></td>
                                     </c:if>
                             </tr>
                         </c:forEach>
@@ -90,6 +93,25 @@
                     </table>
                 </div>
             </div>
+
+            <!-- MODAL DESATIVAR USUARIO -->
+            <div class="modal fade" id="modalDesativar" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Desativar Usuário</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Deseja realmente desativar o usuário?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <a id="btnDesativar" class="btn btn-danger" href="${linkTo[UsuariosController].remover}?id=">Desativar</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </div>
     </jsp:body>
 </tags:layout>

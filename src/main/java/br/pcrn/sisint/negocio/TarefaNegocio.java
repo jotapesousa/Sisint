@@ -28,6 +28,10 @@ public class TarefaNegocio {
     public void salvar(Tarefa tarefa) {
         Tarefa tarefaBanco = tarefaDao.buscarPorId(tarefa.getId());
 
+        if (tarefa.getNotas().get(0).getDescricao() == null) {
+            tarefa.getNotas().clear();
+        }
+
         String mensagemLog = "O usuário " + usuarioLogado.getUsuario().getNome() + " alterou a tarefa. " + compararTarefaEGerarLog(tarefa, tarefaBanco);
         LogServico logServico = new LogServico();
         logServico.setLog(mensagemLog);

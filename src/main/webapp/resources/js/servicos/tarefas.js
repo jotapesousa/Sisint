@@ -15,9 +15,14 @@ $(document).ready(function () {
     var editando = false;
     var posicaoEditavel;
     var $btnsRemover = $('.remover-tarefa');
+    var btnRemTarefa = $('#btnRemTarefa').attr("href");
     var listaTarefas = [];
     var id;
     var titulo;
+    var telRetorno;
+    var solicitante;
+    var prioridade;
+    var setor;
     var tecnico;
     var tecnicoNome;
     var descricao;
@@ -48,7 +53,7 @@ $(document).ready(function () {
         $('#status-tarefa').val("EM_ESPERA");
 
         $('#btnSalvarTarefa').trigger('click');
-        $('#form-servico-tarefa').submit();
+        // $('#form-servico-tarefa').submit();
     });
 
     $('#btnAdicionarTarefa').click(function (e) {
@@ -58,7 +63,7 @@ $(document).ready(function () {
         limparInputs();
     });
 
-    var url = ctx + "/listaTarefas?id=" + idServico;
+    var url = "";
     var urlLogs = ctx + "/listaLogs?id=" + idServico;
     var $containerInputsTarefa = $('#container-inputs-tarefa');
 
@@ -99,6 +104,7 @@ $(document).ready(function () {
             criarInputsHidden($form, tarefa, cont);
             cont = cont + 1;
         });
+
         limparInputs();
         editando = false;
 
@@ -106,24 +112,28 @@ $(document).ready(function () {
         $btnsRemover = $(".remover-tarefa");
         atribuirListennerBtnEdicao($btnsEditar);
         atribuirListennerBtnRemocao($btnsRemover);
+
+        $('#form-servico-tarefa').submit();
     });
 
     requisicaoTarefas();
 
     function requisicaoTarefas() {
+        url = ctx + "/listaTarefas?id=" + idServico;
+
         $.ajax({
             dataType: 'json',
             type: 'GET',
             url: url
         }).done(function (data) {
-            console.log(data);
+            // console.log(data);
             listaTarefas.concat(criarTarefasEInserirNaLista(data));
             var cont = 0;
             listaTarefas.forEach(function (tarefa) {
                 criarInputsHidden($form, tarefa, cont);
                 cont = cont + 1;
             });
-            //console.log("tarefas: " + listaTarefas.length);
+            console.log("tarefas: " + listaTarefas.length);
         }).fail(function () {
         }).always(function () {
             $btnsEditar = $(".editar-tarefa");
@@ -208,7 +218,7 @@ $(document).ready(function () {
             "<div id='list-tarefa' class='list-group-item' >"+
                 "<a id='editar-tarefa' class='editar-tarefa' href='#myModal' data-toggle='modal' posicao='"+ i +"' style='float: right;'>" +
                     "<i class='fa fa-pencil-square-o'></i></a>" +
-                "<a id='remover-tarefa' class='remover-tarefa' href='#' posicao='"+ i +"' style='margin-right: 4px; float: right;'>" +
+                "<a id='remover-tarefa' class='remover-tarefa' href='#modalRemTarefa' data-toggle='modal' posicao='"+ i +"' style='margin-right: 4px; float: right;'>" +
                     "<i class='fa fa-trash-o'></i></a>" +
                 "<h4 class='list-group-item-heading'>"+tarefa.titulo+"</h4>" +
                 "<span class='list-group-item-text' style='size: 14px; margin-right: 16px;'>" +
@@ -249,21 +259,18 @@ $(document).ready(function () {
     }
 
     function remover(posicao) {
-        listaTarefas.splice(posicao,1);
-        $tarefasContainer.empty();
-        $containerInputsTarefa.empty();
-        var cont = 0;
-        listaTarefas.forEach(function (tarefa) {
-            criarInputsHidden($form, tarefa, cont);
-            cont = cont + 1;
-        });
+        var idRemover = listaTarefas[posicao].id;
+        var urlRemover = btnRemTarefa + idRemover;
+        console.log(urlRemover);
+        $('#btnRemTarefa').attr("href", urlRemover);
     }
 
-    function atribuirListennerBtnRemocao($btnRemocao) {
+    function atribuirListennerBtnRemocao($btnRemocao, tarefa, i) {
         $btnRemocao.off('click');
         $btnRemocao.each(function () {
             $(this).click(function () {
                 var posicao = $(this).attr('posicao');
+                var idTarefa = "'#tarefa-servico-"+posicao+"'";
                 posicaoEditavel = posicao;
                 remover(posicao);
             });
@@ -296,8 +303,27 @@ $(document).ready(function () {
         dateteste = moment.utc(prazo);
         prazo = dateteste.toISOString();
 
-        console.log("tecnico nome: " + tecnicoNome);
+        // console.log("tecnico nome: " + tecnicoNome);
     }
+
+    // function carregarInputsServico() {
+    //     id = $("input[name='servico.id']");
+    //     titulo = $("input[name='servico.titulo']");
+    //     telRetorno = $("input[name='servico.telefoneRetorno']");
+    //     solicitante = $("input[name='servico.nomeSolicitante']");
+    //     setor = $("select[name='servico.setor.id']");
+    //     tecnico = $("select[name='servico.tecnico.id']");
+    //     tecnicoNome = $("#servico-tecnico :selected").text();
+    //     descricao = $("textarea[name='servico.descricao']");
+    //     dataFechamento = $("input[name='servico.dataFechamento']");
+    //     prioridade = $("select[name='servico.prioridade']");
+    //
+    //     prazo = moment(dataFechamento.val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    //     dateteste = moment.utc(prazo);
+    //     prazo = dateteste.toISOString();
+    //
+    //     // console.log("tecnico nome: " + tecnicoNome);
+    // }
 
     function limparInputs() {
         id.val("");

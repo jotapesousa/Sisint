@@ -1,6 +1,9 @@
 
 $(document).ready(function () {
 
+    var $form = $('#form-manutencao-equip');
+    var $containerInputsEquipamento = $('#container-inputs-equipamento');
+
     var $equipamentoContainer = $('#equipamentoCadastrado');
     var $btnBuscarEquipamento = $('#btn-buscarEquipamento');
     var $inputEquipamentoPorNS = $('#busca-equipamentoPorNS');
@@ -161,6 +164,61 @@ $(document).ready(function () {
 
     });
 
+    function criarInputsHidden($form, equipamento, i) {
+        // $containerInputsEquipamento.empty();
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden id='equip-manutencao' name='manutencao.equipamento.id' value='" + equipamento.id + "'/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='manutencao.equipamento.nome' value='" + equipamento.nome + "'/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='manutencao.equipamento.tombo' value='" + equipamento.tombo + "'/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='manutencao.equipamento.numeroSerie' value='" + equipamento.numeroSerie + "'/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='manutencao.equipamento.tipo' value='" + equipamento.tipo.valor + "'/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='manutencao.equipamento.deletado' value='" + equipamento.deletado + "'/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='manutencao.equipamento.descricao' value='" + equipamento.descricao + "'/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='manutencao.equipamento.status' value='" + equipamento.status.valor + "'/>");
+
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].titulo' " +
+            "value='" + tarefa.titulo + "'" +
+            "/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].dataFechamento' " +
+            "value='" + tarefa.dataFechamento + "'" +
+            "/>");
+
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].statusTarefa' " +
+            "value='" + tarefa.statusTarefa.valor + "'" +
+            "/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].descricao' " +
+            "value='" + tarefa.descricao + "'" +
+            "/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].tecnico.id' " +
+            "value='" + tarefa.tecnico.id + "'" +
+            "/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].codigoTarefa' " +
+            "value='" + tarefa.codigoTarefa + "'" +
+            "/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].dataAbertura' " +
+            "value='" + tarefa.dataAbertura + "'" +
+            "/>");
+        $containerInputsEquipamento.prepend("<input " +
+            "hidden name='servico.tarefas[" + i + "].pendente' " +
+            "value='" + tarefa.pendente + "'" +
+            "/>");
+        criarWellTarefa(tarefa, i);
+    }
+
 
     function gerarInputsEquipamento(equipamento) {
         console.log(equipamento);
@@ -212,7 +270,6 @@ $(document).ready(function () {
     };
 
     $('#fecharModal').click( function () {
-        console.log("AQUI LIMPA");
         $('#busca-equipamentoPorNS').val("");
         $('#busca-equipamentoTombo').val("");
     });

@@ -69,6 +69,7 @@ function criarAviso() {
     elemento_pai.appendChild(elemento);
 }
 
+
 if ($(".datePicker").val()) {
     var data = moment($(".datePicker").val(), "YYYY-MM-DD").format("DD/MM/YYYY");
     $(".datePicker").val(data);

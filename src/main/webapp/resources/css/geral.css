@@ -60,3 +60,7 @@
     background-image: -webkit-radial-gradient(center top, circle farthest-side, #55e7ca 0%, #1abc9c 100%);
     background-image: radial-gradient(circle farthest-side at center top, #55e7ca 0%, #1abc9c 100%);
 }
+
+.alert {
+    position : relative;
+}

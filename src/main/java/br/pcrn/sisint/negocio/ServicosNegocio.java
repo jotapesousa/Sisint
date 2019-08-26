@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ServicosNegocio {
+
     private ServicoDao servicoDao;
     private SetorDao setorDao;
     private UsuarioDao usuarioDao;
@@ -38,7 +39,7 @@ public class ServicosNegocio {
     }
 
     public List<OpcaoSelect> geraListaOpcoesUsuarios() {
-        List<Usuario> todos = this.usuarioDao.todos().stream().collect(Collectors.toList());
+        List<Usuario> todos = this.usuarioDao.listarAptos().stream().collect(Collectors.toList());
         return todos.stream().map(
                 usuario -> new OpcaoSelect(usuario.getNome(), usuario.getId()))
                 .collect(Collectors.toList());

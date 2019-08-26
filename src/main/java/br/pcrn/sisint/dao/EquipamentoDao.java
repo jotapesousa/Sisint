@@ -12,4 +12,6 @@ public interface EquipamentoDao extends EntidadeDao<Equipamento> {
     List<Equipamento> listarPorNSerie(String codigo);
     Optional<Equipamento> buscarPorNSerie(String codigo);
     Optional<Equipamento> buscarPorTombo(Long codigo);
+    boolean verificarNSerie(String nserie);
+    boolean verificarTombo(Long tombo);
 }

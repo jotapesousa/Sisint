@@ -61,7 +61,7 @@
             <!-- /.col-lg-12 -->
         </div>
         <div class="panel painel-cadastro-sisint">
-            <form id="form-manutencao-tarefa" action="${linkTo[ManutencaoController].salvar}" method="post"
+            <form id="form-manutencao-equip" action="${linkTo[ManutencaoController].salvar}" method="post"
                   enctype="multipart/form-data">
                     <%--<input type="hidden" name="manutencao.codigoServico" value="${manutencao.codigoServico}"/>--%>
                 <div id="container-inputs-equipamento"></div>
@@ -223,8 +223,9 @@
 
                 <!-- Modal content-->
                 <div class="modal-content">
+                    <input type="hidden" name="equipamento.id" value="${equipamento.id}"/>
                     <input id="urlSalvarEquipamento" type="hidden" value="${linkTo[EquipamentoController].salvar}"/>
-                    <input type='hidden' id="#equip-novo-id" name='manutencao.equipamento.id' value='${manutencao.equipamento.id}' />
+                    <%--<input type='hidden' id="#equip-novo-id" name='manutencao.equipamento.id' value='${manutencao.equipamento.id}' />--%>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Cadastrar Equipamento</h4>

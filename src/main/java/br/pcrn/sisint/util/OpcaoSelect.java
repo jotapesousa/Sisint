@@ -2,8 +2,8 @@ package br.pcrn.sisint.util;
 
 import br.pcrn.sisint.conversor.ConvertivelOpcaoSelect;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 /**
  * Dto que auxilia montar selects na jsp
  */
@@ -35,6 +35,20 @@ public class OpcaoSelect {
         }
         return lista;
     }
+
+    public static List<OpcaoSelect> toListaOpcoesOrdenada(ConvertivelOpcaoSelect[] listaTodos) {
+        List<OpcaoSelect> lista = toListaOpcoes(listaTodos);
+
+        Collections.sort(lista, new Comparator<OpcaoSelect>() {
+            @Override
+            public int compare(OpcaoSelect o1, OpcaoSelect o2) {
+                return o1.getValor().toString().compareTo(o2.getValor().toString());
+            }
+        });
+
+        return lista;
+    }
+
     public Object getChave() {
         return chave;
     }

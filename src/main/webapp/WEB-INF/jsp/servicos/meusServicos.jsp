@@ -21,7 +21,6 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/js/servicos/servico.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
@@ -97,8 +96,10 @@
                                 <td><span class="label label-status">${servico.statusServico.chave}</span></td>
                                 <td><a title="Detalhes" href="${linkTo[ServicosController].detalhes}?id=${servico.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
                                     <a title="Editar" href="${linkTo[ServicosController].editar}?id=${servico.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
-                                    <a title="Visualizar Log do serviço" href="${linkTo[ServicosController].logServico}?id=${servico.id}">
-                                        <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
+                                    <c:if test="${usuarioLogado.isAdmin()}">
+                                        <a title="Log do serviço" href="${linkTo[ServicosController].logServico}?id=${servico.id}">
+                                            <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
+                                    </c:if>
                                     <a title="Remover" class="remover-servico" id-servico="${servico.id}" data-toggle="modal" href="#modalRemover">
                                         <i class="fa fa-trash fa-lg"></i></a></td>
                             </tr>

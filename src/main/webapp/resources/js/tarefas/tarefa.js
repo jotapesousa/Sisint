@@ -6,6 +6,7 @@ $(document).ready( function () {
         var id = $(this).attr("id-tarefa");
         var url = pathConcluir + id;
         $('#btnConcluirTarefa').attr('href', url);
+        // console.log("url: " + $('#btnConcluirTarefa').val());
     });
 
     // Verifica inputs em branco do formulário de Nova Tarefa ao clicar no botão de id 'btnAdicionarTarefa'(ADICIONAR TAREFA)
@@ -13,29 +14,23 @@ $(document).ready( function () {
        verifcarInputsTarefa();
     });
 
-    //
     $('#titulo-tarefa').keyup( function (event) {
-       console.log("titulo tarefa: " + $('#titulo-tarefa').val());
        verifcarInputsTarefa();
     });
 
     $('#data-fechamento-tarefa').datepicker().on('changeDate', function (ev) {
-        console.log("data finalizacao tarefa: " + $('#data-fechamento-tarefa').val());
         verifcarInputsTarefa();
     });
 
     $('#status-tarefa').change( function (event) {
-       console.log("Status tarefa: " + $('#status-tarefa').val());
        verifcarInputsTarefa();
     });
 
     $('#tecnico-tarefa').change( function (event) {
-       console.log("tecnico tarefa: " + $('#tecnico-tarefa').val());
        verifcarInputsTarefa();
     });
 
     $('#descricao-tarefa').keyup( function (event) {
-       console.log("Descricao tarefa: " + $('#descricao-tarefa').val());
        verifcarInputsTarefa();
     });
 
@@ -43,8 +38,10 @@ $(document).ready( function () {
         if ($('#titulo-tarefa').val() == "" || $('#data-fechamento-tarefa').val() == "" ||
             $('#status-tarefa').val() == "" || $('#tecnico-tarefa').val() == "" || $('#descricao-tarefa').val() == ""){
             $('#btnSalvarTarefa').attr("disabled", "disabled");
+            $('#campoObrigatorio').text("*Todos os campos devem ser preenchidos.");
         } else {
             $('#btnSalvarTarefa').removeAttr("disabled");
+            $('#campoObrigatorio').text("");
         }
     }
 });

@@ -1,6 +1,7 @@
 package br.pcrn.sisint.controller;
 
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.pcrn.sisint.anotacoes.Seguranca;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@Seguranca(tipoUsuario = TipoUsuario.TECNICO)
 public class TarefasController extends ControladorSisInt<Tarefa> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TarefasController.class);
@@ -77,7 +79,7 @@ public class TarefasController extends ControladorSisInt<Tarefa> {
         Tarefa tarefa = tarefaDao.buscarPorId(id);
         tarefa.setDeletado(true);
         resultado.include("mensagem", new SimpleMessage("success","mensagem.salvar.sucesso"));
-        resultado.redirectTo(this).tarefasAbertas();
+        resultado.redirectTo(ServicosController.class).editar(tarefa.getServico().getId());
     }
 
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
@@ -103,7 +105,6 @@ public class TarefasController extends ControladorSisInt<Tarefa> {
 
     public void detalhes(Long id){
         Tarefa tarefa = this.tarefaDao.buscarPorId(id);
-
         this.resultado.include("tarefa", tarefa);
     }
 

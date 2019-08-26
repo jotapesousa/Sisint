@@ -12,7 +12,6 @@
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/js/servicos/lista.js"></script>
-        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
             $(document).ready(function () {
@@ -50,19 +49,15 @@
             var idServico = "";
             var url = $('#btnSalvarTarefa').attr('href');
             var urlServicoPadrao = $('#urlServicoPadrao').val();
-            console.log(url);
             //            var $btnAssumir = $('#assumir-servico');
             //            atribuirListennerBtnEdicao();
             //            function atribuirListennerBtnEdicao($btnEditar) {
             $('.concluir-tarefa').off('click');
             $('.assumir-servico').each(function () {
-                console.log('oi');
                 $(this).click(function () {
                     var novaUrl;
-                    console.log("entrou")
                     idTarefa = $(this).attr('id-servico');
                     novaUrl = url + idServico;
-                    console.log(url);
                     var novaUrlServPadrao = urlServicoPadrao +"?id="+idServico;
                     $('#btnSalvarTarefa').attr('href', novaUrl);
                     $('#salvarServPadrao').attr('href', novaUrlServPadrao);
@@ -86,6 +81,7 @@
                             <th>Titulo</th>
                             <th>Status</th>
                             <th>Setor</th>
+                            <th>Data de Abertura</th>
                             <th>Data de Fechamento</th>
                             <th>Técnico</th>
                             <th>Ações</th>
@@ -97,6 +93,7 @@
                                 <td>${tarefa.titulo}</td>
                                 <td><span class="label label-status">${tarefa.statusTarefa.chave}</span></td>
                                 <td>${tarefa.servico.setor.nome}</td>
+                                <td class="date-column">${tarefa.dataAbertura}</td>
                                 <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
                                 <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>

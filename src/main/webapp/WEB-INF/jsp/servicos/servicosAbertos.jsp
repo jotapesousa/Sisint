@@ -19,28 +19,23 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/init.js"></script>
+        <%--<script src="${ctx}/resources/js/init.js"></script>--%>
         <script>
             var idServico = "";
             var url = $('#btnSalvarTarefa').attr('href');
             var urlServicoPadrao = $('#urlServicoPadrao').val();
-            console.log(url);
 //            var $btnAssumir = $('#assumir-servico');
 //            atribuirListennerBtnEdicao();
 //            function atribuirListennerBtnEdicao($btnEditar) {
                 $('.assumir-servico').off('click');
                 $('.assumir-servico').each(function () {
-                    console.log('oi');
                     $(this).click(function () {
                         var novaUrl;
-                        console.log("entrou")
                         idServico = $(this).attr('id-servico');
                         novaUrl = url + idServico;
-                        console.log(url);
                         var novaUrlServPadrao = urlServicoPadrao +"?id="+idServico;
-                        $('#btnSalvarTarefa').attr('href', novaUrl);
+                        // $('#btnSalvarTarefa').attr('href', novaUrl);
                         $('#salvarServPadrao').attr('href', novaUrlServPadrao);
-                        console.log($('#btnSalvarTarefa').attr('href'));
                         console.log($('#salvarServPadrao').attr('href'));
                     });
                 });
@@ -52,41 +47,7 @@
 
         </script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
-        <script>
-            $(document).ready(function () {
-                $.fn.dataTable.moment('DD/MM/YYYY');
-
-                $('.table').DataTable( {
-                    pageLength:25,
-                    "language":
-                        {
-                            "sEmptyTable": "Nenhum registro encontrado",
-                            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                            "sInfoPostFix": "",
-                            "sInfoThousands": ".",
-                            "sLengthMenu": "_MENU_ resultados por página",
-                            "sLoadingRecords": "Carregando...",
-                            "sProcessing": "Processando...",
-                            "sZeroRecords": "Nenhum registro encontrado",
-                            "sSearch": "Pesquisar",
-                            "oPaginate": {
-                                "sNext": "Próximo",
-                                "sPrevious": "Anterior",
-                                "sFirst": "Primeiro",
-                                "sLast": "Último"
-                            },
-                            "oAria": {
-                                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                                "sSortDescending": ": Ordenar colunas de forma descendente"
-                            }
-                        }
-                } );
-            });
-
-
-        </script>
+        <script src="${ctx}/resources/js/table.js"></script>
     </jsp:attribute>
 
     <jsp:body>
@@ -127,8 +88,10 @@
                                 <td>
                                     <a title="Detalhes" href="${linkTo[ServicosController].detalhes}?id=${servico.id}">
                                         <i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
-                                    <a title="Visualizar Log" href="${linkTo[ServicosController].logServico}?id=${servico.id}">
-                                        <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
+                                    <c:if test="${usuarioLogado.isAdmin()}">
+                                        <a title="Log do serviço" href="${linkTo[ServicosController].logServico}?id=${servico.id}">
+                                            <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
+                                    </c:if>
                                     <a title="Editar" href="${linkTo[ServicosController].editar}?id=${servico.id}">
                                         <i class="fa fa-pencil-square-o fa-lg" aria-hidden="false"></i></a>
                                     <a title="Assumir Serviço" class="assumir-servico" id-servico="${servico.id}" data-toggle="modal" href="#myModal">
@@ -157,10 +120,10 @@
                     </div>
                     <div id="btns-modal" class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <a id="salvarServPadrao" href="#" class="btn btn-success">Salvar e criar tarefa</a>
-                        <a id="btnSalvarTarefa" href="${linkTo[ServicosController].assumirServico}?id=" class="btn btn-primary">
-                        Salvar
-                        </a>
+                        <a id="salvarServPadrao" href="${linkTo[ServicosController].assumirServicoComTarefa}?id=" class="btn btn-success">Assumir</a>
+                        <%--<a id="btnSalvarTarefa" href="${linkTo[ServicosController].assumirServico}?id=" class="btn btn-primary">--%>
+                        <%--Salvar--%>
+                        <%--</a>--%>
                     </div>
                 </div>
             </div>

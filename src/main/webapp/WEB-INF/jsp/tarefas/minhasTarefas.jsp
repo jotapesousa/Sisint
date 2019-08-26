@@ -11,7 +11,6 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
         <script src="${ctx}/resources/js/tarefas/notas.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
@@ -50,7 +49,6 @@
 
             $('.concluir-tarefa').click( function() {
                 var url = $('#concluir-tarefa').attr('href');
-                console.log("URL" + url);
                 // $('.concluir-tarefa').off('click');
                 // $('.btnConcluirTarefa').each(function () {
                 //     console.log('oiConcluetarefa');
@@ -81,6 +79,7 @@
                             <th>Titulo</th>
                             <th>Status</th>
                             <th>Setor</th>
+                            <th>Data de Abertura</th>
                             <th>Data de Fechamento</th>
                             <th>Técnico</th>
                             <th>Ações</th>
@@ -92,6 +91,7 @@
                                 <td>${tarefa.titulo}</td>
                                 <td><span class="label label-status">${tarefa.statusTarefa.chave}</span></td>
                                 <td>${tarefa.servico.setor.nome}</td>
+                                <td class="date-column">${tarefa.dataAbertura}</td>
                                 <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
                                 <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
@@ -99,12 +99,13 @@
                                     <%--<a title="Remover" href="#"><i class="fa fa-trash fa-lg"></i></a>--%>
                                     <a title="Adicionar Nota" class="add_nota" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalNota">
                                         <i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
-                                    <a title="Concluir" class="concluir-tarefa" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalTarefa">
-                                        <i class="fa fa-check fa-lg" aria-hidden="true"></i></a>
+                                    <c:if test="${tarefa.sizeNotas() != 0}">
+                                        <a title="Concluir" class="concluir-tarefa" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalTarefa">
+                                            <i class="fa fa-check fa-lg" aria-hidden="true"></i></a>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
-
                         </tbody>
                     </table>
                 </div>
@@ -128,7 +129,7 @@
                         <div id="btn_nota_modal" class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <%--<a id="btnAddNota" class="btn btn-primary" href="${linkTo[TarefasController].salvarNota}?id=">Concluir</a>--%>
-                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                            <button id="btnAdicionar" type="submit" class="btn btn-primary">Adicionar</button>
                         </div>
                     </div>
                 </form>
@@ -146,9 +147,7 @@
                         <h4 class="modal-title primary">Concluir Tarefa</h4>
                     </div>
                     <div class="modal-body">
-                        <h5> Adicionar Nota:</h5>
-                        <textarea type="text" id="nota_tarefaConclusao" name="nota.descricao" class="form-control"
-                                  rows="5" value="${nota.descricao}"></textarea>
+                        Deseja realmente concluir esta tarefa?
                     </div>
                     <div id="btns-modal" class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

@@ -90,16 +90,17 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
     }
 
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
+    @Transacional
     public void remover(Long id) {
         try {
             Usuario usuario = usuarioDao.buscarPorId(id);
             usuario.setDeletado(true);
             usuarioDao.salvar(usuario);
             resultado.include("mensagem", new SimpleMessage("success","mensagem.usuario.remover.sucesso"));
-            resultado.of(this).lista();
+            resultado.redirectTo(this).lista();
         } catch (Exception e) {
             resultado.include("mensagem", new SimpleMessage("error", "mensagem.ususario.remover.error"));
-            resultado.of(this).lista();
+            resultado.redirectTo(this).lista();
         }
     }
 

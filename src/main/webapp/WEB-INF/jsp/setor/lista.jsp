@@ -11,7 +11,6 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/servicos/lista.js"></script>
         <script src="${ctx}/resources/js/setor/setor.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
@@ -61,6 +60,7 @@
             </div>
             <div class="panel-body" style="padding-top: 0px;">
                 <a class="btn btn-info" style="margin-bottom: 16px;" href="${linkTo[SetorController].form}">Cadastrar</a>
+
                 <div class="tabela-servicos">
                     <table class="table table-bordered">
                         <thead>

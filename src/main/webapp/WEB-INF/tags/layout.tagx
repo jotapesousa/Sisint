@@ -211,9 +211,11 @@
                                     <li>
                                         <a href="${linkTo[TarefasController].tarefasConcluidas}">Concluídas</a>
                                     </li>
-                                    <li>
-                                        <a href="${linkTo[TarefasController].lista}">Todas</a>
-                                    </li>
+                                    <c:if test="${usuarioLogado.isAdmin()}">
+                                        <li>
+                                            <a href="${linkTo[TarefasController].lista}">Todas</a>
+                                        </li>
+                                    </c:if>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -308,7 +310,24 @@
         <!-- Morris Charts JavaScript -->
         <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/raphael/raphael.min.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/morrisjs/morris.min.js"><c:out value=""/></script>
+
+        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/dist/js/sb-admin-2.js"><c:out value=""/></script>
+
+        <script src="${ctx}/resources/plugins/dataPicker/dataPicker-bootstrap.js"><c:out value=""/></script>
+        <script src="${ctx}/resources/plugins/moment/moment.js"><c:out value=""/></script>
+
+        <script src="${ctx}/resources/plugins/moment/moment-with-locale.js"><c:out value=""/></script>
+
+        <script src="${ctx}/resources/plugins/jqueryValidate/jquery.validate.js"><c:out value=""/></script>
+        <script src="${ctx}/resources/plugins/bootstrapValidator/validator.js"><c:out value=""/></script>
+        <script src="${ctx}/resources/js/init.js"><c:out value=""/></script>
+
         <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/data/morris-data.js"><c:out value=""/></script>-->
+        <!--<script src="${ctx}/resources/plugins/moment/date-time-moment.js"><c:out value=""/></script>-->
+
+        <!--<script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>-->
+
+        <!--<script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>-->
 
         <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot/excanvas.min.js"><c:out value=""/></script>-->
         <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/flot/jquery.flot.js"><c:out value=""/></script>-->
@@ -319,22 +338,14 @@
         <!--<script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/data/flot-data.js"><c:out value=""/></script>-->
 
         <!-- Custom Theme JavaScript -->
-        <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/dist/js/sb-admin-2.js"><c:out value=""/></script>
+
 
         <!--&lt;!&ndash; jQuery &ndash;&gt;-->
         <!--<script src="${ctx}/resources/plugins/jquery/jquery-3.2.1.min.js"><c:out value=""/></script>-->
         <!--&lt;!&ndash; Bootstrap Core JavaScript &ndash;&gt;-->
         <!--<script src="${ctx}/resources/plugins/bootstrap3/js/bootstrap.js"><c:out value=""/></script>-->
 
-        <script src="${ctx}/resources/plugins/dataPicker/dataPicker-bootstrap.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/plugins/moment/moment.js"><c:out value=""/></script>
-        <!--<script src="${ctx}/resources/plugins/moment/date-time-moment.js"><c:out value=""/></script>-->
-        <script src="${ctx}/resources/plugins/moment/moment-with-locale.js"><c:out value=""/></script>
-        <!--<script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>-->
 
-        <!--<script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>-->
-        <script src="${ctx}/resources/plugins/jqueryValidate/jquery.validate.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/plugins/bootstrapValidator/validator.js"><c:out value=""/></script>
 
         <!--<script src="${ctx}/resources/js/init.js"><c:out value=""/></script>-->
 

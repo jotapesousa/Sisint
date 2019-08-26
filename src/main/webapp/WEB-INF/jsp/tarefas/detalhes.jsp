@@ -31,19 +31,17 @@
     </jsp:attribute>
 
     <jsp:attribute name="rodape">
-        <script src="${ctx}/resources/js/init.js"></script>
+        <script src="${ctx}/resources/js/tarefas/notas.js"></script>
+        <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
         <script>
-            console.log($('#tarefa-dataFechamento').val());
-            var obj = moment($('#tarefa-dataFechamento').val(), 'YYYY-MM-DD').format('DD/MM/YYYY');
-            $('#tarefa-dataFechamento').val(obj);
+            // var obj = moment($('#tarefa-dataFechamento').val(), 'YYYY-MM-DD').format('DD/MM/YYYY');
+            // $('#tarefa-dataFechamento').val(obj);
 
             $(".badge").each(function () {
                 var tecnico = $('#tarefa-tecnico').val();
-                console.log(tecnico);
                 var nome = $(this).text();
                 nome = moment(nome).format("DD/MM/YYYY HH:mm:ss");
                 $(this).text(nome + ", " + tecnico);
-                console.log(nome);
             })
         </script>
     </jsp:attribute>
@@ -66,8 +64,13 @@
                                    value="${tarefa.tecnico.nome}" disabled/>
                         </div>
                         <div class="form-group col-md-3">
+                            <label for="tarefa-dataAbertura">Data de Abertura: </label>
+                            <input id="tarefa-dataAbertura" class="form-control date-columnInput fonte" name="tarefa.dataAbertura"
+                                   value="${tarefa.dataAbertura}" disabled/>
+                        </div>
+                        <div class="form-group col-md-3">
                             <label for="tarefa-dataFechamento">Prazo Final: </label>
-                            <input id="tarefa-dataFechamento" class="form-control date-column fonte" name="tarefa.dataFechamento"
+                            <input id="tarefa-dataFechamento" class="form-control date-columnInput fonte" name="tarefa.dataFechamento"
                                    value="${tarefa.dataFechamento}" disabled/>
                         </div>
                         <div class="form-group col-md-3">
@@ -89,7 +92,9 @@
                     </div>
                 </div>
                 <div class="panel-heading">
-                    <h3 align="center">Notas</h3>
+                    <h3 align="center">Notas <a title="Adicionar Nota" class="add_nota" id-tarefa="${tarefa.id}"
+                                                  data-toggle="modal" href="#modalNota" style="margin-left: 10px;">
+                        <i class="fa fa-plus" aria-hidden="true"></i></a></h3>
                 </div>
                 <div class="row">
                     <c:forEach items="${tarefa.notas}" var="nota">
@@ -99,6 +104,56 @@
                             </li>
                         </ul>
                     </c:forEach>
+                </div>
+            </div>
+            <c:if test="${tarefa.statusTarefa.chave != 'Concluído' && tarefa.sizeNotas() != 0}">
+                <div class="form-group text-center">
+                    <a class="btn btn-lg btn-primary concluir-tarefa" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalConcluir">Concluir Tarefa</a>
+                </div>
+            </c:if>
+        </div>
+
+        <!-- MODAL ADICIONAR NOTA -->
+        <div class="modal fade" id="modalNota" role="dialog">
+            <div class="modal-dialog">
+                <form action="${linkTo[TarefasController].salvarNota}" accept-charset="ISO-8859-1">
+                    <input type="hidden" id="id_tarefa_nota" name="nota.tarefa.id" value=""/>
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title primary">Adicionar Nota</h4>
+                        </div>
+                        <div class="modal-body">
+                            <textarea type="text" id="nota_tarefa" name="nota.descricao" class="form-control" rows="7" value="${nota.descricao}"></textarea>
+                        </div>
+                        <div id="btn_nota_modal" class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <%--<a id="btnAddNota" class="btn btn-primary" href="${linkTo[TarefasController].salvarNota}?id=">Concluir</a>--%>
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL CONCLUIR TAREFA -->
+        <div class="modal fade" id="modalConcluir" role="dialog">
+            <div class="modal-dialog">
+                <input type="hidden" name="tarefa.id" value="${tarefa.id}"/>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title primary">Concluir Tarefa</h4>
+                    </div>
+                    <div class="modal-body">
+                        Deseja realmente concluir esta tarefa?
+                    </div>
+                    <div id="btns-modal" class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <a id="btnConcluirTarefa" href="${linkTo[TarefasController].concluir}?id=" class="btn btn-primary">Concluir</a>
+                    </div>
                 </div>
             </div>
         </div>

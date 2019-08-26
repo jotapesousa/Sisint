@@ -99,6 +99,8 @@
                                            data-toggle="modal" alt="Remover">
                                             <i class="fa fa-trash fa-lg"></i></a>
                                     </c:if>
+                                    <a title="Log do Equipamento" href="${linkTo[EquipamentoController].logs}?id=${equipamento.id}">
+                                        <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
                                     <%--<a href="#"><i class="glyphicon glyphicon-file"></i></a>--%>
                                 </td>
                                 <%--<td><a href="#">Detalhar</a></td>--%>

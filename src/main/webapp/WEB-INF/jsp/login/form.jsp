@@ -32,6 +32,7 @@
             </div>
             <form method="post" action="${linkTo[LoginController].login}">
                 <input id="login-usuario" type="text" class="form-control" name="usuario.login" placeholder="Login" autofocus>
+                <p></p>
                 <input id="senha-usuario" type="password" class="form-control" name="usuario.senha" placeholder="Senha">
                 <jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>
                 <button class="btn btn-primary btn-lg btn-block">Entrar</button>

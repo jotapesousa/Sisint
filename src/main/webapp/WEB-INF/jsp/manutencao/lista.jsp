@@ -99,7 +99,7 @@
                                 <td><span class="label labelStatus">${manutencao.status.chave}</span></td>
                                 <td><a title="Detalhar" href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}"><i class="fa fa-eye fa-lg"></i></a>
                                     <c:if test="${(usuarioLogado.usuario.nome == manutencao.tecnico.nome) ||
-                                                    (usuarioLogado.usuario.tipoUsuario == 'ADMINISTRADOR')}">
+                                                    (usuarioLogado.isAdmin())}">
                                             <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}"
                                                title="Editar"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                             <a class="removerManutencao" href="#modalRemover" data-toggle="modal"
@@ -183,17 +183,20 @@
         <!-- Modal REMOVER -->
         <div class="modal fade" id="modalRemover" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
             <div class="modal-dialog" role="document">
+                <input type="hidden" name="manutencao.id" value="${manutencao.id}"/>
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+                        <h4 class="modal-title" id="modalLabel">Remover Manutenção</h4>
                     </div>
                     <div class="modal-body">
-                        Deseja realmente excluir este item?
+                        Deseja realmente remover esta manutenção?
                     </div>
                     <div class="modal-footer">
-                        <a id="btnRemover" href="" class="btn btn-primary">Sim</a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                        <div id="btn-remover-modal" class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <a id="btnRemoverManutencao" href="${linkTo[ManutencaoController].remover}?id=" class="btn btn-danger">Remover</a>
+                        </div>
                     </div>
                 </div>
             </div>

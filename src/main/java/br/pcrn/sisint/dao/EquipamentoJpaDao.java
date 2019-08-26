@@ -51,9 +51,33 @@ public class EquipamentoJpaDao extends EntidadeJpaDao<Equipamento> implements Eq
 
     @Override
     public Optional<Equipamento> buscarPorTombo(Long codigo) {
-        Query query = manager.createQuery("SELECT e FROM Equipamento e WHERE e.tombo = :codigo AND e.deletado = false")
+        Query query = manager.createQuery("SELECT e FROM Equipamento e WHERE str(e.tombo) = :codigo AND e.deletado = false")
                 .setParameter("codigo", codigo);
         query.setMaxResults(1);
         return query.getResultList().stream().findFirst();
+    }
+
+    @Override
+    public boolean verificarNSerie(String nserie) {
+        Query query = manager.createQuery("SELECT COUNT(e) FROM Equipamento e WHERE e.numeroSerie = :nserie AND e.deletado = false")
+                .setParameter("nserie", nserie);
+        Long qtd = (Long) query.getSingleResult();
+        if (qtd != 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean verificarTombo(Long tombo) {
+        Query query = manager.createQuery("SELECT COUNT(e) FROM Equipamento e WHERE e.tombo = :tombo AND e.deletado = false")
+                .setParameter("tombo", tombo);
+        Long qtd = (Long) query.getSingleResult();
+        if (qtd != 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -8,6 +8,9 @@ import br.pcrn.sisint.dominio.UsuarioLogado;
 import br.pcrn.sisint.negocio.LoginNegocio;
 
 import javax.inject.Inject;
+import javax.naming.NamingException;
+import java.io.IOException;
+
 @Path("/login")
 @Controller
 public class LoginController extends Controlador {
@@ -39,6 +42,32 @@ public class LoginController extends Controlador {
             resultado.of(this).form();
         }
     }
+
+//    @Post("/login")
+//    public void login(Usuario usuario) throws IOException, NamingException {
+//        if (usuario.getLogin() == null) {
+//            resultado.include("mensagem", new SimpleMessage("error","login.campoBranco"));
+//            resultado.of(this).form();
+//        } else if (usuario.getSenha() == null) {
+//            resultado.include("mensagem", new SimpleMessage("error","login.campoBranco"));
+//            resultado.of(this).form();
+//        } else {
+//            //        Usuario usuarioLogin = loginNegocio.validarUsuario(usuario);
+//            Usuario usuarioLogin = loginNegocio.ldapAuth(usuario);
+//
+//            if (usuarioLogin == null) {
+//                resultado.include("mensagem", new SimpleMessage("error","login.dadoIncorreto"));
+//                resultado.of(this).form();
+//
+////            } else if (!usuarioLogin.isPermitido()) {
+////                resultado.include("mensagem", new SimpleMessage("error","login.permissaoUsuario"));
+////                resultado.of(this).form();
+//            } else {
+//                usuarioLogado.setUsuario(usuario);
+//                resultado.redirectTo(InicioController.class).index();
+//            }
+//        }
+//    }
 
     @Path("/")
     public void form(){

@@ -35,19 +35,7 @@
     </jsp:attribute>
 
     <jsp:attribute name="rodape">
-        <script src="${ctx}/resources/js/init.js"></script>
-        <%--<script>--%>
-            <%--$(document).ready(function() {--%>
-                <%--var nome;--%>
-                <%--$(".badge").each(function () {--%>
-                    <%--nome = $(this).text();--%>
-                    <%--nome = moment(nome);--%>
-                    <%--nome = moment(nome).format("DD/MM/YYYY HH:mm:ss");--%>
-                    <%--$(this).text(nome);--%>
-                    <%--console.log("Nome:" +nome);--%>
-                <%--})--%>
-            <%--});--%>
-        <%--</script>--%>
+
     </jsp:attribute>
 
     <jsp:body>

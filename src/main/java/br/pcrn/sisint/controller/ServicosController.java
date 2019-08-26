@@ -1,14 +1,12 @@
 package br.pcrn.sisint.controller;
 
 import br.com.caelum.vraptor.*;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
 import br.pcrn.sisint.anotacoes.Seguranca;
 import br.pcrn.sisint.anotacoes.Transacional;
-import br.pcrn.sisint.dao.EntidadeDao;
-import br.pcrn.sisint.dao.ServicoDao;
-import br.pcrn.sisint.dao.TarefaJpaDao;
-import br.pcrn.sisint.dao.UsuarioDao;
+import br.pcrn.sisint.dao.*;
 import br.pcrn.sisint.dominio.*;
 import br.pcrn.sisint.negocio.ServicosNegocio;
 import br.pcrn.sisint.util.OpcaoSelect;
@@ -31,6 +29,7 @@ public class ServicosController extends ControladorSisInt<Servico> {
     private UsuarioDao usuarioDao;
     private ServicosNegocio servicosNegocio;
     private EntidadeDao<Servico> dao;
+    private SetorDao setorDao;
 
     @Inject
     private ServletContext context;
@@ -44,18 +43,19 @@ public class ServicosController extends ControladorSisInt<Servico> {
      * @deprecated CDI eyes only
      */
     protected ServicosController() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null);
     }
 
     @Inject
     public ServicosController(Result resultado, EntidadeDao<Servico> dao, ServicoDao servicoDao, Validator validador, UsuarioDao usuarioDao,
-                              ServicosNegocio servicosNegocio) {
+                              ServicosNegocio servicosNegocio, SetorDao setorDao) {
         super(resultado);
         this.dao = dao;
         this.servicoDao = servicoDao;
         this.validador = validador;
         this.usuarioDao = usuarioDao;
         this.servicosNegocio = servicosNegocio;
+        this.setorDao = setorDao;
     }
 
     public void form() {
@@ -112,11 +112,11 @@ public class ServicosController extends ControladorSisInt<Servico> {
             }
 
             this.servicoDao.salvar(servico);
-            resultado.include("success", "mensagem.salvar.sucesso");
-            resultado.redirectTo(InicioController.class).index();
+            resultado.include("mensagem", new SimpleMessage("success", "mensagem.salvar.sucesso"));
+            resultado.redirectTo(this).editar(servico.getId());
         } catch (Exception e) {
-            resultado.include("error", "mensagem.salvar.error");
-            resultado.redirectTo(InicioController.class).index();
+            resultado.include("mensagem", new SimpleMessage("error", "mensagem.salvar.error"));
+            resultado.redirectTo(this).editar(servico.getId());
         }
     }
 
@@ -153,30 +153,30 @@ public class ServicosController extends ControladorSisInt<Servico> {
 
         if (servico != null) {
             if(servico.getTarefas() != null) {
-            for (Tarefa tarefa : servico.getTarefas()) {
-                if (!tarefa.isDeletado()) {
-                    JsonObject jsonObject = new JsonObject();
-                    String pendente;
-                    if (tarefa.isPendente()) {
-                        pendente = "true";
-                    } else {
-                        pendente = "false";
+                for (Tarefa tarefa : servico.getTarefas()) {
+                    if (!tarefa.isDeletado()) {
+                        JsonObject jsonObject = new JsonObject();
+                        String pendente;
+                        if (tarefa.isPendente()) {
+                            pendente = "true";
+                        } else {
+                            pendente = "false";
+                        }
+                        jsonObject.addProperty("id", tarefa.getId());
+                        jsonObject.addProperty("titulo", tarefa.getTitulo());
+                        jsonObject.addProperty("statusValor", tarefa.getStatusTarefa().getValor());
+                        jsonObject.addProperty("statusChave", tarefa.getStatusTarefa().getChave());
+                        jsonObject.addProperty("dataFechamento", tarefa.getDataFechamento().toString());
+                        jsonObject.addProperty("descricao", tarefa.getDescricao());
+                        jsonObject.addProperty("servicoId", tarefa.getServico().getId());
+                        jsonObject.addProperty("tecnicoId", tarefa.getTecnico().getId());
+                        jsonObject.addProperty("tecnicoNome", tarefa.getTecnico().getNome());
+                        jsonObject.addProperty("codigoTarefa", tarefa.getCodigoTarefa());
+                        jsonObject.addProperty("dataAbertura", tarefa.getDataAbertura().toString());
+                        jsonObject.addProperty("pendente", pendente);
+                        listaServicos.add(jsonObject);
                     }
-                    jsonObject.addProperty("id", tarefa.getId());
-                    jsonObject.addProperty("titulo", tarefa.getTitulo());
-                    jsonObject.addProperty("statusValor", tarefa.getStatusTarefa().getValor());
-                    jsonObject.addProperty("statusChave", tarefa.getStatusTarefa().getChave());
-                    jsonObject.addProperty("dataFechamento", tarefa.getDataFechamento().toString());
-                    jsonObject.addProperty("descricao", tarefa.getDescricao());
-                    jsonObject.addProperty("servicoId", tarefa.getServico().getId());
-                    jsonObject.addProperty("tecnicoId", tarefa.getTecnico().getId());
-                    jsonObject.addProperty("tecnicoNome", tarefa.getTecnico().getNome());
-                    jsonObject.addProperty("codigoTarefa", tarefa.getCodigoTarefa());
-                    jsonObject.addProperty("dataAbertura", tarefa.getDataAbertura().toString());
-                    jsonObject.addProperty("pendente", pendente);
-                    listaServicos.add(jsonObject);
                 }
-            }
             }
             resultado.use(Results.json()).withoutRoot().from(listaServicos).recursive().serialize();
         } else {
@@ -206,15 +206,19 @@ public class ServicosController extends ControladorSisInt<Servico> {
     }
 
     public void editar(Long id) {
-        Servico servico = this.servicoDao.BuscarPorId(id);
-        resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
-        resultado.include("usuarios", servicosNegocio.geraListaOpcoesUsuarios());
-        resultado.include("status", OpcaoSelect.toListaOpcoes(StatusServico.values()));
-        resultado.include("statusTarefa", OpcaoSelect.toListaOpcoes(StatusTarefa.values()));
-        resultado.include("prioridades", OpcaoSelect.toListaOpcoes(Prioridade.values()));
-        resultado.include("listaLogs", servico.getLogServicos());
-        resultado.include(servico);
-        resultado.of(this).form();
+        if (id == null) {
+            resultado.redirectTo(InicioController.class).index();
+        } else {
+            Servico servico = this.servicoDao.BuscarPorId(id);
+            resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+            resultado.include("usuarios", servicosNegocio.geraListaOpcoesUsuarios());
+            resultado.include("status", OpcaoSelect.toListaOpcoes(StatusServico.values()));
+            resultado.include("statusTarefa", OpcaoSelect.toListaOpcoes(StatusTarefa.values()));
+            resultado.include("prioridades", OpcaoSelect.toListaOpcoes(Prioridade.values()));
+            resultado.include("listaLogs", servico.getLogServicos());
+            resultado.include(servico);
+            resultado.of(this).form();
+        }
     }
 
     @Path("/remover")
@@ -260,6 +264,14 @@ public class ServicosController extends ControladorSisInt<Servico> {
         servico.setTarefas(tarefas);
         servicoDao.salvar(servico);
         resultado.redirectTo(ServicosController.class).meusServicos();
+    }
+
+    public void buscarSetorJson(Long id) {
+        Setor setor = setorDao.buscarPorId(id);
+        JsonObject telJson = new JsonObject();
+        telJson.addProperty("telJson", setor.getTelefone());
+
+        resultado.use(Results.json()).withoutRoot().from(telJson).recursive().serialize();
     }
 
 //    @Get

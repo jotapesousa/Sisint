@@ -12,7 +12,6 @@
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/js/servicos/lista.js"></script>
-        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
 
         <script>

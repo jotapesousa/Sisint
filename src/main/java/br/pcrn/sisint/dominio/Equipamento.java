@@ -1,6 +1,7 @@
 package br.pcrn.sisint.dominio;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 import br.pcrn.sisint.dominio.Manutencao;
@@ -18,6 +19,7 @@ public class Equipamento extends Entidade{
     private String nome;
     private Long tombo;
     private String numeroSerie;
+    private LocalDate dataCadastro;
     private TipoEquipamento tipo;
     private boolean deletado;
 
@@ -35,6 +37,10 @@ public class Equipamento extends Entidade{
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Termo> termos;
+
+    @Column(name ="log_equipamento")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<LogEquipamento> logEquipamentos;
 
     @Override
     public Long getId() {
@@ -110,5 +116,21 @@ public class Equipamento extends Entidade{
 
     public void setTermos(List<Termo> termos) {
         this.termos = termos;
+    }
+
+    public List<LogEquipamento> getLogEquipamentos() {
+        return logEquipamentos;
+    }
+
+    public void setLogEquipamentos(List<LogEquipamento> logEquipamentos) {
+        this.logEquipamentos = logEquipamentos;
+    }
+
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }

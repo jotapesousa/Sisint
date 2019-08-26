@@ -18,45 +18,41 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/servicos/lista.js"></script>
-        <script src="${ctx}/resources/js/init.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
+        <script src="${ctx}/resources/js/table.js"></script>
+        <%--<script>--%>
+            <%--$(document).ready(function () {--%>
+                <%--$.fn.dataTable.moment('DD/MM/YYYY');--%>
 
-        <script>
-            $(document).ready(function () {
-                $.fn.dataTable.moment('DD/MM/YYYY');
-
-                $('.table').DataTable( {
-                    pageLength:25,
-                    "language":
-                        {
-                            "sEmptyTable": "Nenhum registro encontrado",
-                            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                            "sInfoPostFix": "",
-                            "sInfoThousands": ".",
-                            "sLengthMenu": "_MENU_ resultados por página",
-                            "sLoadingRecords": "Carregando...",
-                            "sProcessing": "Processando...",
-                            "sZeroRecords": "Nenhum registro encontrado",
-                            "sSearch": "Pesquisar",
-                            "oPaginate": {
-                                "sNext": "Próximo",
-                                "sPrevious": "Anterior",
-                                "sFirst": "Primeiro",
-                                "sLast": "Último"
-                            },
-                            "oAria": {
-                                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                                "sSortDescending": ": Ordenar colunas de forma descendente"
-                            }
-                        }
-                } );
-            });
-
-
-        </script>
+                <%--$('.table').DataTable( {--%>
+                    <%--pageLength:25,--%>
+                    <%--"language":--%>
+                        <%--{--%>
+                            <%--"sEmptyTable": "Nenhum registro encontrado",--%>
+                            <%--"sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",--%>
+                            <%--"sInfoEmpty": "Mostrando 0 até 0 de 0 registros",--%>
+                            <%--"sInfoFiltered": "(Filtrados de _MAX_ registros)",--%>
+                            <%--"sInfoPostFix": "",--%>
+                            <%--"sInfoThousands": ".",--%>
+                            <%--"sLengthMenu": "_MENU_ resultados por página",--%>
+                            <%--"sLoadingRecords": "Carregando...",--%>
+                            <%--"sProcessing": "Processando...",--%>
+                            <%--"sZeroRecords": "Nenhum registro encontrado",--%>
+                            <%--"sSearch": "Pesquisar",--%>
+                            <%--"oPaginate": {--%>
+                                <%--"sNext": "Próximo",--%>
+                                <%--"sPrevious": "Anterior",--%>
+                                <%--"sFirst": "Primeiro",--%>
+                                <%--"sLast": "Último"--%>
+                            <%--},--%>
+                            <%--"oAria": {--%>
+                                <%--"sSortAscending": ": Ordenar colunas de forma ascendente",--%>
+                                <%--"sSortDescending": ": Ordenar colunas de forma descendente"--%>
+                            <%--}--%>
+                        <%--}--%>
+                <%--} );--%>
+            <%--});--%>
+        <%--</script>--%>
     </jsp:attribute>
 
     <jsp:body>
@@ -71,6 +67,8 @@
                         <tr>
                             <th>Titulo</th>
                             <th>Status</th>
+                            <th>Setor</th>
+                            <th>Data de Abertura</th>
                             <th>Data de Fechamento</th>
                             <th>Técnico</th>
                             <th>Ações</th>
@@ -81,7 +79,9 @@
                             <tr>
                                 <td>${tarefa.titulo}</td>
                                 <td><span class="label label-status">${tarefa.statusTarefa.chave}</span></td>
-                                <td clas="date-column">${tarefa.dataFechamento}</td>
+                                <td>${tarefa.servico.setor.nome}</td>
+                                <td class="date-column">${tarefa.dataAbertura}</td>
+                                <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
                                 <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
                                     <a title="Editar" href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>

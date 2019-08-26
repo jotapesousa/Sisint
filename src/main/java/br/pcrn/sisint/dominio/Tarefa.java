@@ -135,6 +135,8 @@ public class Tarefa extends Entidade{
         return notas;
     }
 
+    public int sizeNotas(){ return notas.size(); }
+
     public void setNotas(List<Nota> notas) {
         this.notas = notas;
     }

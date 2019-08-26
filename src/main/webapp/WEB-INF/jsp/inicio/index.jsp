@@ -15,7 +15,7 @@
 <tags:layout>
 
     <jsp:attribute name="cabecalho">
-
+        <meta http-equiv="refresh" content="300" url="${linkTo[InicioController].index}">
     </jsp:attribute>
 
     <jsp:attribute name="rodape">

@@ -1,6 +1,7 @@
 package br.pcrn.sisint.dominio;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by samue on 09/09/2017.
@@ -38,6 +39,10 @@ public class Manutencao extends Entidade {
 
     @OneToOne
     private Equipamento equipamento;
+
+    @Column(name ="log_manutencao")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<LogManutencao> logManutencoes;
 
     @Override
     public Long getId() {
@@ -149,5 +154,13 @@ public class Manutencao extends Entidade {
 
     public void setDescricaoFinal(String descricaoFinal) {
         this.descricaoFinal = descricaoFinal;
+    }
+
+    public List<LogManutencao> getLogManutencoes() {
+        return logManutencoes;
+    }
+
+    public void setLogManutencoes(List<LogManutencao> logManutencoes) {
+        this.logManutencoes = logManutencoes;
     }
 }

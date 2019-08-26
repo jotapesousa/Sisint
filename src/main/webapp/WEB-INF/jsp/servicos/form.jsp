@@ -32,6 +32,7 @@
 
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/js/servicos/form.js"></script>
+        <script src="${ctx}/resources/js/servicos/servico.js"></script>
         <script src="${ctx}/resources/js/servicos/tarefas.js"></script>
         <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
         <script src="${ctx}/resources/js/servicos/btnTarefa.js"></script>
@@ -65,17 +66,10 @@
                             <input id="servico-id" type="hidden" name="servico.id" value="${servico.id}"/>
                             <input id="servico-dataAbertura" type="hidden" name="servico.dataAbertura" value="${servico.dataAbertura}"/>
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="titulo-servico">Título</label>
-                                <input type="text" minlength="5" class="form-control" id="titulo-servico" required="true"
+                                <input type="text" minlength="4" class="form-control" id="titulo-servico" required="true"
                                        value="${servico.titulo}" placeholder="Titulo do serviço" name="servico.titulo"/>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="telRetorno-servico">Telefone para Retorno: </label>
-                                <input type="text" class="form-control" id="telRetorno-servico" required="true"
-                                       value="${servico.telefoneRetorno}"
-                                       placeholder="Telefone para retorno"
-                                       name="servico.telefoneRetorno"/>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="nomeSolicitante-servico">Nome do solicitante</label>
@@ -84,7 +78,7 @@
                                        value="${servico.nomeSolicitante}"
                                        placeholder="Nome do solicitante" name="servico.nomeSolicitante"/>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="setor-servico">Setor solicitante</label>
                                 <select class="form-control" required id="setor-servico" name="servico.setor.id">
                                     <option value=""></option>
@@ -99,14 +93,20 @@
 
                                 </select>
                             </div>
-
+                            <div class="form-group col-md-2">
+                                <label for="telRetorno-servico">Telefone para Retorno: </label>
+                                <input type="text" class="form-control" id="telRetorno-servico" required="true"
+                                       value="${servico.telefoneRetorno}"
+                                       placeholder="Telefone para retorno"
+                                       name="servico.telefoneRetorno"/>
+                            </div>
                             <div class="form-group col-md-3">
                                 <label for="data-fechamento-servico">Data de Finalização</label>
                                 <input type="text" class="form-control datePicker" id="data-fechamento-servico"
                                        required="true"
                                        value="${servico.dataFechamento}"
                                        placeholder="Data de finalização" readonly="readonly" name="servico.dataFechamento"/>
-                            </div>
+                        </div>
 
                             <div class="form-group col-md-3">
                                 <label for="prioridade-servico">Prioridade</label>
@@ -167,7 +167,7 @@
                     <!-- BOTAO PARA MODAL SERVICO -->
                     <div class="panel" align="right">
                         <button type="button" id="btnServico" class="btn btn-primary"
-                                data-toggle="modal" data-target="#modalServico" onclick="criarAviso()">Cadastrar</button>
+                                data-toggle="modal" data-target="#modalServico" onclick="criarAviso()">Salvar</button>
                     </div>
                 </div>
 
@@ -260,11 +260,11 @@
                                         </select>
                                     </div>
                                 </div>
-                                <label>Possui pendência:
-                                    <div style="margin-left: 16px; float: right;">
-                                        <input type="checkbox" name="tarefa.pendente" value="${tarefa.pendente}"/>
-                                    </div>
-                                </label>
+                                <%--<label>Possui pendência:--%>
+                                    <%--<div style="margin-left: 16px; float: right;">--%>
+                                        <%--<input type="checkbox" name="tarefa.pendente" value="${tarefa.pendente}"/>--%>
+                                    <%--</div>--%>
+                                <%--</label>--%>
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="descricao-tarefa">Descrição:</label>
                                     <div class="col-md-10">
@@ -280,10 +280,32 @@
                             <button id="btnSalvarTarefa" type="button" class="btn btn-primary" data-dismiss="modal" disabled>
                                 Salvar
                             </button>
+                            <div class="">
+                                <span id="campoObrigatorio" style="color: red;"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- MODAL REMOCAO DE TAREFA -->
+            <div class="modal fade" id="modalRemTarefa" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Remover Tarefa</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Deseja realmente remover a tarefa?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <a id="btnRemTarefa" class="btn btn-danger" href="${linkTo[TarefasController].remover}?id=">Remover</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
 
         </div>
     </jsp:body>

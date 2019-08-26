@@ -39,7 +39,13 @@
             <div class="panel-body">
                 <form id="formTarefa" action="${linkTo[EquipamentoController].salvar}" enctype="multipart/form-data" method="post">
                     <input type="hidden" name="equipamento.id" value="${equipamento.id}">
-
+                    <c:forEach items="${listaLogs}" var="log" begin="0" varStatus="count">
+                        <input type="hidden" name="equipamento.logEquipamentos[${count.index}].id" value="${log.id}"/>
+                        <input type="hidden" name="equipamento.logEquipamentos[${count.index}].log" value="${log.log}"/>
+                        <input type="hidden" name="equipamento.logEquipamentos[${count.index}].usuario.id" value="${log.usuario.id}"/>
+                        <input type="hidden" name="equipamento.logEquipamentos[${count.index}].equipamento.id" value="${log.equipamento.id}"/>
+                        <input type="hidden" name="equipamento.logEquipamentos[${count.index}].dataAlteracao" value="${log.dataAlteracao}"/>
+                    </c:forEach>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="nome-equipamento">Nome: </label>

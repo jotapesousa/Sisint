@@ -37,15 +37,17 @@ $(document).ready(function () {
     });
 
     $(".date-column").each(function () {
-        var data =  $(this).text();
-        data = moment(data, 'YYYY-MM-DD').format('DD/MM/YYYY');
-        $(this).text(data);
+        var formatacao = $(this).text().split('-');
+        var data = new Date(formatacao[0], formatacao[1] - 1, formatacao[2]);
+        var novaData = data.toLocaleDateString();
+        $(this).text(novaData);
     });
 
     $(".date-columnInput").each( function () {
-        var valorData = $(this).val();
-        valorData = moment(valorData, 'YYYY-MM-DD').format('DD/MM/YYYY');
-        $(this).val(valorData);
+        var formatacao = $(this).val().split('-');
+        var data = new Date(formatacao[0], formatacao[1] - 1, formatacao[2]);
+        var novaData = data.toLocaleDateString();
+        $(this).val(novaData);
     });
 
     $('.alert').fadeOut(7000);

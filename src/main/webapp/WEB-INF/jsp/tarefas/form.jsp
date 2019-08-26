@@ -15,10 +15,8 @@
     <jsp:attribute name="cabecalho">
     </jsp:attribute>
     <jsp:attribute name="rodape">
-        <script src="${ctx}/resources/js/init.js"></script>
         <script>
             $(document).ready(function () {
-                console.log("entrou no js");
                 $("#formTarefa").validator();
 
                 var data = moment($(".datePicker").val(), "YYYY-MM-DD").format("DD/MM/YYYY");
@@ -39,6 +37,15 @@
                     <input type="hidden" name="tarefa.codigoTarefa" value="${tarefa.codigoTarefa}">
                     <input type="hidden" name="tarefa.servico.id" value="${tarefa.servico.id}">
                     <input type="hidden" name="tarefa.dataAbertura" value="${tarefa.dataAbertura}">
+                    <input type="hidden" name="tarefa.notas" value="${tarefa.notas}">
+                    <c:forEach items="${tarefa.notas}" var="nota" begin="0" varStatus="count">
+                        <input type="hidden" name="tarefa.notas[${count.index}].id" value="${nota.id}"/>
+                        <input type="hidden" name="tarefa.notas[${count.index}].dataCriacao" value="${nota.dataCriacao}"/>
+                        <input type="hidden" name="tarefa.notas[${count.index}].tecnico.id" value="${nota.tecnico.id}"/>
+                        <input type="hidden" name="tarefa.notas[${count.index}].descricao" value="${nota.descricao}"/>
+                        <input type="hidden" name="tarefa.notas[${count.index}].tarefa.id" value="${nota.tarefa.id}"/>
+                    </c:forEach>
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Título</label>
                         <div class="col-sm-10">
@@ -48,7 +55,9 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Prazo de finalização</label>
                         <div class="col-sm-10">
-                            <input class="form-control datePicker" name="tarefa.dataFechamento" type="text" value="${tarefa.dataFechamento}">
+                            <input type="text" class="form-control datePicker" id="data-fechamento-tarefa"
+                                   required="true" value="${tarefa.dataFechamento}" placeholder="Data de Finalização"
+                                   readonly="readonly" name="tarefa.dataFechamento">
                         </div>
                     </div>
                     <div class="form-group">

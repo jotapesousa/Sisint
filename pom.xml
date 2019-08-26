@@ -62,12 +62,6 @@
 			<version>5.2.8.Final</version>
 		</dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>br.com.caelum</groupId>-->
-			<!--<artifactId>vraptor</artifactId>-->
-			<!--<version>4.2.0-RC4</version>-->
-		<!--</dependency>-->
-
 		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<!--<dependency>-->
 			<!--<groupId>log4j</groupId>-->
@@ -87,6 +81,12 @@
 			<artifactId>weld-core-impl</artifactId>
 			<version>2.1.2.Final</version>
 		</dependency>
+
+		<!--<dependency>-->
+		<!--<groupId>org.hibernate</groupId>-->
+		<!--<artifactId>hibernate-core</artifactId>-->
+		<!--<version>5.2.8.Final</version>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>javax.el</groupId>
@@ -119,13 +119,6 @@
 			<artifactId>hibernate-validator-cdi</artifactId>
 			<version>5.4.0.Final</version>
 		</dependency>
-
-		<!--<dependency>-->
-		<!--<groupId>org.hibernate</groupId>-->
-		<!--<artifactId>hibernate-core</artifactId>-->
-		<!--<version>5.2.8.Final</version>-->
-		<!--</dependency>-->
-
 
 		<dependency>
 			<groupId>jstl</groupId>
@@ -172,15 +165,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>br.com.caelum.vraptor</groupId>
-			<artifactId>vraptor-java8</artifactId>
-			<version>4.0.0.Final</version>
-		</dependency>
-
-		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.caelum.vraptor</groupId>
+			<artifactId>vraptor-java8</artifactId>
+			<version>4.0.0.Final</version>
 		</dependency>
 
 		<dependency>
@@ -207,6 +200,13 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.3.3</version>
         </dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
 
 
 	</dependencies>
