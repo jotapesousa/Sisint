@@ -66,84 +66,84 @@ public class EquipamentoController extends Controlador{
 
         Optional<Equipamento> equipamento1;
 
-        equipamentoNegocio.validarEquipamento(equipamento);
+//        equipamentoNegocio.validarEquipamento(equipamento);
 
-//        if (equipamentoNegocio.validarEquipamento(equipamento)) {
-//
-//        }
+        if (equipamentoNegocio.validarEquipamento(equipamento)) {
 
-//        if (equipamento.getId() == null) {
-//            equipamento1 = this.equipamentoDao.buscarPorTombo(equipamento.getTombo());
-//
-//            if (equipamento1.isPresent()) {
-//                resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroTombo"));
-//                resultado.include("equipamento", equipamento);
-//                resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
-//                resultado.of(this).form();
-//            } else {
-//                equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
-//
-//                if (equipamento1.isPresent()) {
-//                    resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
-//                    resultado.include("equipamento", equipamento);
-//                    resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
-//                    resultado.of(this).form();
-//                } else {
-//                    equipamentoNegocio.gerarLog(equipamento);
-//                    equipamentoDao.salvar(equipamento);
-//                    resultado.redirectTo(this).lista();
-//                }
-//            }
-//        } else {
-//            equipamento1 = this.equipamentoDao.buscarPorTombo(equipamento.getTombo());
-//
-//            if (equipamento1.isPresent()) {
-//                if (equipamento.getId() != equipamento1.get().getId()) {
-//                    resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroTombo"));
-//                    resultado.include("equipamento", equipamento);
-//                    resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
-//                    resultado.of(this).form();
-//                } else {
-//                    equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
-//
-//                    if (equipamento1.isPresent()) {
-//                        if (equipamento.getId() != equipamento1.get().getId()) {
-//                            resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
-//                            resultado.include("equipamento", equipamento);
-//                            resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
-//                            resultado.of(this).form();
-//                        } else {
-//                            equipamentoNegocio.gerarLog(equipamento);
-//                            equipamentoDao.salvar(equipamento);
-//                            resultado.redirectTo(this).lista();
-//                        }
-//                    } else {
-//                        equipamentoNegocio.gerarLog(equipamento);
-//                        equipamentoDao.salvar(equipamento);
-//                        resultado.redirectTo(this).lista();
-//                    }
-//                }
-//            } else {
-//                equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
-//
-//                if (equipamento1.isPresent()) {
-//                    if (equipamento.getId() != equipamento1.get().getId()) {
-//                        resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
-//                        resultado.include("equipamento", equipamento);
-//                        resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
-//                        resultado.of(this).form();
-//                    } else {
-//                        equipamentoNegocio.gerarLog(equipamento);
-//                        equipamentoDao.salvar(equipamento);
-//                        resultado.redirectTo(this).lista();
-//                    }
-//                } else {
-//                    equipamentoNegocio.gerarLog(equipamento);
-//                    equipamentoDao.salvar(equipamento);
-//                    resultado.redirectTo(this).lista();
-//                }
-//            }
-//        }
+        }
+
+        if (equipamento.getId() == null) {
+            equipamento1 = this.equipamentoDao.buscarPorTombo(equipamento.getTombo());
+
+            if (equipamento1.isPresent()) {
+                resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroTombo"));
+                resultado.include("equipamento", equipamento);
+                resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                resultado.of(this).form();
+            } else {
+                equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
+
+                if (equipamento1.isPresent()) {
+                    resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
+                    resultado.include("equipamento", equipamento);
+                    resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                    resultado.of(this).form();
+                } else {
+                    equipamentoNegocio.gerarLog(equipamento);
+                    equipamentoDao.salvar(equipamento);
+                    resultado.redirectTo(this).lista();
+                }
+            }
+        } else {
+            equipamento1 = this.equipamentoDao.buscarPorTombo(equipamento.getTombo());
+
+            if (equipamento1.isPresent()) {
+                if (equipamento.getId() != equipamento1.get().getId()) {
+                    resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroTombo"));
+                    resultado.include("equipamento", equipamento);
+                    resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                    resultado.of(this).form();
+                } else {
+                    equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
+
+                    if (equipamento1.isPresent()) {
+                        if (equipamento.getId() != equipamento1.get().getId()) {
+                            resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
+                            resultado.include("equipamento", equipamento);
+                            resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                            resultado.of(this).form();
+                        } else {
+                            equipamentoNegocio.gerarLog(equipamento);
+                            equipamentoDao.salvar(equipamento);
+                            resultado.redirectTo(this).lista();
+                        }
+                    } else {
+                        equipamentoNegocio.gerarLog(equipamento);
+                        equipamentoDao.salvar(equipamento);
+                        resultado.redirectTo(this).lista();
+                    }
+                }
+            } else {
+                equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
+
+                if (equipamento1.isPresent()) {
+                    if (equipamento.getId() != equipamento1.get().getId()) {
+                        resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
+                        resultado.include("equipamento", equipamento);
+                        resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                        resultado.of(this).form();
+                    } else {
+                        equipamentoNegocio.gerarLog(equipamento);
+                        equipamentoDao.salvar(equipamento);
+                        resultado.redirectTo(this).lista();
+                    }
+                } else {
+                    equipamentoNegocio.gerarLog(equipamento);
+                    equipamentoDao.salvar(equipamento);
+                    resultado.redirectTo(this).lista();
+                }
+            }
+        }
     }
 
     public void lista() { resultado.include("equipamentos", dao.listar()); }
