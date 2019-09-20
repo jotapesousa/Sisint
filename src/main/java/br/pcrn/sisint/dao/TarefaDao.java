@@ -9,4 +9,5 @@ public interface TarefaDao extends EntidadeDao<Tarefa> {
     List<Tarefa> tarefasEmAberto();
     List<Tarefa> minhasTarefas();
     List<Tarefa> tarefasConcluidas();
+    List<Tarefa> buscarDezUltimas();
 }

@@ -50,4 +50,12 @@ public class TarefaJpaDao extends EntidadeJpaDao<Tarefa> implements TarefaDao{
         return (Long) query.getSingleResult();
     }
 
+    @Override
+    public List<Tarefa> buscarDezUltimas() {
+        Query query = manager.createQuery("SELECT t FROM Tarefa t ORDER BY t.dataFechamento DESC")
+                .setMaxResults(9);
+        List<Tarefa> tarefas = query.getResultList();
+        return tarefas;
+    }
+
 }

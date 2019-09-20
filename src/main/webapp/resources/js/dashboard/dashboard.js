@@ -46,14 +46,12 @@ $(document).ready(function () {
 
     $.ajax({
         dataType: 'json',
-        type: 'POST',
-        url: urlBase + "Siscva/informacoes",
-        data: {
-
+        type: 'GET',
+        url: "/pcrn_sisint_war_exploded/info",
+        success: function (data) {
+            console.log(data);
+            iniciarDashLinhas(data);
         }
-    }).done(function (data) {
-        iniciarDashLinhas(data);
-        // console.log(data);
     }).fail(function () {
         alert("Ops, algum problema ao solicitar os dados.")
     }).always(function () {

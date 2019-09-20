@@ -188,4 +188,63 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
         }
     }
 
+    @Override
+    public Long contarPorSetor(Long id) {
+        Query query = manager.createQuery("SELECT COUNT(s) FROM Servico s WHERE s.setor.id = :id")
+                .setParameter("id", id);
+
+        return (Long) query.getSingleResult();
+    }
+
+
+    public List<Servico> filtrarAPartirDeDESC(LocalDate dtMin) {
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.dataFechamento > :dtDe ORDER BY s.dataFechamento DESC").setParameter("dtDe", dtMin);
+        return query.getResultList();
+    }
+
+    public List<Servico> filtrarAteDataDESC(LocalDate dtMax) {
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.dataFechamento < :dtAte ORDER BY s.dataFechamento DESC")
+                .setParameter("dtAte", dtMax);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Servico> filtrarDeAteDataDESC(LocalDate dtDe, LocalDate dtAte) {
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.dataFechamento >= :dtDe AND s.dataFechamento <= :dtAte) ORDER BY s.dataFechamento DESC")
+                .setParameter("dtDe", dtDe)
+                .setParameter("dtAte", dtAte);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object> contarDeAteDataDESC(LocalDate dtDe, LocalDate dtAte) {
+        Query query = manager.createNativeQuery("SELECT COUNT(s) AS total, EXTRACT(MONTH FROM s.dataFechamento) AS mes, EXTRACT(YEAR FROM s.dataFechamento) AS ano FROM Servico s " +
+                " WHERE s.dataFechamento > '"+dtDe.toString()+"' AND s.dataFechamento < '"+dtAte.toString()+"' GROUP BY ano,mes ORDER BY ano,mes");
+        List<Object> informacoes = query.getResultList();
+        return informacoes;
+    }
+
+    @Override
+    public List<Servico> filtrarDeAteDataPorSetorDESC(Long id, LocalDate dtDe, LocalDate dtAte) {
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.setor.id = :id AND s.dataFechamento >= :dtDe AND s.dataFechamento <= :dtAte) ORDER BY s.dataFechamento DESC")
+                .setParameter("id", id)
+                .setParameter("dtDe", dtDe)
+                .setParameter("dtAte", dtAte);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Servico> filtrarMaisRecentesPorSetor(Long id) {
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.setor.id = :id ORDER BY s.dataFechamento DESC").setParameter("id", id).setMaxResults(10);
+        return query.getResultList();
+    }
+
+//    @Override
+//    public List<Servico> filtrarPorMesAno(int mes, int ano) {
+//        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (EXTRACT(year FROM s.dataFechamento)) = :ano AND (EXTRACT(month FROM s.dataFechamento) = :mes)")
+//                .setParameter("ano", ano)
+//                .setParameter("mes", mes);
+//        return query.getResultList();
+//    }
+
 }
