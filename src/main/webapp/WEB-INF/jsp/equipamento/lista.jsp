@@ -18,7 +18,6 @@
     <jsp:attribute name="rodape">
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
-        <script src="${ctx}/resources/js/servicos/lista.js"></script>
         <script src="${ctx}/resources/js/equipamentos/equipamento.js"></script>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
@@ -28,6 +27,8 @@
 
                 $('.table').DataTable( {
                     pageLength:25,
+                    "order" : [[ 0, "desc" ]],
+                    stateSave : true,
                     "language":
                         {
                             "sEmptyTable": "Nenhum registro encontrado",
@@ -78,6 +79,7 @@
                             <th>Tombo</th>
                             <th>Número de Série</th>
                             <th>Setor</th>
+                            <th>Data de Cadastro</th>
                             <th>Status</th>
                             <th>Ações</th>
                             <%--<th>Detalhes</th>--%>
@@ -91,6 +93,7 @@
                                 <td>${equipamento.tombo}</td>
                                 <td>${equipamento.numeroSerie}</td>
                                 <td>${equipamento.setor.nome}</td>
+                                <td class="date-column">${equipamento.dataCadastro}</td>
                                 <td><span class="label status-equip">${equipamento.status.chave}</span></td>
                                 <td><a title="Editar" class="editar-equip" href="${linkTo[EquipamentoController].editar}?id=${equipamento.id}" alt="Editar">
                                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>

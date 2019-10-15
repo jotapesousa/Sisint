@@ -153,7 +153,7 @@ public class TermoController extends Controlador {
         List<TermoGeral> termos = this.termoNegocio.gerarTermoGeral(termo);
         Setor setor = this.setorDao.buscarPorId(termo.getSetor().getId());
 
-        Report report = new EntityReport<TermoGeral>(termos,"relatorioServico.jasper", context);
+        Report report = new EntityReport<TermoGeral>(termos,"termoResponsabilidade.jasper", context);
         report.addParameter("setor1", setor.getNome());
         ReportDownload download = new ReportDownload(report, ExportFormats.pdf(), false);
         return download;

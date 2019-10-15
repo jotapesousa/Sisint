@@ -51,7 +51,7 @@ public class EquipamentoJpaDao extends EntidadeJpaDao<Equipamento> implements Eq
 
     @Override
     public Optional<Equipamento> buscarPorTombo(Long codigo) {
-        Query query = manager.createQuery("SELECT e FROM Equipamento e WHERE str(e.tombo) = :codigo AND e.deletado = false")
+        Query query = manager.createQuery("SELECT e FROM Equipamento e WHERE e.tombo = :codigo AND e.deletado = false")
                 .setParameter("codigo", codigo);
         query.setMaxResults(1);
         return query.getResultList().stream().findFirst();

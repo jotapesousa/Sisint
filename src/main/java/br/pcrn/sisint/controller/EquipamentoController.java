@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Seguranca(tipoUsuario = TipoUsuario.TECNICO)
@@ -79,6 +80,8 @@ public class EquipamentoController extends Controlador{
                 resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroTombo"));
                 resultado.include("equipamento", equipamento);
                 resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                resultado.include("status", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+                resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
                 resultado.of(this).form();
             } else {
                 equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
@@ -87,8 +90,11 @@ public class EquipamentoController extends Controlador{
                     resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
                     resultado.include("equipamento", equipamento);
                     resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                    resultado.include("status", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+                    resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
                     resultado.of(this).form();
                 } else {
+                    equipamento.setDataCadastro(LocalDate.now());
                     equipamentoNegocio.gerarLog(equipamento);
                     equipamentoDao.salvar(equipamento);
                     resultado.redirectTo(this).lista();
@@ -102,6 +108,8 @@ public class EquipamentoController extends Controlador{
                     resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroTombo"));
                     resultado.include("equipamento", equipamento);
                     resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                    resultado.include("status", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+                    resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
                     resultado.of(this).form();
                 } else {
                     equipamento1 = this.equipamentoDao.buscarPorNSerie(equipamento.getNumeroSerie());
@@ -111,13 +119,17 @@ public class EquipamentoController extends Controlador{
                             resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
                             resultado.include("equipamento", equipamento);
                             resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                            resultado.include("status", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+                            resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
                             resultado.of(this).form();
                         } else {
+                            equipamento.setDataCadastro(LocalDate.now());
                             equipamentoNegocio.gerarLog(equipamento);
                             equipamentoDao.salvar(equipamento);
                             resultado.redirectTo(this).lista();
                         }
                     } else {
+                        equipamento.setDataCadastro(LocalDate.now());
                         equipamentoNegocio.gerarLog(equipamento);
                         equipamentoDao.salvar(equipamento);
                         resultado.redirectTo(this).lista();
@@ -131,13 +143,17 @@ public class EquipamentoController extends Controlador{
                         resultado.include("mensagem", new SimpleMessage("error", "mensagem.equipamento.salvar.erroNSerie"));
                         resultado.include("equipamento", equipamento);
                         resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+                        resultado.include("status", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
+                        resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
                         resultado.of(this).form();
                     } else {
+                        equipamento.setDataCadastro(LocalDate.now());
                         equipamentoNegocio.gerarLog(equipamento);
                         equipamentoDao.salvar(equipamento);
                         resultado.redirectTo(this).lista();
                     }
                 } else {
+                    equipamento.setDataCadastro(LocalDate.now());
                     equipamentoNegocio.gerarLog(equipamento);
                     equipamentoDao.salvar(equipamento);
                     resultado.redirectTo(this).lista();
@@ -202,6 +218,7 @@ public class EquipamentoController extends Controlador{
     @Transacional
     @Post
     public void salvarAjax(Equipamento equipamento) {
+        equipamento.setDataCadastro(LocalDate.now());
         dao.salvar(equipamento);
         resultado.use(Results.json()).withoutRoot().from(equipamento).recursive().serialize();
     }
