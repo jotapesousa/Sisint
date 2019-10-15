@@ -19,6 +19,9 @@
     </jsp:attribute>
 
     <jsp:attribute name="rodape">
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
         <script src="${ctx}/resources/js/dashboard/dashboard.js"></script>
     </jsp:attribute>
     <jsp:body>
@@ -109,7 +112,8 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="${linkTo[ManutencaoController].lista}">
+                        <a href="#">
+                        <%--<a href="${linkTo[ManutencaoController].lista}">--%>
                             <div class="panel-footer">
                                 <span class="pull-left">Ver Manutenções</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -130,13 +134,33 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <!-- <div id="morris-area-chart"></div> -->
-                            <div class="flot-chart">
-                                <div class="flot-chart-content" id="flot-line-chart"></div>
+                            <div id="container-linha" style="height:200px;">
                             </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
+                    <%--<div class="panel panel-default">--%>
+                        <%--<div class="panel-heading">--%>
+                            <%--<i class="fa fa-bar-chart-o fa-fw"></i> Gráfico de Chamados--%>
+                        <%--</div>--%>
+                        <%--<!-- /.panel-heading -->--%>
+                        <%--<div class="panel-body">--%>
+                            <%--<div id="container-pizza" style="height:200px;">--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- /.panel-body -->--%>
+                    <%--</div>--%>
+                    <%--<div class="panel panel-default">--%>
+                        <%--<div class="panel-heading">--%>
+                            <%--<i class="fa fa-bar-chart-o fa-fw"></i> Gráfico de Chamados--%>
+                        <%--</div>--%>
+                        <%--<!-- /.panel-heading -->--%>
+                        <%--<div class="panel-body">--%>
+                            <%--<div id="container-barra" style="height:200px;">--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- /.panel-body -->--%>
+                    <%--</div>--%>
                 </div>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
@@ -148,15 +172,17 @@
                         <div class="panel-body">
                             <div class="list-group">
                                 <c:forEach items="${dezUltimasTarefas}" var="tarefa">
-                                        <a href="#" class="list-group-item">
-                                            ${tarefa.servico.setor.nome}
+                                        <a href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}" class="list-group-item">
+                                            ${tarefa.titulo}
                                             <span class="pull-right text-muted small date-column"><em>${tarefa.dataFechamento}</em>
+                                            </span>
+                                            <span class="pull-right text-muted small" style="padding-right: 15px;"><em>${tarefa.tecnico.nome}</em>
                                             </span>
                                         </a>
                                 </c:forEach>
                             </div>
                             <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                            <a href="${linkTo[TarefasController].lista}" class="btn btn-default btn-block">Ver Todas as Tarefas</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>

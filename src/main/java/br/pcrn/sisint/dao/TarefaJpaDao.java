@@ -1,5 +1,6 @@
 package br.pcrn.sisint.dao;
 
+import br.pcrn.sisint.dominio.Servico;
 import br.pcrn.sisint.dominio.StatusTarefa;
 import br.pcrn.sisint.dominio.Tarefa;
 import br.pcrn.sisint.dominio.UsuarioLogado;
@@ -7,6 +8,7 @@ import br.pcrn.sisint.dominio.UsuarioLogado;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TarefaJpaDao extends EntidadeJpaDao<Tarefa> implements TarefaDao{
@@ -56,6 +58,21 @@ public class TarefaJpaDao extends EntidadeJpaDao<Tarefa> implements TarefaDao{
                 .setMaxResults(9);
         List<Tarefa> tarefas = query.getResultList();
         return tarefas;
+    }
+
+    public List<Tarefa> filtrarDeAteDataPorSetorDESC(Long id, LocalDate dtDe, LocalDate dtAte) {
+        Query query = manager.createQuery("SELECT t FROM Tarefa t WHERE (t.servico.setor.id = :id AND t.dataFechamento >= :dtDe AND t.dataFechamento <= :dtAte) ORDER BY t.dataFechamento DESC")
+                .setParameter("id", id)
+                .setParameter("dtDe", dtDe)
+                .setParameter("dtAte", dtAte);
+        return query.getResultList();
+    }
+
+    public List<Tarefa> filtrarMaisRecentesPorSetorDESC(Long id) {
+        Query query = manager.createQuery("SELECT t FROM Tarefa t WHERE (t.servico.setor.id = :id and t.deletado = false) ORDER BY t.dataFechamento DESC")
+                .setParameter("id", id);
+
+        return query.getResultList();
     }
 
 }

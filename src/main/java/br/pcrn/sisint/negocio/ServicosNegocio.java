@@ -1,13 +1,21 @@
 package br.pcrn.sisint.negocio;
 
+import br.com.caelum.vraptor.jasperreports.Report;
+import br.com.caelum.vraptor.jasperreports.download.ReportDownload;
+import br.com.caelum.vraptor.jasperreports.formats.ExportFormats;
+import br.com.caelum.vraptor.observer.download.Download;
 import br.pcrn.sisint.dao.ServicoDao;
 import br.pcrn.sisint.dao.SetorDao;
 import br.pcrn.sisint.dao.TarefaJpaDao;
 import br.pcrn.sisint.dao.UsuarioDao;
 import br.pcrn.sisint.dominio.*;
+import br.pcrn.sisint.dominio.relatorios.Relatorio;
+import br.pcrn.sisint.dominio.relatorios.RelatorioServico;
+import br.pcrn.sisint.util.EntidadeReport;
 import br.pcrn.sisint.util.OpcaoSelect;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,6 +28,7 @@ public class ServicosNegocio {
     private ServicoDao servicoDao;
     private SetorDao setorDao;
     private UsuarioDao usuarioDao;
+    private ServletContext context;
 
     @Inject
     private TarefaJpaDao tarefaJpaDao;
@@ -28,14 +37,15 @@ public class ServicosNegocio {
     private UsuarioLogado usuarioLogado;
 
     public ServicosNegocio(){
-        this(null, null,null);
+        this(null, null,null, null);
     }
 
     @Inject
-    public ServicosNegocio(ServicoDao servicoDao, UsuarioDao usuarioDao, SetorDao setorDao) {
+    public ServicosNegocio(ServicoDao servicoDao, UsuarioDao usuarioDao, SetorDao setorDao, ServletContext context) {
         this.servicoDao = servicoDao;
         this.usuarioDao = usuarioDao;
         this.setorDao = setorDao;
+        this.context = context;
     }
 
     public List<OpcaoSelect> geraListaOpcoesUsuarios() {
@@ -224,4 +234,116 @@ public class ServicosNegocio {
 
         servico.getLogServicos().add(logServico);
     }
+
+    public Download relatorioNumServicosPorSetor(String dtDe, String dtAte) {
+        List<Object[]> servicos;
+        List<RelatorioServico> relatoriosServico;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate inicio;
+        LocalDate fim;
+        Report report = null;
+        ReportDownload download = null;
+
+        if (dtDe == null && dtAte != null) {
+            fim = LocalDate.parse(dtAte, formatter);
+            servicos = servicoDao.contarAteDataPorSetorDESC(fim);
+        } else if (dtDe != null && dtAte == null) {
+            inicio = LocalDate.parse(dtDe, formatter);
+            servicos = servicoDao.contarAPartirDePorSetorDESC(inicio);
+        } else {
+            inicio = LocalDate.parse(dtDe, formatter);
+            fim = LocalDate.parse(dtAte, formatter);
+            servicos = servicoDao.contarDeAteDataPorSetorDESC(inicio, fim);
+        }
+
+        if(servicos.size() > 0 ){
+            relatoriosServico = converterObjetoParaRelatorio(servicos, dtDe, dtAte);
+
+            report = new EntidadeReport<RelatorioServico>(relatoriosServico, "relatorioContarNumServicosPorSetor.jasper", context);
+            download = new ReportDownload(report, ExportFormats.pdf(), false);
+        } else {
+            report = new EntidadeReport<RelatorioServico>(null, "resultadoVazioNumServicos.jasper", context);
+            report.addParameter("dtDe", dtDe == null ? "" : dtDe);
+            report.addParameter("dtAte", dtAte == null ? "" : dtAte);
+            download = new ReportDownload(report, ExportFormats.pdf(), false);
+        }
+
+        return download;
+    }
+
+
+    public Download relatorioFiltrarServicosPorSetor(Long idSetor, String dtDe, String dtAte) {
+        List<Servico> servicos;
+        List<RelatorioServico> relatoriosServico;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate inicio;
+        LocalDate fim;
+        Report report;
+        ReportDownload download;
+
+        if (dtDe == null && dtAte != null) {
+            fim = LocalDate.parse(dtAte, formatter);
+            servicos = servicoDao.filtrarAteDataPorSetorDESC(idSetor, fim);
+        } else if (dtDe != null && dtAte == null) {
+            inicio = LocalDate.parse(dtDe, formatter);
+            servicos = servicoDao.filtrarAPartirDePorSetorDESC(idSetor, inicio);
+        } else {
+            inicio = LocalDate.parse(dtDe, formatter);
+            fim = LocalDate.parse(dtAte, formatter);
+            servicos = servicoDao.filtrarDeAteDataPorSetorDESC(idSetor, inicio, fim);
+        }
+
+        if (servicos.size() > 0) {
+            relatoriosServico = converterServicoParaRelatorio(servicos, dtDe, dtAte);
+
+            report = new EntidadeReport<RelatorioServico>(relatoriosServico, "filtrarServicosPorSetor.jasper", context);
+            report.addParameter("totalServicos", relatoriosServico.get(relatoriosServico.size()-1).getTotalRegistro());
+            report.addParameter("dtDe", dtDe == null ? "" : dtDe);
+            report.addParameter("dtAte", dtAte == null ? "" : dtAte);
+            download = new ReportDownload(report, ExportFormats.pdf(), false);
+        } else {
+            Setor setor = setorDao.buscarPorId(idSetor);
+            report = new EntidadeReport<RelatorioServico>(null, "resultadoVazioServicoPorSetor.jasper", context);
+            report.addParameter("setorServico", setor.getNome());
+            report.addParameter("dtDe", dtDe == null ? "" : dtDe);
+            report.addParameter("dtAte", dtAte == null ? "" : dtAte);
+            download = new ReportDownload(report, ExportFormats.pdf(), false);
+        }
+
+        return download;
+    }
+
+    private List<RelatorioServico> converterObjetoParaRelatorio(List<Object[]> servicos, String dtDe, String dtAte) {
+        List<RelatorioServico> relatorioServicos = new ArrayList<>();
+
+        int totalServicos = 0;
+        for (Object[] servico : servicos) {
+            totalServicos += Integer.parseInt(servico[0].toString());
+        }
+
+        for (Object[] servico : servicos) {
+            RelatorioServico relatorioServico = new RelatorioServico(servico[1].toString(),
+                    Integer.parseInt(servico[0].toString()), totalServicos, dtDe, dtAte);
+            relatorioServicos.add(relatorioServico);
+        }
+        return  relatorioServicos;
+    }
+    private List<RelatorioServico> converterServicoParaRelatorio(List<Servico> servicos, String dtDe, String dtAte) {
+        List<RelatorioServico> relatorioServicos = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataFechamento;
+
+        int totalServicos = 0;
+
+        for (Servico servico : servicos) {
+            dataFechamento = servico.getDataFechamento().format(formatter);
+            totalServicos += 1;
+            RelatorioServico relatorioServico = new RelatorioServico(servico.getSetor().getNome(), totalServicos, dataFechamento,
+                    servico.getTecnico().getNome(), servico.getTitulo());
+            relatorioServicos.add(relatorioServico);
+        }
+        return  relatorioServicos;
+    }
+
+//    public Download imprimirRelatorioServico(Lis)
 }

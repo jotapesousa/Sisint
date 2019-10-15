@@ -104,8 +104,9 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
 
     @Override
     public Long meusServicos() {
-        Query query = manager.createQuery("select count(s) from Servico s where (s.statusServico = 'EM_EXECUCAO' or " +
-                "s.statusServico = 'EM_ESPERA') and s.tecnico.id = :usuario and s.deletado = false");
+        Query query = manager.createQuery("select count(s) from Servico s " +
+                                             "where (s.statusServico = 'EM_EXECUCAO' or s.statusServico = 'EM_ESPERA') " +
+                                             "and s.tecnico.id = :usuario and s.deletado = false");
         query.setParameter("usuario", usuarioLogado.getUsuario().getId());
         return (Long) query.getSingleResult();
     }
@@ -126,7 +127,8 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
 
     @Override
     public List<Servico> listarMeusServicos(Long id) {
-        Query query = manager.createQuery("select s from Servico s where (s.statusServico = 'EM_EXECUCAO' OR s.statusServico = 'EM_ESPERA') AND s.deletado = false AND s.tecnico.id = :id");
+        Query query = manager.createQuery("select s from Servico s " +
+                                             "where (s.statusServico = 'EM_EXECUCAO' OR s.statusServico = 'EM_ESPERA') AND s.deletado = false AND s.tecnico.id = :id");
         query.setParameter("id", id);
         return query.getResultList();
     }
@@ -196,40 +198,42 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
         return (Long) query.getSingleResult();
     }
 
-
-    public List<Servico> filtrarAPartirDeDESC(LocalDate dtMin) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.dataFechamento > :dtDe ORDER BY s.dataFechamento DESC").setParameter("dtDe", dtMin);
-        return query.getResultList();
-    }
-
-    public List<Servico> filtrarAteDataDESC(LocalDate dtMax) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.dataFechamento < :dtAte ORDER BY s.dataFechamento DESC")
-                .setParameter("dtAte", dtMax);
-        return query.getResultList();
-    }
-
     @Override
     public List<Servico> filtrarDeAteDataDESC(LocalDate dtDe, LocalDate dtAte) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.dataFechamento >= :dtDe AND s.dataFechamento <= :dtAte) ORDER BY s.dataFechamento DESC")
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.dataFechamento >= :dtDe AND s.dataFechamento <= :dtAte) AND s.statusServico = :status " +
+                "ORDER BY s.dataFechamento DESC")
                 .setParameter("dtDe", dtDe)
-                .setParameter("dtAte", dtAte);
+                .setParameter("dtAte", dtAte)
+                .setParameter("status", StatusServico.CONCLUIDO);
         return query.getResultList();
     }
 
-    @Override
-    public List<Object> contarDeAteDataDESC(LocalDate dtDe, LocalDate dtAte) {
-        Query query = manager.createNativeQuery("SELECT COUNT(s) AS total, EXTRACT(MONTH FROM s.dataFechamento) AS mes, EXTRACT(YEAR FROM s.dataFechamento) AS ano FROM Servico s " +
-                " WHERE s.dataFechamento > '"+dtDe.toString()+"' AND s.dataFechamento < '"+dtAte.toString()+"' GROUP BY ano,mes ORDER BY ano,mes");
-        List<Object> informacoes = query.getResultList();
-        return informacoes;
+    public List<Servico> filtrarAPartirDePorSetorDESC(Long id, LocalDate dtMin) {
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.setor.id = :id AND s.dataFechamento >= :dtMin AND s.statusServico = :status " +
+                "ORDER BY s.dataFechamento DESC")
+                .setParameter("id", id)
+                .setParameter("dtMin", dtMin)
+                .setParameter("status", StatusServico.CONCLUIDO);
+        return query.getResultList();
+    }
+
+    public List<Servico> filtrarAteDataPorSetorDESC(Long id, LocalDate dtMax) {
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.dataFechamento <= :dtAte AND s.id = :id AND s.statusServico = :status" +
+                " ORDER BY s.dataFechamento DESC")
+                .setParameter("dtAte", dtMax)
+                .setParameter("id", id)
+                .setParameter("status", StatusServico.CONCLUIDO);
+        return query.getResultList();
     }
 
     @Override
     public List<Servico> filtrarDeAteDataPorSetorDESC(Long id, LocalDate dtDe, LocalDate dtAte) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.setor.id = :id AND s.dataFechamento >= :dtDe AND s.dataFechamento <= :dtAte) ORDER BY s.dataFechamento DESC")
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.setor.id = :id AND s.dataFechamento >= :dtDe" +
+                " AND s.dataFechamento <= :dtAte) AND s.statusServico = :status ORDER BY s.dataFechamento DESC")
                 .setParameter("id", id)
                 .setParameter("dtDe", dtDe)
-                .setParameter("dtAte", dtAte);
+                .setParameter("dtAte", dtAte)
+                .setParameter("status", StatusServico.CONCLUIDO);
         return query.getResultList();
     }
 
@@ -239,7 +243,57 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
         return query.getResultList();
     }
 
-//    @Override
+    @Override
+    public List<Object[]> contarDeAteDataDESC(LocalDate dtDe, LocalDate dtAte) {
+        Query query = manager.createNativeQuery("SELECT COUNT(s) AS total, EXTRACT(MONTH FROM s.dataFechamento) AS mes, " +
+                "EXTRACT(YEAR FROM s.dataFechamento) AS ano FROM Servico s WHERE s.dataFechamento >= '"+dtDe.toString()+"'" +
+                " AND s.dataFechamento <= '"+dtAte.toString()+"' AND s.statusServico = 'CONCLUIDO' GROUP BY ano,mes ORDER BY ano,mes");
+        List<Object[]> informacoes = query.getResultList();
+        return informacoes;
+    }
+
+    @Override
+    public List<Object[]> contarDeAteDataPorSetorDESC(LocalDate dtDe, LocalDate dtAte) {
+        Query query = manager.createQuery("SELECT COUNT(servico) as total, setor.nome FROM Servico servico " +
+                                             "INNER JOIN Setor setor on servico.setor.id = setor.id " +
+                                             "WHERE servico.statusServico = :status AND servico.dataFechamento >= :dtDe " +
+                                             "AND servico.dataFechamento <= :dtAte " +
+                                             "GROUP BY servico.setor.id, setor.nome " +
+                                             "ORDER BY total DESC")
+                .setParameter("dtDe", dtDe)
+                .setParameter("dtAte", dtAte)
+                .setParameter("status", StatusServico.CONCLUIDO);
+        List<Object[]> informacoes = query.getResultList();
+
+        return informacoes;
+    }
+
+    @Override
+    public List<Object[]> contarAPartirDePorSetorDESC(LocalDate dtDe) {
+        Query query = manager.createQuery("SELECT COUNT(servico) as total, setor.nome FROM Servico servico " +
+                                             "INNER JOIN Setor setor on servico.setor.id = setor.id " +
+                                             "WHERE servico.statusServico = :status AND servico.dataFechamento >= :dtDe GROUP BY servico.setor.id, setor.nome ORDER BY total DESC")
+                .setParameter("dtDe", dtDe)
+                .setParameter("status", StatusServico.CONCLUIDO);
+        List<Object[]> informacoes = query.getResultList();
+
+        return informacoes;
+    }
+
+    @Override
+    public List<Object[]> contarAteDataPorSetorDESC(LocalDate dtAte) {
+        Query query = manager.createQuery("SELECT COUNT(servico) as total, setor.nome FROM Servico servico " +
+                                             "INNER JOIN Setor setor on servico.setor.id = setor.id " +
+                                             "WHERE servico.statusServico = :status AND servico.dataFechamento <= :dtAte " +
+                                             "GROUP BY servico.setor.id, setor.nome ORDER BY total DESC")
+                .setParameter("dtAte", dtAte)
+                .setParameter("status", StatusServico.CONCLUIDO);
+        List<Object[]> informacoes = query.getResultList();
+
+        return informacoes;
+    }
+
+    //    @Override
 //    public List<Servico> filtrarPorMesAno(int mes, int ano) {
 //        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (EXTRACT(year FROM s.dataFechamento)) = :ano AND (EXTRACT(month FROM s.dataFechamento) = :mes)")
 //                .setParameter("ano", ano)

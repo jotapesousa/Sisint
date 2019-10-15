@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioContarNumServicoPorSetor" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9cc94ab-b964-4800-81a3-f38875dc60da">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="diretorio_base" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="setorServico" class="java.lang.String">
+		<fieldDescription><![CDATA[setorServico]]></fieldDescription>
+	</field>
+	<field name="numServicos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numServicos]]></fieldDescription>
+	</field>
+	<field name="totalRegistro" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totalRegistro]]></fieldDescription>
+	</field>
+	<field name="dtDe" class="java.lang.String">
+		<fieldDescription><![CDATA[dtDe]]></fieldDescription>
+	</field>
+	<field name="dtAte" class="java.lang.String">
+		<fieldDescription><![CDATA[dtAte]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="106" splitType="Stretch">
+			<image>
+				<reportElement x="20" y="6" width="70" height="84" uuid="220a2edf-f2c1-4611-9fc1-edd2dfc1cd74"/>
+				<imageExpression><![CDATA[$P{diretorio_base} + "resources/imagens/Brasao-Policia-Civil-RN.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="90" width="536" height="16" uuid="b7ecd95d-fef0-43bb-a66e-e789d4262c48"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top"/>
+				<text><![CDATA[______________________________________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="6" width="420" height="20" uuid="82a0bdb5-4252-432f-adfe-5167a3030fbb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[GOVERNO DO ESTADO DO RIO GRANDE DO NORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="28" width="420" height="20" uuid="1eb1e30f-6d10-4f0c-8fa7-c7320b041164"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POLICIA CIVIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="50" width="420" height="18" uuid="7f30e3a4-b983-4947-88bc-85aae86aaee9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SETOR DE INFORMÁTICA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="5" width="72" height="30" uuid="a1fe2edb-4c01-4f78-b8f6-ddacdd46a040"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Período de: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="5" width="60" height="30" uuid="6a350f99-b3a1-4be5-8337-71bc4a8e087d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Até:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="5" width="139" height="30" uuid="7ff10b18-9b78-4975-9be9-b5784aab6054">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[RELATORIO GERADO EM:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="505" y="5" width="48" height="30" uuid="47756718-7323-4a41-8cae-bebc135b1b97">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="74" y="5" width="56" height="30" uuid="50933345-f551-4e43-9e92-48f9bb4a670e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dtDe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="5" width="90" height="30" uuid="2403c0d7-99f5-4b76-b517-9ca12a152b4a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dtAte}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="130" height="30" uuid="6b875f72-acbd-4b5e-b550-0d9ed0a2d879">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Setor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="150" height="30" uuid="2d42e061-1a06-42d6-b67e-943bbb3e0b89">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Servicos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="130" height="30" uuid="1439c648-f47b-4618-b891-ffae5ab5c293"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{setorServico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="150" height="30" uuid="fc1d8663-278e-4caf-9837-aa168f797ac4"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numServicos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="130" height="30" uuid="cb8f24a3-2833-4d97-a144-f77a89bd1ae6">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Serviços:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="0" width="150" height="30" uuid="b76137df-5666-4601-afb4-1b3ce014cefb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalRegistro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

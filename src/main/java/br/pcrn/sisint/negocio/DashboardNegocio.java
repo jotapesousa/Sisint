@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.inject.Inject;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +60,14 @@ public class DashboardNegocio {
     }
 
 
-    public JsonElement informacoesDataEntrada () {
+    private JsonElement informacoesDataEntrada () {
         LocalDate agora = LocalDate.now();
         LocalDate inicio = agora.minusYears(1l);
-        List<Object> informacoes = servicoDao.contarDeAteDataDESC(inicio,agora);
+        List<Object[]> informacoes = servicoDao.contarDeAteDataDESC(inicio,agora);
         return gerarJsonDeServicosPorData(informacoes);
     }
 
-    private JsonElement gerarJsonDeServicosPorData (List<Object> informacoes) {
+    private JsonElement gerarJsonDeServicosPorData (List<Object[]> informacoes) {
         LocalDate localDate = LocalDate.now().minusYears(1l).plusMonths(1);
         JsonArray jsonArray = new JsonArray();
         for (int i=0; i<12; i++) {
@@ -75,10 +76,14 @@ public class DashboardNegocio {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("date",customizarData(localDate));
             jsonObject.addProperty("quantidade",0);
-            for(Object info : informacoes) {
-//                if( (int) info. == ano && (int) info.get(1) == mes) {
-//                    jsonObject.addProperty("quantidade",info.get);
-//                }
+            for(Object[] info : informacoes) {
+                BigInteger totalInfo = (BigInteger) info[0];
+                Double mesInfo = (Double) info[1];
+                Double anoInfo = (Double) info[2];
+
+                if(anoInfo == ano && mesInfo == mes) {
+                    jsonObject.addProperty("quantidade",totalInfo);
+                }
             }
             localDate = localDate.plusMonths(1l);
             jsonArray.add(jsonObject);

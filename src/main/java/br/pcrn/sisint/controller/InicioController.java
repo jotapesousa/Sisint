@@ -77,5 +77,11 @@ public class InicioController extends Controlador {
         resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
     }
 
+    @Path("/informacoes")
+    @Get
+    public void informacoes() {
+
+    }
+
 
 }
