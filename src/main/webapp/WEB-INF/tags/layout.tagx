@@ -198,6 +198,9 @@
                                         <li>
                                             <a href="${linkTo[ServicosController].lista}">Ver Todos os Serviços</a>
                                         </li>
+                                        <li>
+                                            <a href="${linkTo[ServicosController].formRelatorio}">Relatório</a>
+                                        </li>
                                     </c:if>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -219,21 +222,21 @@
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
-                            <li>
-                                <a href="#"><i class="fa fa-wrench fa-fw"><c:out value=""/></i> Manutenção<i class="fa arrow"><c:out value=""/></i></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="${linkTo[ManutencaoController].form}">Cadastrar</a>
-                                    </li>
-                                    <li>
-                                        <a href="${linkTo[ManutencaoController].lista}">Ver Abertas</a>
-                                    </li>
-                                    <li>
-                                        <a href="${linkTo[ManutencaoController].listarConcluidos}">Concluídos</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
+                            <!--<li>-->
+                                <!--<a href="#"><i class="fa fa-wrench fa-fw"><c:out value=""/></i> Manutenção<i class="fa arrow"><c:out value=""/></i></a>-->
+                                <!--<ul class="nav nav-second-level">-->
+                                    <!--<li>-->
+                                        <!--<a href="${linkTo[ManutencaoController].form}">Cadastrar</a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a href="${linkTo[ManutencaoController].lista}">Ver Abertas</a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a href="${linkTo[ManutencaoController].listarConcluidos}">Concluídos</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                                <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
+                            <!--</li>-->
                             <li>
                                 <a href="#"><i class="fa fa-laptop fa-fw"><c:out value=""/></i> Equipamentos<i class="fa arrow"><c:out value=""/></i></a>
                                 <ul class="nav nav-second-level">
@@ -255,6 +258,9 @@
                                     <li>
                                         <a href="${linkTo[SetorController].lista}">Ver Todos</a>
                                     </li>
+                                    <li>
+                                        <a href="${linkTo[SetorController].tarefasPorSetor}?id=">Ver Tarefas</a>
+                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -272,20 +278,20 @@
                                     <!-- /.nav-second-level -->
                                 </li>
                             </c:if>
+                            <!--<li>-->
+                                <!--<a href="#"><i class="fa fa-file-text fa-fw"><c:out value=""/></i> Termos<i class="fa arrow"><c:out value=""/></i></a>-->
+                                <!--<ul class="nav nav-second-level">-->
+                                    <!--<li>-->
+                                        <!--<a href="${linkTo[TermoController].form}">Cadastrar</a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a href="${linkTo[TermoController].lista}">Ver Todos</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                                <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
+                            <!--</li>-->
                             <li>
-                                <a href="#"><i class="fa fa-file-text fa-fw"><c:out value=""/></i> Termos<i class="fa arrow"><c:out value=""/></i></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="${linkTo[TermoController].form}">Cadastrar</a>
-                                    </li>
-                                    <li>
-                                        <a href="${linkTo[TermoController].lista}">Ver Todos</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="${linkTo[InicioController].info}"><i class="fa fa-info-circle fa-fw"><c:out value=""/></i> Informações Gerais</a>
+                                <a href="${linkTo[InicioController].informacoes}"><i class="fa fa-info-circle fa-fw"><c:out value=""/></i> Informações Gerais</a>
                             </li>
                         </ul>
                     </div>
@@ -299,7 +305,6 @@
             <jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>
             <jsp:doBody/>
         </div>
-
 
         <!-- jQuery -->
         <script src="${ctx}/resources/plugins/startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js"><c:out value=""/></script>
@@ -345,11 +350,9 @@
         <!--&lt;!&ndash; Bootstrap Core JavaScript &ndash;&gt;-->
         <!--<script src="${ctx}/resources/plugins/bootstrap3/js/bootstrap.js"><c:out value=""/></script>-->
 
-
+        <jsp:invoke fragment="rodape"/>
 
         <!--<script src="${ctx}/resources/js/init.js"><c:out value=""/></script>-->
-
-        <jsp:invoke fragment="rodape"/>
     </body>
 
     </html>

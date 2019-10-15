@@ -1,8 +1,8 @@
-$(document).ready(function () {
-    // $.fn.dataTable.moment('DD/MM/YYYY');
-
+$(document).ready( function () {
     $('.table').DataTable( {
         pageLength:25,
+        "order" : [[ 0, "desc" ]],
+        stateSave : true,
         "language":
             {
                 "sEmptyTable": "Nenhum registro encontrado",
@@ -29,3 +29,4 @@ $(document).ready(function () {
             }
     } );
 });
+

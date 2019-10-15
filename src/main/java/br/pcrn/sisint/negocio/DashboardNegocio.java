@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.inject.Inject;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,33 +38,58 @@ public class DashboardNegocio {
         return null;
     }
 
-//    public JsonElement servicosPorSetor() {
-//        List<Setor> setores = setorDao.listar();
-//        JsonObject jsonDash = new JsonObject();
-//        JsonArray jsonArray = new JsonArray();
-//        Long total = servicoDao.servicoPorSetor(0l);
-//
-//        for ( Setor setor : setores) {
-//            Long nServicos = servicoDao.servicoPorSetor(setor.getId());
-//            JsonObject jsonObject = new JsonObject();
-//            jsonObject.addProperty("setor", setor.getNome());
-//            jsonObject.addProperty("quantidade", nServicos);
-//            jsonObject.addProperty("porcentagem",
-//                    (Double.parseDouble(nServicos.toString())/Double.parseDouble(total.toString())));
-//            jsonArray.add(jsonObject);
-//        }
-//        jsonDash.addProperty("total", total);
-//        jsonDash.add("servicos", jsonArray);
-//        jsonDash.add("dates", informacoesDataEntrada())
-//    }
+    public JsonElement servicosPorSetor() {
+        List<Setor> setores = setorDao.listar();
+        JsonObject jsonDash = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        Long total = servicoDao.contarTotalServicos();
+
+        for ( Setor setor : setores) {
+            Long numServicos = servicoDao.contarPorSetor(setor.getId());
+            Double porcentagem = Double.valueOf(numServicos) / Double.valueOf(total);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("setor", setor.getNome());
+            jsonObject.addProperty("quantidade", numServicos);
+            jsonObject.addProperty("porcentagem", porcentagem);
+            jsonArray.add(jsonObject);
+        }
+        jsonDash.addProperty("total", total);
+        jsonDash.add("servicos", jsonArray);
+        jsonDash.add("dates", informacoesDataEntrada());
+        return jsonDash;
+    }
 
 
-//    public JsonElement informacoesDataEntrada () {
-//        LocalDate agora = LocalDate.now();
-//        LocalDate inicio = agora.minusYears(1l);
-//        List<VeiculoInformacoes> informacoes = veiculoDao.veiculosPorDataEntrada(inicio,agora);
-//        return gerarJsonDeVeiculosPorDataEntrada(informacoes);
-//    }
+    private JsonElement informacoesDataEntrada () {
+        LocalDate agora = LocalDate.now();
+        LocalDate inicio = agora.minusYears(1l);
+        List<Object[]> informacoes = servicoDao.contarDeAteDataDESC(inicio,agora);
+        return gerarJsonDeServicosPorData(informacoes);
+    }
+
+    private JsonElement gerarJsonDeServicosPorData (List<Object[]> informacoes) {
+        LocalDate localDate = LocalDate.now().minusYears(1l).plusMonths(1);
+        JsonArray jsonArray = new JsonArray();
+        for (int i=0; i<12; i++) {
+            int mes = localDate.getMonthValue();
+            int ano = localDate.getYear();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("date",customizarData(localDate));
+            jsonObject.addProperty("quantidade",0);
+            for(Object[] info : informacoes) {
+                BigInteger totalInfo = (BigInteger) info[0];
+                Double mesInfo = (Double) info[1];
+                Double anoInfo = (Double) info[2];
+
+                if(anoInfo == ano && mesInfo == mes) {
+                    jsonObject.addProperty("quantidade",totalInfo);
+                }
+            }
+            localDate = localDate.plusMonths(1l);
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
+    }
 
     private String customizarData(LocalDate date) {
         if (date.getMonthValue() == 1){

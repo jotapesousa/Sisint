@@ -19,7 +19,10 @@
     </jsp:attribute>
 
     <jsp:attribute name="rodape">
-        <%--<script src="${ctx}/resources/js/dashboard/dashboard.js"></script>--%>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="${ctx}/resources/js/dashboard/dashboard.js"></script>
     </jsp:attribute>
     <jsp:body>
             <div class="row">
@@ -109,7 +112,8 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="${linkTo[ManutencaoController].lista}">
+                        <a href="#">
+                        <%--<a href="${linkTo[ManutencaoController].lista}">--%>
                             <div class="panel-footer">
                                 <span class="pull-left">Ver Manutenções</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -119,87 +123,72 @@
                     </div>
                 </div>
             </div>
-            <!-- /.row -->
-            <%--<div class="row">--%>
 
-                <%--<div class="col-lg-8">--%>
+            <!-- /.row -->
+            <div class="row">
+
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Gráfico de Chamados
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="container-linha" style="height:200px;">
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
                     <%--<div class="panel panel-default">--%>
                         <%--<div class="panel-heading">--%>
                             <%--<i class="fa fa-bar-chart-o fa-fw"></i> Gráfico de Chamados--%>
                         <%--</div>--%>
                         <%--<!-- /.panel-heading -->--%>
                         <%--<div class="panel-body">--%>
-                            <%--<!-- <div id="morris-area-chart"></div> -->--%>
-                            <%--<div class="flot-chart">--%>
-                                <%--<div class="flot-chart-content" id="flot-line-chart"></div>--%>
+                            <%--<div id="container-pizza" style="height:200px;">--%>
                             <%--</div>--%>
                         <%--</div>--%>
                         <%--<!-- /.panel-body -->--%>
                     <%--</div>--%>
-                <%--</div>--%>
-                <%--<!-- /.col-lg-8 -->--%>
-                <%--<div class="col-lg-4">--%>
                     <%--<div class="panel panel-default">--%>
                         <%--<div class="panel-heading">--%>
-                            <%--<i class="fa fa-bell fa-fw"></i> Últimos Serviços--%>
+                            <%--<i class="fa fa-bar-chart-o fa-fw"></i> Gráfico de Chamados--%>
                         <%--</div>--%>
                         <%--<!-- /.panel-heading -->--%>
                         <%--<div class="panel-body">--%>
-                            <%--<div class="list-group">--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-comment fa-fw"></i> New Comment--%>
-                                    <%--<span class="pull-right text-muted small"><em>4 minutes ago</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-twitter fa-fw"></i> 3 New Followers--%>
-                                    <%--<span class="pull-right text-muted small"><em>12 minutes ago</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-envelope fa-fw"></i> Message Sent--%>
-                                    <%--<span class="pull-right text-muted small"><em>27 minutes ago</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-tasks fa-fw"></i> New Task--%>
-                                    <%--<span class="pull-right text-muted small"><em>43 minutes ago</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-upload fa-fw"></i> Server Rebooted--%>
-                                    <%--<span class="pull-right text-muted small"><em>11:32 AM</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-bolt fa-fw"></i> Server Crashed!--%>
-                                    <%--<span class="pull-right text-muted small"><em>11:13 AM</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-warning fa-fw"></i> Server Not Responding--%>
-                                    <%--<span class="pull-right text-muted small"><em>10:57 AM</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-shopping-cart fa-fw"></i> New Order Placed--%>
-                                    <%--<span class="pull-right text-muted small"><em>9:49 AM</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
-                                <%--<a href="#" class="list-group-item">--%>
-                                    <%--<i class="fa fa-money fa-fw"></i> Payment Received--%>
-                                    <%--<span class="pull-right text-muted small"><em>Yesterday</em>--%>
-                                    <%--</span>--%>
-                                <%--</a>--%>
+                            <%--<div id="container-barra" style="height:200px;">--%>
                             <%--</div>--%>
-                            <%--<!-- /.list-group -->--%>
-                            <%--<a href="#" class="btn btn-default btn-block">View All Alerts</a>--%>
                         <%--</div>--%>
                         <%--<!-- /.panel-body -->--%>
                     <%--</div>--%>
-                    <%--<!-- /.panel -->--%>
-                <%--</div>--%>
-            <%--</div>--%>
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Últimas Tarefas
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <c:forEach items="${dezUltimasTarefas}" var="tarefa">
+                                        <a href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}" class="list-group-item">
+                                            ${tarefa.titulo}
+                                            <span class="pull-right text-muted small date-column"><em>${tarefa.dataFechamento}</em>
+                                            </span>
+                                            <span class="pull-right text-muted small" style="padding-right: 15px;"><em>${tarefa.tecnico.nome}</em>
+                                            </span>
+                                        </a>
+                                </c:forEach>
+                            </div>
+                            <!-- /.list-group -->
+                            <a href="${linkTo[TarefasController].lista}" class="btn btn-default btn-block">Ver Todas as Tarefas</a>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+            </div>
             <!-- /.row -->
     </jsp:body>
 </tags:layout>

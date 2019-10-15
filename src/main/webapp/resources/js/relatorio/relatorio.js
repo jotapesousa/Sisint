@@ -1,8 +1,18 @@
-$(document).ready(function () {
-    // $.fn.dataTable.moment('DD/MM/YYYY');
+// Funções para limpar datas de inicio e final do evento
+function limparDataInicio() {
+    console.log($('#dtDe_relatorio').val());
+    $('#dtDe_relatorio').val('');
+}
 
+function limparDataFinal() {
+    console.log($('#dtAte_relatorio').val());
+    $('#dtAte_relatorio').val('');
+}
+
+$(document).ready( function () {
     $('.table').DataTable( {
         pageLength:25,
+        "order" : [[ 1, "desc" ]],
         "language":
             {
                 "sEmptyTable": "Nenhum registro encontrado",
@@ -28,4 +38,16 @@ $(document).ready(function () {
                 }
             }
     } );
+
+    var urlFiltro = $('.link-filtrar').attr('url-filtrar');
+
+    $('#filtroSetor').change( function () {
+        var idSetor = $(this).val();
+        var inicio = $('#dtDe_relatorio').val();
+        var fim = $('#dtAte_relatorio').val();
+        var urlFinalFiltro = urlFiltro + idSetor + '&dtDe=' + inicio + '&dtAte=' + fim;
+        console.log(urlFinalFiltro);
+        $('#btnFiltrar').attr('href', urlFinalFiltro);
+    })
+
 });
