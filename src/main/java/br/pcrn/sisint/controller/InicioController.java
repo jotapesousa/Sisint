@@ -1,6 +1,7 @@
 package br.pcrn.sisint.controller;
 
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
@@ -17,6 +18,7 @@ import br.pcrn.sisint.negocio.DashboardNegocio;
 import com.google.gson.JsonElement;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 
 @Path("/")
 @Seguranca(tipoUsuario = TipoUsuario.TECNICO)
@@ -47,10 +49,10 @@ public class InicioController extends Controlador {
         this.dashboardNegocio = dashboardNegocio;
     }
 
-    public void informacoesDashboard() {
-        JsonElement informacoes = this.dashboardNegocio.dashServicos();
-        resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
-    }
+//    public void informacoesDashboard() {
+//        JsonElement informacoes = this.dashboardNegocio.dashServicos();
+//        resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
+//    }
 
     @Path("")
     public void index(){
@@ -64,10 +66,20 @@ public class InicioController extends Controlador {
         resultado.include("totalEquipamentos",equipamentoDao.contarTotalEquipamentos());
         resultado.include("tarefasPendentes", tarefaDao.minhasTarefas().size());
         resultado.include("meusServicos", servicoDao.meusServicos());
+
+        resultado.include("dezUltimasTarefas", tarefaDao.buscarDezUltimas());
     }
 
     @Path("/info")
+    @Get
     public void info() {
+        JsonElement informacoes = dashboardNegocio.servicosPorSetor();
+        resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
+    }
+
+    @Path("/informacoes")
+    @Get
+    public void informacoes() {
 
     }
 

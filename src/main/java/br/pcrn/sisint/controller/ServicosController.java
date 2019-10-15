@@ -9,6 +9,7 @@ import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.*;
 import br.pcrn.sisint.dominio.*;
 import br.pcrn.sisint.negocio.ServicosNegocio;
+import br.pcrn.sisint.negocio.SetorNegocio;
 import br.pcrn.sisint.util.OpcaoSelect;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -39,6 +40,10 @@ public class ServicosController extends ControladorSisInt<Servico> {
 
     @Inject
     private TarefaJpaDao tarefaJpaDao;
+
+    @Inject
+    private SetorNegocio setorNegocio;
+
     /**
      * @deprecated CDI eyes only
      */
@@ -274,12 +279,25 @@ public class ServicosController extends ControladorSisInt<Servico> {
         resultado.use(Results.json()).withoutRoot().from(telJson).recursive().serialize();
     }
 
+    public void formRelatorio() {
+        resultado.include("setores", setorNegocio.gerarListaOpcoesSetor());
+    }
+
+    @Post
+    public void relatorio(String dtDe, String dtAte) {
+//        List<Object[]> info = servicosNegocio.filtrarRelatorio(dtDe, dtAte);
+//        resultado.include("dtDe" , dtDe);
+//        resultado.include("dtAte" , dtAte);
+//        resultado.include("servicos", info);
+//        resultado.redirectTo(this).formRelatorio();
+    }
+
 //    @Get
 //    @Path("/imprimirProdutos")
 //    @SuppressWarnings({ "unchecked", "rawtypes" })
 //    public Download imprimirProdutos() {
 //        List<Servico> lista = servicoDao.listar();
-//        Report report = new ReportJasperServico<Servico>(lista, "relatorioServico.jasper", context);
+//        Report report = new ReportJasperServico<Servico>(lista, "termoResponsabilidade.jasper", context);
 //        ReportDownload download = new ReportDownload(report, ExportFormats.pdf(), false);
 //        return download;
 //
