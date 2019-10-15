@@ -82,7 +82,6 @@ public class TarefasController extends ControladorSisInt<Tarefa> {
         resultado.redirectTo(ServicosController.class).editar(tarefa.getServico().getId());
     }
 
-    @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
     public void lista(){
         this.resultado.include("tarefas", tarefaDao.listar());
 

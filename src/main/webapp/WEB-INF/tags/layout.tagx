@@ -214,11 +214,9 @@
                                     <li>
                                         <a href="${linkTo[TarefasController].tarefasConcluidas}">Concluídas</a>
                                     </li>
-                                    <c:if test="${usuarioLogado.isAdmin()}">
-                                        <li>
-                                            <a href="${linkTo[TarefasController].lista}">Todas</a>
-                                        </li>
-                                    </c:if>
+                                    <li>
+                                        <a href="${linkTo[TarefasController].lista}">Todas</a>
+                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>

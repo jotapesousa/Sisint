@@ -1,7 +1,6 @@
 package br.pcrn.sisint.dominio;
 
 import br.pcrn.sisint.conversor.ConvertivelOpcaoSelect;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

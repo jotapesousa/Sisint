@@ -34,14 +34,9 @@
         <script src="${ctx}/resources/js/tarefas/notas.js"></script>
         <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
         <script>
-            // var obj = moment($('#tarefa-dataFechamento').val(), 'YYYY-MM-DD').format('DD/MM/YYYY');
-            // $('#tarefa-dataFechamento').val(obj);
-
-            $(".badge").each(function () {
-                var tecnico = $('#tarefa-tecnico').val();
-                var nome = $(this).text();
-                nome = moment(nome).format("DD/MM/YYYY HH:mm:ss");
-                $(this).text(nome + ", " + tecnico);
+            $('.dataBadge').each( function () {
+                var date = new Date($(this).text());
+                $(this).text(date.toLocaleString());
             })
         </script>
     </jsp:attribute>
@@ -98,18 +93,21 @@
                 </div>
                 <div class="row">
                     <c:forEach items="${tarefa.notas}" var="nota">
+                        <input class="usuarioNota" type="hidden" value="${nota.tecnico.nome}">
                         <ul class="list-group">
                             <li class="list-group-item"><span style="font-weight: 600;color: #3c99c8;">
-                                    ${nota.descricao}</span><span class="badge">${nota.dataCriacao}</span>
+                                    ${nota.descricao}</span><span class="badge dataBadge">${nota.dataCriacao}</span><span class="badge">${nota.tecnico.nome}</span>
                             </li>
                         </ul>
                     </c:forEach>
                 </div>
             </div>
             <c:if test="${tarefa.statusTarefa.chave != 'Concluído' && tarefa.sizeNotas() != 0}">
-                <div class="form-group text-center">
-                    <a class="btn btn-lg btn-primary concluir-tarefa" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalConcluir">Concluir Tarefa</a>
-                </div>
+                <c:if test="${tarefa.tecnico.id == usuarioLogado.usuario.id}">
+                    <div class="form-group text-center">
+                        <a class="btn btn-lg btn-primary concluir-tarefa" id-tarefa="${tarefa.id}" data-toggle="modal" href="#modalConcluir">Concluir Tarefa</a>
+                    </div>
+                </c:if>
             </c:if>
         </div>
 

@@ -97,8 +97,10 @@
                                 <td class="date-column">${tarefa.dataFechamento}</td>
                                 <td>${tarefa.tecnico.nome}</td>
                                 <td><a title="Detalhes" href="${linkTo[TarefasController].detalhes}?id=${tarefa.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
-                                    <a title="Editar" href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
-                                    <a title="Remover" href="${linkTo[TarefasController].remover}?id=${tarefa.id}"><i class="fa fa-trash fa-lg"></i></a>
+                                    <c:if test="${usuarioLogado.usuario.id == tarefa.tecnico.id || usuarioLogado.isAdmin()}">
+                                        <a title="Editar" href="${linkTo[TarefasController].editar}?id=${tarefa.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                        <a title="Remover" href="${linkTo[TarefasController].remover}?id=${tarefa.id}"><i class="fa fa-trash fa-lg"></i></a>
+                                    </c:if>
                                         <%--<a data-toggle="modal" url="${linkTo[ServicosController].assumirServico}?id=${tarefa.id}" --%>
                                            <%--href="#concluirId" id="concluir-tarefa" id-tarefa="${tarefa.id}" title="Concluir Tarefa">--%>
                                             <%--<i class="glyphicon glyphicon-ok"></i> </a>--%>
