@@ -1,6 +1,7 @@
 package br.pcrn.sisint.dao;
 
 import br.pcrn.sisint.dominio.Equipamento;
+import br.pcrn.sisint.dominio.TipoEquipamento;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,8 @@ public interface EquipamentoDao extends EntidadeDao<Equipamento> {
 
     List<Equipamento> listarPorTombo(Long codigo);
     List<Equipamento> listarPorNSerie(String codigo);
+    List<Equipamento> listarPorTomboETipo(Long tombo, TipoEquipamento tipoEquip);
+    List<Equipamento> buscarPorTipo(TipoEquipamento tipoEquipamento);
     Optional<Equipamento> buscarPorNSerie(String codigo);
     Optional<Equipamento> buscarPorTombo(Long codigo);
     boolean verificarNSerie(String nserie);

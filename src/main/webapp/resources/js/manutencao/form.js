@@ -112,8 +112,9 @@ $(document).ready(function () {
         var id = $(this).attr('id-equip');
         $('#trequip-'+id).find('td').each(function () {
             equipamentos.push($(this).text());
+            console.log("dasodi" + $(this).text());
         });
-        equipamento.id = id;
+        eqipamento.id = id;
         equipamento.nome = equipamentos[0];
         equipamento.tombo = equipamentos[1];
         equipamento.numSerie = equipamentos[2];

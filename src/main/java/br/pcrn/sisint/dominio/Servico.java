@@ -19,6 +19,7 @@ public class Servico extends Entidade{
     private String titulo;
     private LocalDate dataAbertura;
     private LocalDate dataFechamento;
+    private LocalDate dataConclusao;
     private String telefoneRetorno;
 
     @Column(columnDefinition = "text")
@@ -183,6 +184,14 @@ public class Servico extends Entidade{
         this.telefoneRetorno = telefoneRetorno;
     }
 
+    public LocalDate getDataConclusao() {
+        return dataConclusao;
+    }
+
+    public void setDataConclusao(LocalDate dataConclusao) {
+        this.dataConclusao = dataConclusao;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -194,6 +203,8 @@ public class Servico extends Entidade{
         if (id != null ? !id.equals(servico.id) : servico.id != null) return false;
         if (titulo != null ? !titulo.equals(servico.titulo) : servico.titulo != null) return false;
         if (dataAbertura != null ? !dataAbertura.equals(servico.dataAbertura) : servico.dataAbertura != null)
+            return false;
+        if (dataConclusao != null ? !dataConclusao.equals(servico.dataConclusao) : servico.dataConclusao != null)
             return false;
         if (dataFechamento != null ? !dataFechamento.equals(servico.dataFechamento) : servico.dataFechamento != null)
             return false;
@@ -213,6 +224,7 @@ public class Servico extends Entidade{
         result = 31 * result + (titulo != null ? titulo.hashCode() : 0);
         result = 31 * result + (dataAbertura != null ? dataAbertura.hashCode() : 0);
         result = 31 * result + (dataFechamento != null ? dataFechamento.hashCode() : 0);
+        result = 31 * result + (dataConclusao != null ? dataConclusao.hashCode() : 0);
         result = 31 * result + (descricao != null ? descricao.hashCode() : 0);
         result = 31 * result + (deletado ? 1 : 0);
         result = 31 * result + (tecnico != null ? tecnico.hashCode() : 0);

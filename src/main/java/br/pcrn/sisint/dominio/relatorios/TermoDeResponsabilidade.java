@@ -1,42 +1,23 @@
 package br.pcrn.sisint.dominio.relatorios;
 
-public class TermoGeral extends Relatorio {
+public class TermoDeResponsabilidade extends Relatorio {
 
-    private String numero;
-    private String ano;
     private String setor;
-    private String nomeEquipamento;
+    private Integer qtdeEquipamento;
+    private String tipoEquipamento;
     private String tomboEquipamento;
     private String numSerieEquipamento;
     private Integer posicao;
 
-    public TermoGeral(String numero, String ano, String setor, String nomeEquipamento, String tomboEquipamento,
-                      String numSerieEquipamento, Integer posicao) {
-        this.numero = (numero != null) ? numero : "";
-        this.ano = (ano != null) ? ano : "";
+    public TermoDeResponsabilidade(String setor, String tipoEquipamento, String tomboEquipamento, String numSerieEquipamento, Integer qtdeEquipamento, Integer posicao) {
         this.setor = (setor != null) ? setor : "";
-        this.nomeEquipamento = (nomeEquipamento != null) ? nomeEquipamento : "";
+        this.tipoEquipamento = (tipoEquipamento != null) ? tipoEquipamento : "";
         this.tomboEquipamento = (tomboEquipamento != null)? tomboEquipamento : "";
         this.numSerieEquipamento = (numSerieEquipamento != null) ? numSerieEquipamento : "";
+        this.qtdeEquipamento = qtdeEquipamento;
         this.posicao = posicao;
 
         System.out.println(tomboEquipamento);
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getAno() {
-        return ano;
-    }
-
-    public void setAno(String ano) {
-        this.ano = ano;
     }
 
     public String getSetor() {
@@ -47,12 +28,12 @@ public class TermoGeral extends Relatorio {
         this.setor = setor;
     }
 
-    public String getNomeEquipamento() {
-        return nomeEquipamento;
+    public String getTipoEquipamento() {
+        return tipoEquipamento;
     }
 
-    public void setNomeEquipamento(String nomeEquipamento) {
-        this.nomeEquipamento = nomeEquipamento;
+    public void setTipoEquipamento(String tipoEquipamento) {
+        this.tipoEquipamento = tipoEquipamento;
     }
 
     public String getTomboEquipamento() { return tomboEquipamento; }
@@ -73,5 +54,13 @@ public class TermoGeral extends Relatorio {
 
     public void setPosicao(Integer posicao) {
         this.posicao = posicao;
+    }
+
+    public Integer getQtdeEquipamento() {
+        return qtdeEquipamento;
+    }
+
+    public void setQtdeEquipamento(Integer qtdeEquipamento) {
+        this.qtdeEquipamento = qtdeEquipamento;
     }
 }

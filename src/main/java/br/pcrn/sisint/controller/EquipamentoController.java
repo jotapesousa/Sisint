@@ -1,9 +1,6 @@
 package br.pcrn.sisint.controller;
 
-import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.*;
 import br.com.caelum.vraptor.observer.upload.UploadSizeLimit;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
@@ -22,6 +19,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Seguranca(tipoUsuario = TipoUsuario.TECNICO)
@@ -221,6 +219,18 @@ public class EquipamentoController extends Controlador{
         equipamento.setDataCadastro(LocalDate.now());
         dao.salvar(equipamento);
         resultado.use(Results.json()).withoutRoot().from(equipamento).recursive().serialize();
+    }
+
+    @Get
+    public void buscarEquipamentosPorTipo(TipoEquipamento tipoEquip){
+        JsonArray jsonArray = equipamentoNegocio.buscarEquipamentoPorTipo(tipoEquip);
+        resultado.use(Results.json()).withoutRoot().from(jsonArray).recursive().serialize();
+    }
+
+    @Get
+    public void buscarEquipamentosPorTombo(Long tombo, TipoEquipamento tipoEquip){
+        JsonArray jsonArray = equipamentoNegocio.buscarEquipamentoPorTombo(tombo, tipoEquip);
+        resultado.use(Results.json()).withoutRoot().from(jsonArray).recursive().serialize();
     }
 
 }

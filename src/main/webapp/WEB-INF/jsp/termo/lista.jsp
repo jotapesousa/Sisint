@@ -19,12 +19,10 @@
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <%--<script src="${ctx}/resources/js/servicos/lista.js"></script>--%>
-        <script src="${ctx}/resources/js/init.js"></script>
+        <%--<script src="${ctx}/resources/js/init.js"></script>--%>
         <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
         <script>
             $(document).ready(function () {
-                $.fn.dataTable.moment('DD/MM/YYYY');
-
                 $('.table').DataTable( {
                     pageLength:25,
                     "language":
@@ -80,7 +78,8 @@
                                 <td class="date-column">${termo.dataCriacao}</td>
                                 <td>${termo.setor.nome}</td>
                                 <td>${termo.tecnico.nome}</td>
-                                <td><a title="Detalhes" href="${linkTo[TermoController].detalhes}?id=${termo.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
+                                <td><a title="Imprimir" href="${linkTo[TermoController].imprimir}?id=${termo.id}"><i class="fa fa-print fa-lg" aria-hidden="false"></i></a>
+                                    <a title="Detalhes" href="${linkTo[TermoController].detalhes}?id=${termo.id}"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
                                     <a title="Editar" href="${linkTo[TermoController].editar}?id=${termo.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <a title="Remover" href="${linkTo[TermoController].remover}?id=${termo.id}"><i class="fa fa-trash fa-lg"></i></a>
                                 </td>

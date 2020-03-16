@@ -5,6 +5,7 @@ import br.com.caelum.vraptor.jasperreports.Report;
 import br.com.caelum.vraptor.jasperreports.download.ReportDownload;
 import br.com.caelum.vraptor.jasperreports.formats.ExportFormats;
 import br.com.caelum.vraptor.observer.download.Download;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.view.Results;
 import br.pcrn.sisint.anotacoes.Seguranca;
 import br.pcrn.sisint.anotacoes.Transacional;
@@ -13,9 +14,12 @@ import br.pcrn.sisint.dao.TermoDao;
 import br.pcrn.sisint.dominio.*;
 import br.pcrn.sisint.dominio.relatorios.EntityReport;
 
-import br.pcrn.sisint.dominio.relatorios.TermoGeral;
+import br.pcrn.sisint.dominio.relatorios.TermoDeResponsabilidade;
+import br.pcrn.sisint.negocio.EquipamentoNegocio;
 import br.pcrn.sisint.negocio.TermoNegocio;
 import br.pcrn.sisint.util.OpcaoSelect;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 
 import javax.inject.Inject;
@@ -39,6 +43,8 @@ public class TermoController extends Controlador {
 
     @Inject
     private ServletContext context;
+    @Inject
+    private EquipamentoNegocio equipamentoNegocio;
 
     @Deprecated
     protected TermoController(){
@@ -60,25 +66,13 @@ public class TermoController extends Controlador {
         resultado.include("usuarios", termoNegocio.geraListaOpcoesUsuarios());
         resultado.include("statusEquipamento", OpcaoSelect.toListaOpcoes(StatusEquipamento.values()));
         resultado.include("tipo", OpcaoSelect.toListaOpcoes(TipoEquipamento.values()));
+        resultado.include("numTermo", termoNegocio.numTermo()+1);
     }
 
-    @Post("/termos")
+    @Post
     @Transacional
     public void salvar(Termo termo) {
-        if (termo.getId() == null) {
-            termo.setNumero(termoNegocio.numTermo() + 1);
-            termo.setAno(LocalDate.now().getYear());
-            termo.setDataCriacao(LocalDate.now());
-            termo.setTecnico(usuarioLogado.getUsuario());
-        }
-        if (termo.isRecebido()) {
-            termo.setHoraRecebimento(LocalDateTime.now());
-            for (Equipamento equipamento : termo.getEquipamentos()) {
-                equipamento.setSetor(termo.getSetor());
-            }
-        }
-
-        this.dao.salvar(termo);
+        termoNegocio.salvar(termo);
         this.resultado.redirectTo(this).lista();
     }
 
@@ -104,21 +98,39 @@ public class TermoController extends Controlador {
         resultado.include("termo", termo);
     }
 
+    public Download imprimir(Long id) {
+        Download download = null;
+
+        try {
+            download = termoNegocio.imprimir(id);
+        } catch (Exception e) {
+            resultado.include("mensagem", new SimpleMessage("error", "mensagem.termo.error"));
+            resultado.redirectTo(this).lista();
+        }
+        return download;
+    }
+
+    public void receber(Long id){
+
+    }
+
     @Post
     @Transacional
     public void salvarAjax(Termo termo) {
-        termo.setNumero(termoNegocio.numTermo() + 1);
-        termo.setAno(LocalDate.now().getYear());
-        termo.setDataCriacao(LocalDate.now());
-        termo.setTecnico(usuarioLogado.getUsuario());
+        System.out.println(termo.toString());
+//        termo.setNumero(termoNegocio.numTermo() + 1);
+//        termo.setAno(LocalDate.now().getYear());
+//        termo.setDataCriacao(LocalDate.now());
+//        termo.setTecnico(usuarioLogado.getUsuario());
+//
+//        if (termo.isRecebido()) {
+//            termo.setHoraRecebimento(LocalDateTime.now());
+//        }
+//
+//        dao.salvar(termo);
+//        resultado.use(Results.json()).withoutRoot().from(termo).recursive().serialize();
+        resultado.redirectTo(this).lista();
 
-        if (termo.isRecebido()) {
-            termo.setHoraRecebimento(LocalDateTime.now());
-        }
-
-        dao.salvar(termo);
-        resultado.use(Results.json()).withoutRoot().from(termo).recursive().serialize();
-        resultado.redirectTo(this).editar(termo.getId());
     }
 
     @Get
@@ -150,12 +162,18 @@ public class TermoController extends Controlador {
         equipamentos.add(equip3);
         termo.setEquipamentos(equipamentos);
 
-        List<TermoGeral> termos = this.termoNegocio.gerarTermoGeral(termo);
+//        List<TermoDeResponsabilidade> termos = this.termoNegocio.gerarTermoGeral(termo);
         Setor setor = this.setorDao.buscarPorId(termo.getSetor().getId());
 
-        Report report = new EntityReport<TermoGeral>(termos,"termoResponsabilidade.jasper", context);
-        report.addParameter("setor1", setor.getNome());
-        ReportDownload download = new ReportDownload(report, ExportFormats.pdf(), false);
-        return download;
+//        Report report = new EntityReport<TermoDeResponsabilidade>(termos,"termoResponsabilidade.jasper", context);
+//        report.addParameter("setor1", setor.getNome());
+//        ReportDownload download = new ReportDownload(report, ExportFormats.pdf(), false);
+        return null;
+    }
+
+    @Get
+    public void buscarEquipamentosPorTipo(TipoEquipamento tipoEquip){
+        JsonArray jsonArray = equipamentoNegocio.buscarEquipamentoPorTipo(tipoEquip);
+        resultado.use(Results.json()).withoutRoot().from(jsonArray).recursive().serialize();
     }
 }

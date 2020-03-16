@@ -178,14 +178,17 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
             for (Tarefa tarefa : servico.getTarefas()) {
                 if (!tarefa.getStatusTarefa().equals(StatusTarefa.CONCLUIDO)) {
                     concluida = false;
+                    servico.setDataConclusao(null);
                 }
             }
         } else {
             concluida = false;
+            servico.setDataConclusao(null);
         }
 
         if(concluida) {
             servico.setStatusServico(StatusServico.CONCLUIDO);
+            servico.setDataConclusao(LocalDate.now());
 //            manager.merge(servico);
         }
     }
@@ -200,8 +203,8 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
 
     @Override
     public List<Servico> filtrarDeAteDataDESC(LocalDate dtDe, LocalDate dtAte) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.dataFechamento >= :dtDe AND s.dataFechamento <= :dtAte) AND s.statusServico = :status " +
-                "ORDER BY s.dataFechamento DESC")
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.dataConclusao >= :dtDe AND s.dataConclusao <= :dtAte) AND s.statusServico = :status " +
+                "ORDER BY s.dataConclusao DESC")
                 .setParameter("dtDe", dtDe)
                 .setParameter("dtAte", dtAte)
                 .setParameter("status", StatusServico.CONCLUIDO);
@@ -209,8 +212,8 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     }
 
     public List<Servico> filtrarAPartirDePorSetorDESC(Long id, LocalDate dtMin) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.setor.id = :id AND s.dataFechamento >= :dtMin AND s.statusServico = :status " +
-                "ORDER BY s.dataFechamento DESC")
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.setor.id = :id AND s.dataConclusao >= :dtMin AND s.statusServico = :status " +
+                "ORDER BY s.dataConclusao DESC")
                 .setParameter("id", id)
                 .setParameter("dtMin", dtMin)
                 .setParameter("status", StatusServico.CONCLUIDO);
@@ -218,8 +221,8 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     }
 
     public List<Servico> filtrarAteDataPorSetorDESC(Long id, LocalDate dtMax) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.dataFechamento <= :dtAte AND s.id = :id AND s.statusServico = :status" +
-                " ORDER BY s.dataFechamento DESC")
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.dataConclusao <= :dtAte AND s.id = :id AND s.statusServico = :status" +
+                " ORDER BY s.dataConclusao DESC")
                 .setParameter("dtAte", dtMax)
                 .setParameter("id", id)
                 .setParameter("status", StatusServico.CONCLUIDO);
@@ -228,8 +231,8 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
 
     @Override
     public List<Servico> filtrarDeAteDataPorSetorDESC(Long id, LocalDate dtDe, LocalDate dtAte) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.setor.id = :id AND s.dataFechamento >= :dtDe" +
-                " AND s.dataFechamento <= :dtAte) AND s.statusServico = :status ORDER BY s.dataFechamento DESC")
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE (s.setor.id = :id AND s.dataConclusao >= :dtDe" +
+                " AND s.dataConclusao <= :dtAte) AND s.statusServico = :status ORDER BY s.dataConclusao DESC")
                 .setParameter("id", id)
                 .setParameter("dtDe", dtDe)
                 .setParameter("dtAte", dtAte)
@@ -239,15 +242,15 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
 
     @Override
     public List<Servico> filtrarMaisRecentesPorSetor(Long id) {
-        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.setor.id = :id ORDER BY s.dataFechamento DESC").setParameter("id", id).setMaxResults(10);
+        Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.setor.id = :id ORDER BY s.dataConclusao DESC").setParameter("id", id).setMaxResults(10);
         return query.getResultList();
     }
 
     @Override
     public List<Object[]> contarDeAteDataDESC(LocalDate dtDe, LocalDate dtAte) {
-        Query query = manager.createNativeQuery("SELECT COUNT(s) AS total, EXTRACT(MONTH FROM s.dataFechamento) AS mes, " +
-                "EXTRACT(YEAR FROM s.dataFechamento) AS ano FROM Servico s WHERE s.dataFechamento >= '"+dtDe.toString()+"'" +
-                " AND s.dataFechamento <= '"+dtAte.toString()+"' AND s.statusServico = 'CONCLUIDO' GROUP BY ano,mes ORDER BY ano,mes");
+        Query query = manager.createNativeQuery("SELECT COUNT(s) AS total, EXTRACT(MONTH FROM s.dataConclusao) AS mes, " +
+                "EXTRACT(YEAR FROM s.dataConclusao) AS ano FROM Servico s WHERE s.dataConclusao >= '"+dtDe.toString()+"'" +
+                " AND s.dataConclusao <= '"+dtAte.toString()+"' AND s.statusServico = 'CONCLUIDO' GROUP BY ano,mes ORDER BY ano,mes");
         List<Object[]> informacoes = query.getResultList();
         return informacoes;
     }
@@ -256,8 +259,8 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     public List<Object[]> contarDeAteDataPorSetorDESC(LocalDate dtDe, LocalDate dtAte) {
         Query query = manager.createQuery("SELECT COUNT(servico) as total, setor.nome FROM Servico servico " +
                                              "INNER JOIN Setor setor on servico.setor.id = setor.id " +
-                                             "WHERE servico.statusServico = :status AND servico.dataFechamento >= :dtDe " +
-                                             "AND servico.dataFechamento <= :dtAte " +
+                                             "WHERE servico.statusServico = :status AND servico.dataConclusao >= :dtDe " +
+                                             "AND servico.dataConclusao <= :dtAte " +
                                              "GROUP BY servico.setor.id, setor.nome " +
                                              "ORDER BY total DESC")
                 .setParameter("dtDe", dtDe)
@@ -272,7 +275,7 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     public List<Object[]> contarAPartirDePorSetorDESC(LocalDate dtDe) {
         Query query = manager.createQuery("SELECT COUNT(servico) as total, setor.nome FROM Servico servico " +
                                              "INNER JOIN Setor setor on servico.setor.id = setor.id " +
-                                             "WHERE servico.statusServico = :status AND servico.dataFechamento >= :dtDe GROUP BY servico.setor.id, setor.nome ORDER BY total DESC")
+                                             "WHERE servico.statusServico = :status AND servico.dataConclusao >= :dtDe GROUP BY servico.setor.id, setor.nome ORDER BY total DESC")
                 .setParameter("dtDe", dtDe)
                 .setParameter("status", StatusServico.CONCLUIDO);
         List<Object[]> informacoes = query.getResultList();
@@ -284,7 +287,7 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     public List<Object[]> contarAteDataPorSetorDESC(LocalDate dtAte) {
         Query query = manager.createQuery("SELECT COUNT(servico) as total, setor.nome FROM Servico servico " +
                                              "INNER JOIN Setor setor on servico.setor.id = setor.id " +
-                                             "WHERE servico.statusServico = :status AND servico.dataFechamento <= :dtAte " +
+                                             "WHERE servico.statusServico = :status AND servico.dataConclusao <= :dtAte " +
                                              "GROUP BY servico.setor.id, setor.nome ORDER BY total DESC")
                 .setParameter("dtAte", dtAte)
                 .setParameter("status", StatusServico.CONCLUIDO);

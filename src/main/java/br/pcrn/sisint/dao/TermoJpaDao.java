@@ -31,8 +31,8 @@ public class TermoJpaDao extends EntidadeJpaDao<Termo> implements TermoDao  {
     }
 
     public int numTermo() {
-        Query query = this.manager.createNativeQuery("SELECT COUNT(t.dataCriacao) FROM Termo t WHERE EXTRACT(YEAR FROM t.dataCriacao) = :ano ");
-        query.setParameter("ano", LocalDate.now().getYear());
+        Query query = this.manager.createNativeQuery("SELECT COUNT(t.dataCriacao) FROM Termo t WHERE EXTRACT(YEAR FROM t.dataCriacao) = :ano ")
+                .setParameter("ano", LocalDate.now().getYear());
 
         BigInteger resultado = (BigInteger) query.getSingleResult();
         return resultado.intValue();

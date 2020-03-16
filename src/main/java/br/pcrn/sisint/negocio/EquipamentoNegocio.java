@@ -5,11 +5,14 @@ import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.pcrn.sisint.controller.EquipamentoController;
 import br.pcrn.sisint.dao.EquipamentoDao;
 import br.pcrn.sisint.dominio.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class EquipamentoNegocio {
@@ -127,5 +130,34 @@ public class EquipamentoNegocio {
         }
 
         return retorno;
+    }
+
+    public JsonArray buscarEquipamentoPorTipo(TipoEquipamento tipoEquip) {
+        List<Equipamento> equipamentos = equipamentoDao.buscarPorTipo(tipoEquip);
+        JsonArray jsonArray = equipamentoJson(equipamentos);
+        return jsonArray;
+    }
+
+    public JsonArray buscarEquipamentoPorTombo(Long tombo, TipoEquipamento tipoEquip) {
+        List<Equipamento> equipamentos = equipamentoDao.listarPorTomboETipo(tombo, tipoEquip);
+        JsonArray jsonArray = equipamentoJson(equipamentos);
+        return jsonArray;
+    }
+
+    private JsonArray equipamentoJson(List<Equipamento> equipamentos) {
+        JsonArray jsonArray = new JsonArray();
+
+        for (Equipamento eq : equipamentos) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("id",eq.getId());
+            jsonObject.addProperty("nome",eq.getNome());
+            jsonObject.addProperty("tombo",eq.getTombo());
+            jsonObject.addProperty("tipo",eq.getTipo().getChave());
+            jsonObject.addProperty("nserie",eq.getNumeroSerie());
+            jsonObject.addProperty("descricao", eq.getDescricao());
+            jsonObject.addProperty("status", eq.getStatus().getChave());
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
     }
 }

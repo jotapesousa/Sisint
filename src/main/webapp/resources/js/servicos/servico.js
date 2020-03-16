@@ -24,6 +24,7 @@ $(document).ready( function () {
 
     $('#setor-servico').change( function (event) {
         var url = ctx + "/buscarSetorJson?id=" + $('#setor-servico').val();
+        console.log(url);
         if ($('#setor-servico').val() != "") {
             $.ajax( {
                 url : url,

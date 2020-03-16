@@ -98,8 +98,7 @@
                                 <td>${manutencao.dataAbertura}</td>
                                 <td><span class="label labelStatus">${manutencao.status.chave}</span></td>
                                 <td><a title="Detalhar" href="${linkTo[ManutencaoController].detalhar}?id=${manutencao.id}"><i class="fa fa-eye fa-lg"></i></a>
-                                    <c:if test="${(usuarioLogado.usuario.nome == manutencao.tecnico.nome) ||
-                                                    (usuarioLogado.isAdmin())}">
+                                    <c:if test="${(usuarioLogado.usuario.nome == manutencao.tecnico.nome)}">
                                             <a href="${linkTo[ManutencaoController].editar}?id=${manutencao.id}"
                                                title="Editar"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                             <a class="removerManutencao" href="#modalRemover" data-toggle="modal"
